@@ -1,11 +1,15 @@
 <?php
 
-namespace Macrame\Cms;
+namespace Macrame\CMS;
 
 use Illuminate\Support\ServiceProvider;
 
 class CmsServiceProvider extends ServiceProvider
 {
+    protected $providers = [
+        Foundation\FoundationServiceProvider::class,
+    ];
+
     /**
      * Register application services.
      *
@@ -13,6 +17,8 @@ class CmsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        foreach ($this->providers as $provider) {
+            $this->app->register($provider);
+        }
     }
 }

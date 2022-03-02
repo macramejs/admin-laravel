@@ -20,12 +20,13 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {
-        "php": "^8.0",
-        "phpunit/phpunit": "^9.5"
+        "php": "^8.1",
+        "phpunit/phpunit": "^9.5",
+        "orchestra/testbench": "^7.0"
     },
     "require": {
-        "illuminate/support": "^8.46|^9.0",
-        "illuminate/contracts": "^8.46|^9.0",
-        "inertiajs/inertia-laravel": "^0.4|^0.5"
+        "illuminate/support": "^9.0",
+        "illuminate/contracts": "^9.0",
+        "inertiajs/inertia-laravel": "^0.5"
     }
 }

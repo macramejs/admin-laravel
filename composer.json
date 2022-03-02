@@ -1,0 +1,31 @@
+{
+    "name": "macramejs/cms-laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lennart Carstens-Behrens",
+            "email": "lennart.carbe@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Macrame\\CMS\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "php": "^8.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "require": {
+        "illuminate/support": "^8.46|^9.0",
+        "illuminate/contracts": "^8.46|^9.0",
+        "inertiajs/inertia-laravel": "^0.4|^0.5"
+    }
+}

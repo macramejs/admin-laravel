@@ -33,9 +33,6 @@ class MakeAdminCommand extends BaseMakeCommand
         $this->line('Make sure the following npm packages are installed:');
         $this->info('tailwindcss lodash.merge @headlessui/vue @macramejs/admin-vue3 @macramejs/admin-config @macramejs/admin-vue3 @macramejs/macrame @macramejs/macrame-vue3 @macramejs/page-builder-vue3 ts-loader typescript vue@next vue-loader@next @inertiajs/inertia @inertiajs/inertia-vue3 @inertiajs/progress');
 
-        $this->line("\nAnd the following composer packages:");
-        $this->info('inertiajs/inertia-laravel');
-
         $this->line("\nMake sure to update composers autoloader:");
         $this->info('composer dumpautoload');
 

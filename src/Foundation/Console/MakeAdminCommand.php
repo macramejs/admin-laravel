@@ -41,6 +41,10 @@ class MakeAdminCommand extends BaseMakeCommand
         $this->line('3. Run the migrations and the seeder:');
         $this->info('php artisan migrate:fresh --seed');
 
+        $this->line('4. Visit '.url($this->name()).' and login using the following credentials:');
+        $this->line('username: admin@admin.com');
+        $this->line('password: secret');
+
         return 0;
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Macrame\CMS\Media\Contracts;
+namespace Macrame\Admin\Media\Contracts;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

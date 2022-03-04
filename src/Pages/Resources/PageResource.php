@@ -1,9 +1,9 @@
 <?php
 
-namespace Macrame\CMS\Pages\Resources;
+namespace Macrame\Admin\Pages\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Macrame\CMS\Pages\Contract\Page;
+use Macrame\Admin\Pages\Contract\Page;
 
 /**
  * @mixin Page

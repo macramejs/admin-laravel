@@ -1,8 +1,8 @@
 <?php
 
-namespace Macrame\CMS\Pages\Resources;
+namespace Macrame\Admin\Pages\Resources;
 
-use Macrame\CMS\Pages\Contract\Page;
+use Macrame\Admin\Pages\Contract\Page;
 use Macrame\Tree\TreeResource;
 
 /**

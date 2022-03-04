@@ -1,6 +1,6 @@
 <?php
 
-namespace Macrame\CMS\Pages\Page;
+namespace Macrame\Admin\Pages\Page;
 
 class Page
 {

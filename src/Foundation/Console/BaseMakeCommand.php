@@ -1,6 +1,6 @@
 <?php
 
-namespace Macrame\CMS\Foundation\Console;
+namespace Macrame\Admin\Foundation\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;

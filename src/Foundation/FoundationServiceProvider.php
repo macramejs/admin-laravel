@@ -1,9 +1,9 @@
 <?php
 
-namespace Macrame\CMS\Foundation;
+namespace Macrame\Admin\Foundation;
 
 use Illuminate\Support\ServiceProvider;
-use Macrame\CMS\Foundation\Console\MakeCmsCommand;
+use Macrame\Admin\Foundation\Console\MakeAdminCommand;
 
 class FoundationServiceProvider extends ServiceProvider
 {
@@ -13,7 +13,7 @@ class FoundationServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        'MakeCms' => MakeCmsCommand::class,
+        'MakeAdmin' => MakeAdminCommand::class,
     ];
 
     /**
@@ -42,14 +42,14 @@ class FoundationServiceProvider extends ServiceProvider
     }
 
     /**
-     * Regsiter make:cms command.
+     * Regsiter make:admin command.
      *
      * @return void
      */
-    protected function registerMakeCmsCommand()
+    protected function registerMakeAdminCommand()
     {
-        $this->app->singleton(MakeCmsCommand::class, function ($app) {
-            return new MakeCmsCommand($app['files']);
+        $this->app->singleton(MakeAdminCommand::class, function ($app) {
+            return new MakeAdminCommand($app['files']);
         });
     }
 }

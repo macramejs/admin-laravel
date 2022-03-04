@@ -1,5 +1,5 @@
 {
-    "name": "macramejs/cms-laravel",
+    "name": "macramejs/admin-laravel",
     "license": "MIT",
     "authors": [
         {
@@ -9,7 +9,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Macrame\\CMS\\": "src/"
+            "Macrame\\Admin\\": "src/"
         }
     },
     "autoload-dev": {
@@ -28,12 +28,13 @@
         "illuminate/support": "^9.0",
         "illuminate/contracts": "^9.0",
         "inertiajs/inertia-laravel": "^0.5",
-        "laravel/breeze": "^1.8"
+        "laravel/breeze": "^1.8",
+        "macramejs/macrame-laravel": "dev-main"
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Macrame\\CMS\\CmsServiceProvider"
+                "Macrame\\Admin\\AdminServiceProvider"
             ]
         },
         "branch-alias": {

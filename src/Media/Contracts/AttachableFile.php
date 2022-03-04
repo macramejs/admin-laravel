@@ -1,6 +1,6 @@
 <?php
 
-namespace Macrame\CMS\Media\Contracts;
+namespace Macrame\Admin\Media\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;

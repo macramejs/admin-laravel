@@ -1,6 +1,6 @@
 <?php
 
-namespace Macrame\CMS\Support;
+namespace Macrame\Admin\Support;
 
 use Macrame\Ui\Page as MacramePage;
 

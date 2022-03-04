@@ -1,10 +1,10 @@
 <?php
 
-namespace Macrame\CMS\Media\Traits;
+namespace Macrame\Admin\Media\Traits;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
-use Macrame\CMS\Media\Contracts\AttachableFile;
+use Macrame\Admin\Media\Contracts\AttachableFile;
 
 trait HasFiles
 {

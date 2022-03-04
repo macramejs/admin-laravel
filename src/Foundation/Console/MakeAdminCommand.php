@@ -1,27 +1,27 @@
 <?php
 
-namespace Macrame\CMS\Foundation\Console;
+namespace Macrame\Admin\Foundation\Console;
 
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 
-class MakeCmsCommand extends BaseMakeCommand
+class MakeAdminCommand extends BaseMakeCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'make:cms';
+    protected $name = 'make:admin';
 
-    protected $publishes = 'cms';
+    protected $publishes = 'admin';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a Macrame CMS application.';
+    protected $description = 'Create a Macrame Admin application.';
 
     public function handle()
     {
@@ -29,9 +29,9 @@ class MakeCmsCommand extends BaseMakeCommand
         $this->makeResources();
         $this->makeRootFiles();
 
-        $this->line("Created Macrame CMS application '".$this->name()."'\n");
+        $this->line("Created Macrame Admin application '".$this->name()."'\n");
         $this->line('Make sure the following npm packages are installed:');
-        $this->info('tailwindcss lodash.merge @headlessui/vue @macramejs/admin-vue3 @macramejs/admin-config @macramejs/admin-vue3 @macramejs/macrame @macramejs/macrame-vue3 ts-loader typescript vue@next vue-loader@next @inertiajs/inertia @inertiajs/inertia-vue3 @inertiajs/progress');
+        $this->info('tailwindcss lodash.merge @headlessui/vue @macramejs/admin-vue3 @macramejs/admin-config @macramejs/admin-vue3 @macramejs/macrame @macramejs/macrame-vue3 @macramejs/page-builder-vue3 ts-loader typescript vue@next vue-loader@next @inertiajs/inertia @inertiajs/inertia-vue3 @inertiajs/progress');
 
         $this->line("\nAnd the following composer packages:");
         $this->info('inertiajs/inertia-laravel');
@@ -242,7 +242,7 @@ mix.alias({
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the CMS application.'],
+            ['name', InputArgument::REQUIRED, 'The name of the Admin application.'],
         ];
     }
 }

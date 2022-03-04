@@ -1,13 +1,13 @@
 <?php
 
-namespace Macrame\CMS\Pages\Ui;
+namespace Macrame\Admin\Pages\Ui;
 
 use Illuminate\Support\Collection;
 use Inertia\Response;
-use Macrame\CMS\Pages\Contracts\Page;
-use Macrame\CMS\Pages\Resources\PageListResource;
-use Macrame\CMS\Pages\Resources\PageResource;
-use Macrame\CMS\Support\BasePage;
+use Macrame\Admin\Pages\Contracts\Page;
+use Macrame\Admin\Pages\Resources\PageListResource;
+use Macrame\Admin\Pages\Resources\PageResource;
+use Macrame\Admin\Support\BasePage;
 
 class PagesShowPage extends BasePage
 {

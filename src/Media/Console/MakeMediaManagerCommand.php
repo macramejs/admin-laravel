@@ -1,9 +1,9 @@
 <?php
 
-namespace Macrame\CMS\Media\Console;
+namespace Macrame\Admin\Media\Console;
 
 use Illuminate\Support\Str;
-use Macrame\CMS\Foundation\Console\BaseMakeCommand;
+use Macrame\Admin\Foundation\Console\BaseMakeCommand;
 use Symfony\Component\Console\Input\InputArgument;
 
 class MakeMediaManagerCommand extends BaseMakeCommand
@@ -22,7 +22,7 @@ class MakeMediaManagerCommand extends BaseMakeCommand
      *
      * @var string
      */
-    protected $description = 'Create a Macrame CMS media-manager.';
+    protected $description = 'Create a Macrame Admin media-manager.';
 
     public function handle()
     {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Macrame\CMS;
+namespace Macrame\Admin;
 
 use Illuminate\Support\ServiceProvider;
 
-class CmsServiceProvider extends ServiceProvider
+class AdminServiceProvider extends ServiceProvider
 {
     protected $providers = [
         Foundation\FoundationServiceProvider::class,

@@ -1,6 +1,6 @@
 <?php
 
-namespace Macrame\CMS\Media\Traits;
+namespace Macrame\Admin\Media\Traits;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Filesystem\FilesystemAdapter;

@@ -4,8 +4,10 @@ namespace Macrame\CMS\Foundation\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use SplFileInfo;
 
 abstract class BaseMakeCommand extends Command
 {
@@ -40,7 +42,7 @@ abstract class BaseMakeCommand extends Command
     {
         $this->files->copy($from, $to);
 
-        $this->applyReplaces($to);
+        $this->applyReplacesToContent($to);
     }
 
     protected function publishDir($from, $to)
@@ -51,16 +53,38 @@ abstract class BaseMakeCommand extends Command
 
         $directoryIterator = new RecursiveDirectoryIterator($to);
 
-        foreach (new RecursiveIteratorIterator($directoryIterator) as $filename => $file) {
-            $this->applyReplaces($file);
-        }
+        collect(new RecursiveIteratorIterator($directoryIterator))
+            ->each(function (SplFileInfo $file) {
+                if (! $file->isDir()) {
+                    $this->applyReplacesToContent($file);
+                }
+
+                $this->applyReplacesToName($file);
+            });
     }
 
-    protected function applyReplaces(string $file)
+    protected function applyReplacesToName(string $file)
+    {
+        $baseName = basename($file);
+
+        foreach ($this->replaces() as $name => $replace) {
+            $baseName = str_replace('{{ '.$name.' }}', $replace, $baseName);
+        }
+
+        if ($baseName == basename($file)) {
+            return;
+        }
+
+        $newFile = Str::replaceLast(basename($file), $baseName, $file);
+
+        $this->files->move($file, $newFile);
+    }
+
+    protected function applyReplacesToContent(string $file)
     {
         $content = $this->files->get($file);
 
-        foreach ($this->replaces as $name => $replace) {
+        foreach ($this->replaces() as $name => $replace) {
             $content = str_replace('{{ '.$name.' }}', $replace, $content);
         }
 

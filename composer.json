@@ -27,6 +27,17 @@
     "require": {
         "illuminate/support": "^9.0",
         "illuminate/contracts": "^9.0",
-        "inertiajs/inertia-laravel": "^0.5"
+        "inertiajs/inertia-laravel": "^0.5",
+        "laravel/breeze": "^1.8"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Macrame\\CMS\\CmsServiceProvider"
+            ]
+        },
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
     }
 }

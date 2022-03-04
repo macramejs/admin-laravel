@@ -1,5 +1,5 @@
 module.exports = {
-    presets: [require('@macramejs/cms-config')],
+    presets: [require('@macramejs/admin-config')],
     content: [
         './resources/{{ name }}/**/*.vue',
         './node_modules/@macramejs/**/*.vue',

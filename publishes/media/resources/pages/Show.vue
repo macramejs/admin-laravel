@@ -8,12 +8,12 @@
 import BaseLayout from './Index.vue';
 import FilesTabs from './components/FilesTabs.vue';
 import { PropType } from 'vue';
-import { {{ model }}CollectionResource } from '@{{ app }}/types';
+import { {{ page }}CollectionResource } from '@{{ app }}/types';
 import { index } from './modules';
 
 const props = defineProps({
     collection: {
-        type: Object as PropType<{{ model }}CollectionResource>,
+        type: Object as PropType<{{ page }}CollectionResource>,
         requried: true,
     },
 });

@@ -1,11 +1,11 @@
 import { useIndex, Index } from '@macramejs/macrame-vue3';
-import { File } from '@{{ app }}/types';
+import { {{ page }} } from '@{{ app }}/types';
 import { reactive, ref, watch } from 'vue'
 import axios from 'axios'
 
-export type FileIndex = Index<File>;
+export type {{ page }}Index = Index<{{ page }}>;
 
-export const index = useIndex<File>({
+export const index = useIndex<{{ page }}>({
     route: '/admin/files/items',
     syncUrl: true,
     sortBy: [],
@@ -34,4 +34,4 @@ export const index = useIndex<File>({
 
 index.reloadOnChange(index.filters);
 
-export const selectedFiles = ref<File[]>([]);
+export const selectedFiles = ref<{{ page }}[]>([]);

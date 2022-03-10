@@ -21,7 +21,7 @@ class {{ page }}Controller
      */
     public function files(Request $request, {{ page }}Index $index)
     {
-        return $index->items($request, {{ model }}::query(), {{ page }}Resource::class);
+        return $index->items($request, {{ file_model }}::query(), {{ page }}Resource::class);
     }
 
     /**

@@ -22,7 +22,7 @@ import { Admin } from '@admin/layout';
 import { index } from './modules';
 import {
     {{ page }}CollectionCollectionResource,
-    {{ model }}CollectionResource,
+    {{ page }}CollectionResource,
 } from '@{{ app }}/types';
 import FilesSidebar from './components/FilesSidebar.vue';
 import FilesTopbarRight from './components/FilesTopbarRight.vue';
@@ -34,7 +34,7 @@ const props = defineProps({
         requried: true,
     },
     collection: {
-        type: Object as PropType<{{ model }}CollectionResource>,
+        type: Object as PropType<{{ page }}CollectionResource>,
         requried: false,
     },
 });

@@ -11,7 +11,7 @@ class {{ file_attachment_model }} extends Pivot
      *
      * @var string
      */
-    public $table = '{{ file_attachment_table }}';
+    public $table = '{{ file_attachments_table }}';
 
     /**
      * Indicates if the IDs are auto-incrementing.

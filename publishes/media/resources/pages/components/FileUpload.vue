@@ -16,7 +16,7 @@ import { index } from '../modules';
 
 const props = defineProps({
     collection: {
-        type: Object as PropType<FileCollection>,
+        type: Object as PropType<{{ page }}Collection>,
         required: false,
     },
 });

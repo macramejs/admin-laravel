@@ -35,15 +35,15 @@ class MakeMediaManagerCommand extends BaseMakeCommand
     protected function replaces(): array
     {
         return [
-            'app'                   => $this->app(),
-            'name'                  => $this->name(),
-            'page'                  => $this->page(),
-            'namespace'             => $this->namespace(),
-            'time'                  => date('Y_m_d_His', time()),
-            'file_model'            => $this->model(),
-            'file_table'            => 'files',
-            'file_attachment_table' => 'file_attachments',
-            'file_attachment_model' => 'FileAttachment',
+            'app'                    => $this->app(),
+            'name'                   => $this->name(),
+            'page'                   => $this->page(),
+            'namespace'              => $this->namespace(),
+            'time'                   => date('Y_m_d_His', time()),
+            'file_model'             => $this->model(),
+            'file_table'             => 'files',
+            'file_attachments_table' => 'file_attachments',
+            'file_attachment_model'  => 'FileAttachment',
         ];
     }
 
@@ -118,11 +118,10 @@ use Admin\Http\Controllers\\{$page}Controller;";
         );
 
         // Types
-        $model = $this->model();
         $page = $this->page();
-        $insert = "// {$model}
+        $insert = "// {$page}
         
-export type {$model} = {
+export type {$page} = {
     id?: number,
     display_name: string,
     group: string,
@@ -132,8 +131,7 @@ export type {$model} = {
     mimetype: string,
     size: number,
 }
-export type {$model}Resource = Resource<File>;
-export type {$model}CollectionResource = CollectionResource<File>;
+export type {$page}Resource = Resource<File>;
 
 // {$page}Collection
 

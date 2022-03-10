@@ -139,7 +139,31 @@ abstract class BaseMakeCommand extends Command
     {
         $content = $this->files->get($path);
 
+        if (str_contains($content, $insert)) {
+            return;
+        }
+
         $this->files->put($path, "{$content}\n\n{$insert}");
+
+        $this->info("{$path} changed, please check it for correction and formatting.");
+    }
+
+    /**
+     * Insert code at the end of the given file.
+     *
+     * @param  string $path
+     * @param  string $insert
+     * @return void
+     */
+    protected function insertAtStart(string $path, string $insert)
+    {
+        $content = $this->files->get($path);
+
+        if (str_contains($content, $insert)) {
+            return;
+        }
+
+        $this->files->put($path, "{$insert}\n{$content}");
 
         $this->info("{$path} changed, please check it for correction and formatting.");
     }

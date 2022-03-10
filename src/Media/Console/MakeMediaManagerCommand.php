@@ -40,11 +40,16 @@ class MakeMediaManagerCommand extends BaseMakeCommand
             'page'                  => $this->page(),
             'namespace'             => $this->namespace(),
             'time'                  => date('Y_m_d_His', time()),
-            'file_model'            => 'File',
+            'file_model'            => $this->model(),
             'file_table'            => 'files',
             'file_attachment_table' => 'file_attachments',
             'file_attachment_model' => 'FileAttachment',
         ];
+    }
+
+    protected function model()
+    {
+        return 'File';
     }
 
     protected function makeAppFiles()
@@ -80,20 +85,28 @@ class MakeMediaManagerCommand extends BaseMakeCommand
         );
 
         $name = $this->name();
+        $page = $this->page();
         $route = $this->route();
         $insert = "
     // {$name}
-    Route::get('/{$route}', [FileController::class, 'index'])->name('{$route}.index');
-    Route::get('/{$route}/items', [FileController::class, '{$route}'])->name('{$route}.{$route}');
-    Route::post('/{$route}/upload', [FileController::class, 'upload'])->name('{$route}.upload');
+    Route::get('/{$route}', [{$page}Controller::class, 'index'])->name('{$route}.index');
+    Route::get('/{$route}/items', [{$page}Controller::class, '{$route}'])->name('{$route}.{$route}');
+    Route::post('/{$route}/upload', [{$page}Controller::class, 'upload'])->name('{$route}.upload');
 
     // {$name} collections
-    Route::post('/{$route}', [FileCollectionController::class, 'store'])->name('{$name}-collections.show');
-    Route::get('/{$route}/{collection}', [FileCollectionController::class, 'show'])->name('{$name}-collections.show');
-    Route::post('/{$route}/{collection}/upload', [FileCollectionController::class, 'upload'])->name('{$name}-collections.upload');";
-        $before = ')};';
+    Route::post('/{$route}', [{$page}CollectionController::class, 'store'])->name('{$name}-collections.show');
+    Route::get('/{$route}/{collection}', [{$page}CollectionController::class, 'show'])->name('{$name}-collections.show');
+    Route::post('/{$route}/{collection}/upload', [{$page}CollectionController::class, 'upload'])->name('{$name}-collections.upload');";
+        $before = '});';
 
-        $this->insertBefore(base_path('routes/'.$this->app().'.php'), $insert, $before);
+        $routesPath = base_path('routes/'.$this->app().'.php');
+        $this->insertBefore($routesPath, $insert, $before);
+
+        $insert = "use Admin\Http\Controllers\\{$page}CollectionController;
+use Admin\Http\Controllers\\{$page}Controller;";
+        $before = "use Illuminate\Support\Facades\Route;";
+
+        $this->insertBefore($routesPath, $insert, $before);
     }
 
     protected function makeResourcesFiles()
@@ -105,7 +118,9 @@ class MakeMediaManagerCommand extends BaseMakeCommand
         );
 
         // Types
-        $insert = 'export type File = {
+        $model = $this->model();
+        $page = $this->page();
+        $insert = "export type {$model} = {
     id?: number,
     display_name: string,
     group: string,
@@ -115,12 +130,20 @@ class MakeMediaManagerCommand extends BaseMakeCommand
     mimetype: string,
     size: number,
 }
+export type {$model}Resource = Resource<File>;
+export type {$model}CollectionResource = CollectionResource<File>;
 
-export type FileCollection = {
+export type {$page}Collection = {
     id?: number,
     title: string,
     key?: string,
-}';
+}
+export type {$page}CollectionResource = Resource<{$page}Collection>;
+export type {$page}CollectionCollectionResource = CollectionResource<{$page}Collection>;";
+        $this->insertAtEnd(
+            resource_path($this->app().'/js/types/resources.ts'),
+            $insert
+        );
     }
 
     protected function resourcesDir()

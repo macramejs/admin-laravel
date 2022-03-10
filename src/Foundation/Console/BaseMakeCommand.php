@@ -122,7 +122,6 @@ abstract class BaseMakeCommand extends Command
         }
 
         $content = Str::replaceFirst($before, $insert.PHP_EOL.$before, $content);
-        dd(str_contains($content, $before), $before, $content);
 
         $this->files->put($path, $content);
 

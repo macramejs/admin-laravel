@@ -2,18 +2,18 @@
 
 namespace {{ namespace }}\Http\Resources;
 
-use App\Models\{{ model }};
+use App\Models\{{ file_model }};
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin {{ model }}
+ * @mixin {{ file_model }}
  */
 class {{ page }}Resource extends JsonResource
 {
     /**
      * The resource instance.
      *
-     * @var {{ model }}
+     * @var {{ file_model }}
      */
     public $resource;
 

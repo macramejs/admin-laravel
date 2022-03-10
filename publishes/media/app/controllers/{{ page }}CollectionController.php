@@ -5,7 +5,7 @@ namespace {{ namespace }}\Http\Controllers;
 use {{ namespace }}\Http\Indexes\{{ page }}Index;
 use {{ namespace }}\Http\Resources\{{ page }}CollectionResource;
 use {{ namespace }}\Ui\Page;
-use App\Models\{{ model }};
+use App\Models\{{ file_model }};
 use App\Models\{{ page }}Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -57,7 +57,7 @@ class {{ page }}CollectionController
     {
         collect($request->files->get('images'))
             ->each(function (UploadedFile $file) use ($collection) {
-                $file = {{ model }}::newFromUploadedFile($file);
+                $file = {{ file_model }}::newFromUploadedFile($file);
 
                 $file->save();
 

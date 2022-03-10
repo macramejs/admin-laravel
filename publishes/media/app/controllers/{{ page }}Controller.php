@@ -6,7 +6,7 @@ use {{ namespace }}\Http\Indexes\{{ page }}Index;
 use {{ namespace }}\Http\Resources\{{ page }}CollectionResource;
 use {{ namespace }}\Http\Resources\{{ page }}Resource;
 use {{ namespace }}\Ui\Page;
-use App\Models\{{ model }};
+use App\Models\{{ file_model }};
 use App\Models\{{ page }}Collection;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -43,7 +43,7 @@ class {{ page }}Controller
     {
         collect($request->files->get('images'))
             ->each(function (UploadedFile $file) {
-                File::newFromUploadedFile($file)->save();
+                {{ file_model }}::newFromUploadedFile($file)->save();
             });
     }
 }

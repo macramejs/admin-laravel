@@ -35,12 +35,15 @@ class MakeMediaManagerCommand extends BaseMakeCommand
     protected function replaces(): array
     {
         return [
-            'app'       => $this->app(),
-            'name'      => $this->name(),
-            'page'      => $this->page(),
-            'namespace' => $this->namespace(),
-            'time'      => date('Y_m_d_His', time()),
-            'model'     => 'File',
+            'app'                   => $this->app(),
+            'name'                  => $this->name(),
+            'page'                  => $this->page(),
+            'namespace'             => $this->namespace(),
+            'time'                  => date('Y_m_d_His', time()),
+            'file_model'            => 'File',
+            'file_table'            => 'files',
+            'file_attachment_table' => 'file_attachments',
+            'file_attachment_model' => 'FileAttachment',
         ];
     }
 
@@ -72,7 +75,7 @@ class MakeMediaManagerCommand extends BaseMakeCommand
 
         // Models
         $this->publishDir(
-            from: $this->publishesPath('models'),
+            from: $this->publishesPath('app/models'),
             to: app_path('Models')
         );
 

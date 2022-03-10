@@ -7,13 +7,13 @@ use App\Http\Controllers\PageController;
 use App\Models\Concerns\IsRestricted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Macrame\CMS\Media\Traits\HasFiles;
-use Macrame\CMS\Pages\Contracts\Page as PageContract;
-use Macrame\CMS\Pages\Traits\IsPage;
+use Macrame\Admin\Media\Traits\HasFiles;
+use Macrame\Admin\Pages\Contracts\Page as PageContract;
+use Macrame\Admin\Pages\Traits\IsPage;
 
-class {{ model }} extends Model implements PageContract, Restrictable
+class {{ model }} extends Model implements PageContract
 {
-    use HasFactory, HasFiles, IsPage, IsRestricted;
+    use HasFactory, HasFiles, IsPage;
 
     /**
      * Attributes that are mass assignable.

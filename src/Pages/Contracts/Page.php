@@ -12,9 +12,10 @@ interface Page extends Tree
     /**
      * Build the routes.
      *
+     * @param  string $controller
      * @return void
      */
-    public static function routes();
+    public static function routes($controller);
 
     /**
      * Gets the route action for the page.

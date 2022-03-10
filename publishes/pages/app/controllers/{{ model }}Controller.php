@@ -39,6 +39,7 @@ class {{ model }}Controller
         $pages = {{ model }}::root();
 
         return $adminPage
+            ->page('Page/Index')
             ->with('pages', {{ model }}ListResource::collection($pages));
     }
 
@@ -47,6 +48,7 @@ class {{ model }}Controller
         $pages = {{ model }}::root();
 
         return $adminPage
+            ->page('Page/Show')
             ->with('page', new {{ model }}Resource($page))
             ->with('pages', {{ model }}ListResource::collection($pages));
     }
@@ -62,13 +64,13 @@ class {{ model }}Controller
 
     public function store(Request $request)
     {
-        $site = {{ model }}::make([
+        $page = {{ model }}::make([
             'name'     => $request->name,
             'slug'     => Str::slug($request->name),
             'template' => $request->template,
         ]);
 
-        $site->save();
+        $page->save();
 
         return redirect()->back();
     }
@@ -82,13 +84,13 @@ class {{ model }}Controller
 
     public function updateOrder($order, $parentId = null)
     {
-        foreach ($order as $position => $site) {
-            Page::whereKey($site['id'])->update([
+        foreach ($order as $position => $page) {
+            Page::whereKey($page['id'])->update([
                 'parent_id'    => $parentId,
                 'order_column' => $position,
             ]);
 
-            $this->updateOrder($site['children'], $site['id']);
+            $this->updateOrder($page['children'], $page['id']);
         }
     }
 

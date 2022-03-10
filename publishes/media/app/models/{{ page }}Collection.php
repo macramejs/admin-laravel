@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Macrame\CMS\Media\Traits\HasFiles;
+use Macrame\Admin\Media\Traits\HasFiles;
 
 class {{ page }}Collection extends Model
 {

@@ -8,6 +8,7 @@ class AdminServiceProvider extends ServiceProvider
 {
     protected $providers = [
         Foundation\FoundationServiceProvider::class,
+        Media\MediaServiceProvider::class,
     ];
 
     /**

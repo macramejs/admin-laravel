@@ -1,11 +1,11 @@
 <?php
 
-namespace Macrame\Admin\Foundation;
+namespace Macrame\Admin\Media;
 
 use Illuminate\Support\ServiceProvider;
-use Macrame\Admin\Foundation\Console\MakeAdminCommand;
+use Macrame\Admin\Media\Console\MakeMediaManagerCommand;
 
-class FoundationServiceProvider extends ServiceProvider
+class MediaServiceProvider extends ServiceProvider
 {
     /**
      * The commands to be registered.
@@ -13,11 +13,11 @@ class FoundationServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
-        'MakeAdmin' => MakeAdminCommand::class,
+        'MakeMediaManager' => MakeMediaManagerCommand::class,
     ];
 
     /**
-     * Register the service provider.
+     * Register application services.
      *
      * @return void
      */
@@ -46,10 +46,10 @@ class FoundationServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerMakeAdminCommand()
+    protected function registerMakeMediaManagerCommand()
     {
         $this->app->singleton(MakeAdminCommand::class, function ($app) {
-            return new MakeAdminCommand($app['files']);
+            return new MakeMediaManagerCommand($app['files']);
         });
     }
 }

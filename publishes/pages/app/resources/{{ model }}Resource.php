@@ -2,18 +2,18 @@
 
 namespace Admin\Http\Resources;
 
-use App\Models\{{ model_name }};
+use App\Models\{{ model }};
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin {{ model_name }}
+ * @mixin {{ model }}
  */
-class SiteListResource extends JsonResource
+class SiteResource extends JsonResource
 {
     /**
      * The resource instance.
      *
-     * @var {{ model_name }}
+     * @var {{ model }}
      */
     public $resource;
 
@@ -25,9 +25,8 @@ class SiteListResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'value'    => parent::toArray($request),
-            'children' => static::collection($this->children->sortBy('order_column')),
-        ];
+        return array_merge(parent::toArray($request), [
+            'full_slug' => $this->getFullSlug(),
+        ]);
     }
 }

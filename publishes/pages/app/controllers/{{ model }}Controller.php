@@ -2,9 +2,9 @@
 
 namespace {{ namespace }}\Http\Controllers;
 
-use {{ namespace }}\Http\Indexes\{{ model_name }}Index;
-use {{ namespace }}\Http\Resources\{{ model_name }}ListResource;
-use {{ namespace }}\Http\Resources\{{ model_name }}Resource;
+use {{ namespace }}\Http\Indexes\{{ model }}Index;
+use {{ namespace }}\Http\Resources\{{ model }}ListResource;
+use {{ namespace }}\Http\Resources\{{ model }}Resource;
 use {{ namespace }}\Ui\Page as AdminPage;
 use App\Models\{{ page_model }};
 use Illuminate\Http\Request;
@@ -21,7 +21,7 @@ class {{ page_model }}Controller
      * @param  Page $page
      * @return Page
      */
-    public function items(Request $request, {{ model_name }}Index $index)
+    public function items(Request $request, {{ model }}Index $index)
     {
         return $index->items(
             $request,
@@ -39,7 +39,7 @@ class {{ page_model }}Controller
         $pages = {{ page_model }}::root();
 
         return $adminPage
-            ->with('pages', {{ model_name }}ListResource::collection($pages));
+            ->with('pages', {{ model }}ListResource::collection($pages));
     }
 
     public function show({{ page_model }} $page, AdminPage $adminPage)
@@ -47,8 +47,8 @@ class {{ page_model }}Controller
         $pages = {{ page_model }}::root();
 
         return $adminPage
-            ->with('page', new {{ model_name }}Resource($page));
-            ->with('pages', {{ model_name }}ListResource::collection($pages));
+            ->with('page', new {{ model }}Resource($page));
+            ->with('pages', {{ model }}ListResource::collection($pages));
     }
 
     public function update(Request $request, {{ page_model }} $page)

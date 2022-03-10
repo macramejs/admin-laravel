@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Macrame\Table\Table;
 
-class {{ model_name }}Index extends Table
+class {{ model }}Index extends Table
 {
     protected $defaultPerPage = 10;
 

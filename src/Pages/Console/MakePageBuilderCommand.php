@@ -85,29 +85,20 @@ class MakePageBuilderCommand extends BaseMakeCommand
             to: app_path('Models')
         );
 
-        $name = $this->name();
-        $page = $this->page();
-        $route = $this->route();
-        $insert = "
-    // {$name}
-    Route::get('/{$route}', [{$page}Controller::class, 'index'])->name('{$route}.index');
-    Route::get('/{$route}/items', [{$page}Controller::class, '{$route}'])->name('{$route}.{$route}');
-    Route::post('/{$route}/upload', [{$page}Controller::class, 'upload'])->name('{$route}.upload');
+        $model = $this->model();
+        $insert = '
+            Page::routes(PageController::class);';
+        $after = "Route::middleware('web')
+        ->namespace(\$this->namespace)
+        ->group(base_path('routes/web.php'));";
 
-    // {$name} collections
-    Route::post('/{$route}', [{$page}CollectionController::class, 'store'])->name('{$name}-collections.show');
-    Route::get('/{$route}/{collection}', [{$page}CollectionController::class, 'show'])->name('{$name}-collections.show');
-    Route::post('/{$route}/{collection}/upload', [{$page}CollectionController::class, 'upload'])->name('{$name}-collections.upload');";
-        $before = '});';
+        $providerPath = app_path('Providers/RouteServiceProvider.php');
+        $this->insertAfter($providerPath, $insert, $after);
 
-        $routesPath = base_path('routes/'.$this->app().'.php');
-        $this->insertBefore($routesPath, $insert, $before);
+        $insert = "\nuse App\Http\Controllers\{$model}Controller;";
+        $after = "namespace App\Providers;";
 
-        $insert = "use Admin\Http\Controllers\\{$page}CollectionController;
-use Admin\Http\Controllers\\{$page}Controller;";
-        $before = "use Illuminate\Support\Facades\Route;";
-
-        $this->insertBefore($routesPath, $insert, $before);
+        $this->insertAfter($providerPath, $insert, $after);
     }
 
     protected function makeResourcesFiles()

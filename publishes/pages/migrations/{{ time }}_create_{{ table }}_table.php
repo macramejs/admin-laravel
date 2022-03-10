@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('{{ pages_table }}', function (Blueprint $table) {
+        Schema::create('{{ table }}', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('slug');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('{{ pages_table }}');
+        Schema::dropIfExists('{{ table }}');
     }
 };

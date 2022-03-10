@@ -35,22 +35,25 @@ class MakePageBuilderCommand extends BaseMakeCommand
     protected function replaces(): array
     {
         return [
-            'app'                    => $this->app(),
-            'name'                   => $this->name(),
-            'route'                  => $this->route(),
-            'page'                   => $this->page(),
-            'namespace'              => $this->namespace(),
-            'time'                   => date('Y_m_d_His', time()),
-            'page_model'             => $this->model(),
-            'pages_table'            => 'files',
-            'file_attachments_table' => 'file_attachments',
-            'file_attachment_model'  => 'FileAttachment',
+            'app'       => $this->app(),
+            'name'      => $this->name(),
+            'route'     => $this->route(),
+            'page'      => $this->page(),
+            'namespace' => $this->namespace(),
+            'time'      => date('Y_m_d_His', time()),
+            'model'     => $this->model(),
+            'table'     => $this->tableName(),
         ];
     }
 
     protected function model()
     {
-        return 'File';
+        return ucfirst(Str::camel($this->argument('name')));
+    }
+
+    protected function tableName()
+    {
+        return Str::snake(Str::plural($this->argument('name')));
     }
 
     protected function makeAppFiles()

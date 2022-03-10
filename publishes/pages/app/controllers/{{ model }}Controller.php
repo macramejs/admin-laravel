@@ -6,14 +6,14 @@ use {{ namespace }}\Http\Indexes\{{ model }}Index;
 use {{ namespace }}\Http\Resources\{{ model }}ListResource;
 use {{ namespace }}\Http\Resources\{{ model }}Resource;
 use {{ namespace }}\Ui\Page as AdminPage;
-use App\Models\{{ page_model }};
+use App\Models\{{ model }};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Macrame\Admin\Pages\Ui\PagesIndexPage;
 use Macrame\Admin\Pages\Ui\PagesShowPage;
 
-class {{ page_model }}Controller
+class {{ model }}Controller
 {
     /**
      * Ship index page.
@@ -25,7 +25,7 @@ class {{ page_model }}Controller
     {
         return $index->items(
             $request,
-            {{ page_model }}::query()
+            {{ model }}::query()
         );
     }
 
@@ -36,22 +36,22 @@ class {{ page_model }}Controller
      */
     public function index(Request $request, AdminPage $adminPage): AdminPage
     {
-        $pages = {{ page_model }}::root();
+        $pages = {{ model }}::root();
 
         return $adminPage
             ->with('pages', {{ model }}ListResource::collection($pages));
     }
 
-    public function show({{ page_model }} $page, AdminPage $adminPage)
+    public function show({{ model }} $page, AdminPage $adminPage)
     {
-        $pages = {{ page_model }}::root();
+        $pages = {{ model }}::root();
 
         return $adminPage
             ->with('page', new {{ model }}Resource($page));
             ->with('pages', {{ model }}ListResource::collection($pages));
     }
 
-    public function update(Request $request, {{ page_model }} $page)
+    public function update(Request $request, {{ model }} $page)
     {
         $page->update([
             'content' => $request->content,
@@ -62,7 +62,7 @@ class {{ page_model }}Controller
 
     public function store(Request $request)
     {
-        $site = {{ page_model }}::make([
+        $site = {{ model }}::make([
             'name'     => $request->name,
             'slug'     => Str::slug($request->name),
             'template' => $request->template,
@@ -92,7 +92,7 @@ class {{ page_model }}Controller
         }
     }
 
-    public function upload(Request $request, {{ page_model }} $page)
+    public function upload(Request $request, {{ model }} $page)
     {
         $validated = $request->validate([
             'file' => 'required',

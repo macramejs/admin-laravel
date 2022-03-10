@@ -21,20 +21,20 @@ import { PropType, watch } from 'vue';
 import { Admin } from '@admin/layout';
 import { index } from './modules';
 import {
-    FileCollectionCollectionResource,
-    FileCollectionResource,
-} from '@admin/modules/resources';
+    {{ page }}CollectionCollectionResource,
+    {{ model }}CollectionResource,
+} from '@{{ app }}/types';
 import FilesSidebar from './components/FilesSidebar.vue';
 import FilesTopbarRight from './components/FilesTopbarRight.vue';
 import FilesTabs from './components/FilesTabs.vue';
 
 const props = defineProps({
     collections: {
-        type: Object as PropType<FileCollectionCollectionResource>,
+        type: Object as PropType<{{ page }}CollectionCollectionResource>,
         requried: true,
     },
     collection: {
-        type: Object as PropType<FileCollectionResource>,
+        type: Object as PropType<{{ model }}CollectionResource>,
         requried: false,
     },
 });

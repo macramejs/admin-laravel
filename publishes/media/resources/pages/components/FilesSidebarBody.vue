@@ -96,17 +96,17 @@ import { Input } from '@macramejs/admin-vue3';
 import { Link } from '@inertiajs/inertia-vue3';
 import { RadioGroup, RadioGroupOption } from '@headlessui/vue';
 import { PropType, ref, computed } from 'vue';
-import { FileCollection } from '@admin/modules/resources';
+import { {{ page }}Collection } from '@{{ app }}/types';
 import AddCollectionForm from './AddCollectionForm.vue';
 import { index } from '../modules';
 
 const props = defineProps({
     collections: {
-        type: Array as PropType<FileCollection[]>,
+        type: Array as PropType<{{ page }}Collection[]>,
         required: true,
     },
     collection: {
-        type: Object as PropType<FileCollection>,
+        type: Object as PropType<{{ page }}Collection>,
         required: false,
     },
 });

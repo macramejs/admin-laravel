@@ -66,12 +66,12 @@ import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
 import FilesListTable from './FilesListTable.vue';
 import FilesGrid from './FilesGrid.vue';
 import { PropType } from 'vue';
-import { FileCollection } from '@admin/modules/resources';
+import { {{ page }}Collection } from '@{{ app }}/types';
 
 const props = defineProps({
     collection: {
-        type: Object as PropType<FileCollection>,
-        requried: true,
+        type: Object as PropType<{{ page }}Collection>,
+        required: true,
     },
 });
 </script>

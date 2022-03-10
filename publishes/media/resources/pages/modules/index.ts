@@ -1,5 +1,5 @@
 import { useIndex, Index } from '@macramejs/macrame-vue3';
-import { File } from '@admin/modules/resources';
+import { File } from '@{{ app }}/types';
 import { reactive, ref, watch } from 'vue'
 import axios from 'axios'
 

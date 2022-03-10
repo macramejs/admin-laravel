@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import { FileCollection } from '@admin/modules/resources';
+import { {{ page }}Collection } from '@{{ app }}/types';
 import { FileUpload } from '@macramejs/admin-vue3';
 import { PropType } from 'vue';
 import { index } from '../modules';

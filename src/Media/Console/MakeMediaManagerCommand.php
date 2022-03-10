@@ -120,7 +120,9 @@ use Admin\Http\Controllers\\{$page}Controller;";
         // Types
         $model = $this->model();
         $page = $this->page();
-        $insert = "export type {$model} = {
+        $insert = "// {$model}
+        
+export type {$model} = {
     id?: number,
     display_name: string,
     group: string,
@@ -132,6 +134,8 @@ use Admin\Http\Controllers\\{$page}Controller;";
 }
 export type {$model}Resource = Resource<File>;
 export type {$model}CollectionResource = CollectionResource<File>;
+
+// {$page}Collection
 
 export type {$page}Collection = {
     id?: number,

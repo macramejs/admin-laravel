@@ -17,15 +17,15 @@ import { PropType } from 'vue';
 import { SidebarSecondary } from '@macramejs/admin-vue3';
 import FilesSidebarHeader from './FilesSidebarHeader.vue';
 import FilesSidebarBody from './FilesSidebarBody.vue';
-import { FileCollection } from '@admin/modules/resources';
+import { {{ page }}Collection } from '@{{ app }}/types';
 
 const props = defineProps({
     collections: {
-        type: Array as PropType<FileCollection[]>,
+        type: Array as PropType<{{ page }}Collection[]>,
         required: true,
     },
     collection: {
-        type: Object as PropType<FileCollection>,
+        type: Object as PropType<{{ page }}Collection>,
         required: false,
     },
 });

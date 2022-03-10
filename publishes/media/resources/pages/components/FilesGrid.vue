@@ -17,13 +17,13 @@ import { Index } from '@macramejs/admin-vue3';
 import FileMenu from './FileMenu.vue';
 import { PropType } from 'vue';
 import { index, updateCollectionFilter } from '../modules';
-import { FileCollection } from '@admin/modules/resources';
+import { {{ page }}Collection } from '@{{ app }}/types';
 import FilesGridTable from './FilesGridTable.vue';
 import FileUpload from './FileUpload.vue';
 
 const props = defineProps({
     collection: {
-        type: Object as PropType<FileCollection>,
+        type: Object as PropType<{{ page }}Collection>,
     },
 });
 </script>

@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { FileCollection } from '@admin/modules/resources';
+import { {{ page }}Collection } from '@{{ app }}/types';
 import { Index, Table } from '@macramejs/admin-vue3';
 import { PropType } from 'vue';
 import { index } from '../modules/index';
@@ -29,7 +29,7 @@ import FileUpload from './FileUpload.vue';
 
 const props = defineProps({
     collection: {
-        type: Object as PropType<FileCollection>,
+        type: Object as PropType<{{ page }}Collection>,
     },
 });
 </script>

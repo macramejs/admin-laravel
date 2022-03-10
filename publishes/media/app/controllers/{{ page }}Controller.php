@@ -14,18 +14,18 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class {{ page }}Controller
 {
     /**
-     * Ship index page.
+     * {{ page }} index page.
      *
      * @param  Page $page
      * @return Page
      */
-    public function files(Request $request, {{ page }}Index $index)
+    public function {{ route }}(Request $request, {{ page }}Index $index)
     {
         return $index->items($request, {{ file_model }}::query(), {{ page }}Resource::class);
     }
 
     /**
-     * Show the index of all file collections.
+     * Show the {{ page }} index.
      *
      * @param  Page $page
      * @return Page
@@ -39,9 +39,15 @@ class {{ page }}Controller
             ->with('collections', {{ page }}CollectionResource::collection($collections));
     }
 
+    /**
+     * Upload files.
+     *
+     * @param Request $request
+     * @return void
+     */
     public function upload(Request $request)
     {
-        collect($request->files->get('images'))
+        collect($request->files->get('files'))
             ->each(function (UploadedFile $file) {
                 {{ file_model }}::newFromUploadedFile($file)->save();
             });

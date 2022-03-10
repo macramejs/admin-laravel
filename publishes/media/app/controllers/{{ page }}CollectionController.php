@@ -43,6 +43,12 @@ class {{ page }}CollectionController
             ->with('collections', {{ page }}CollectionResource::collection($collections));
     }
 
+    /**
+     * Create a new {{ page }}Collection.
+     *
+     * @param Request $request
+     * @return void
+     */
     public function store(Request $request)
     {
         {{ page }}Collection::create([
@@ -53,6 +59,13 @@ class {{ page }}CollectionController
         return redirect()->back();
     }
 
+    /**
+     * Upload files.
+     *
+     * @param Request $request
+     * @param {{ page }}Collection $collection
+     * @return void
+     */
     public function upload(Request $request, {{ page }}Collection $collection)
     {
         collect($request->files->get('images'))

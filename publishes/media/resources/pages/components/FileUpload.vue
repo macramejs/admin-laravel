@@ -22,6 +22,6 @@ const props = defineProps({
 });
 
 const url = props.collection
-    ? `/admin/files/${props.collection.id}/upload`
-    : `/admin/files/upload`;
+    ? `/{{ app }}/{{ route }}/${props.collection.id}/upload`
+    : `/{{ app }}/{{ route }}/upload`;
 </script>

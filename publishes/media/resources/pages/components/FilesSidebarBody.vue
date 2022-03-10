@@ -79,7 +79,9 @@
             :class="c.id == collection?.id ? 'bg-gray-100' : ''"
             class="px-4 py-2 rounded-[8px] transition-colors text-left duration-300 hover:bg-gray-100"
             :href="
-                c.id == collection?.id ? `/admin/files` : `/admin/files/${c.id}`
+                c.id == collection?.id
+                    ? `/{{ app }}/{{ route }}`
+                    : `/{{ app }}/{{ route }}/${c.id}`
             "
         >
             <div class="flex justify-between">

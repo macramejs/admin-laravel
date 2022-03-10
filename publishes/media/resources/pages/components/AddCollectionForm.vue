@@ -11,9 +11,9 @@
 <script lang="ts" setup>
 import { useForm } from '@macramejs/macrame-vue3';
 import { Input } from '@macramejs/admin-vue3';
-import { FileCollection } from '@admin/modules/resources';
+import { {{ page }}Collection } from '@{{ app }}/types';
 
-const form = useForm<FileCollection>(
+const form = useForm<{{ page }}Collection>(
     '/{{ app }}/{{ route }}',
     { title: '' },
     {

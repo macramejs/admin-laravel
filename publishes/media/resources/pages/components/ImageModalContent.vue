@@ -110,10 +110,9 @@ const props = defineProps({
     modelValue: {
         type: Array,
     },
-
     url: {
         type: String,
-        default: '/admin/files',
+        default: '/{{ app }}/{{ route }}',
     },
 });
 

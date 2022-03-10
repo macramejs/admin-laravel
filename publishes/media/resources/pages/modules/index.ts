@@ -6,7 +6,7 @@ import axios from 'axios'
 export type {{ page }}Index = Index<{{ page }}>;
 
 export const index = useIndex<{{ page }}>({
-    route: '/admin/files/items',
+    route: '/{{ app }}/{{ route }}/items',
     syncUrl: true,
     sortBy: [],
     filters: {

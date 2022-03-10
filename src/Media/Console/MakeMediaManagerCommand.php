@@ -37,6 +37,7 @@ class MakeMediaManagerCommand extends BaseMakeCommand
         return [
             'app'                    => $this->app(),
             'name'                   => $this->name(),
+            'route'                  => $this->route(),
             'page'                   => $this->page(),
             'namespace'              => $this->namespace(),
             'time'                   => date('Y_m_d_His', time()),

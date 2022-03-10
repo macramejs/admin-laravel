@@ -14,11 +14,11 @@ import { Input } from '@macramejs/admin-vue3';
 import { FileCollection } from '@admin/modules/resources';
 
 const form = useForm<FileCollection>(
-    '/admin/files',
+    '/{{ app }}/{{ route }}',
     { title: '' },
     {
         method: 'post',
-        onSuccess: request => {
+        onSuccess: (request) => {
             form.reset();
         },
     }

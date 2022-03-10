@@ -4,6 +4,7 @@ namespace Macrame\Admin\Foundation;
 
 use Illuminate\Support\ServiceProvider;
 use Macrame\Admin\Foundation\Console\MakeAdminCommand;
+use Macrame\Admin\Media\MediaServiceProvider;
 
 class FoundationServiceProvider extends ServiceProvider
 {
@@ -24,6 +25,9 @@ class FoundationServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerCommands($this->commands);
+
+        //
+        $this->app->register(MediaServiceProvider::class);
     }
 
     /**

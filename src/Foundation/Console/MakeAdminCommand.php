@@ -68,7 +68,7 @@ class MakeAdminCommand extends BaseMakeCommand
         // Create application files
         $this->publishDir(
             from: $this->publishesPath('app'),
-            to: $this->appDir()
+            to: $this->appPath()
         );
 
         $this->publishFile(
@@ -210,9 +210,9 @@ mix.alias({
         return resource_path($this->name());
     }
 
-    protected function appDir()
+    protected function appPath($path = '')
     {
-        return base_path(lcfirst($this->argument('name')));
+        return base_path(lcfirst($this->argument('name'))).($path != '' ? DIRECTORY_SEPARATOR.$path : '');
     }
 
     protected function namespace()

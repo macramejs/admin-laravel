@@ -15,14 +15,14 @@ class MakeMediaManagerCommand extends BaseMakeCommand
      */
     protected $name = 'make:media-manager';
 
-    protected $publishes = 'media-manager';
+    protected $publishes = 'media';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a Macrame Admin media-manager.';
+    protected $description = 'Create a Macrame Admin media manager.';
 
     public function handle()
     {
@@ -35,23 +35,89 @@ class MakeMediaManagerCommand extends BaseMakeCommand
     protected function replaces(): array
     {
         return [
-            //
+            'app'       => $this->app(),
+            'name'      => $this->name(),
+            'page'      => $this->page(),
+            'namespace' => $this->namespace(),
+            'time'      => date('Y_m_d_His', time()),
+            'model'     => 'File',
         ];
     }
 
     protected function makeAppFiles()
     {
-        // Create directory
-        $this->files->ensureDirectoryExists($this->appDir());
+        // Controllers
+        $this->publishDir(
+            from: $this->publishesPath('app/controllers'),
+            to: $this->appPath('Http/Controllers')
+        );
+
+        // Indexes
+        $this->publishDir(
+            from: $this->publishesPath('app/indexes'),
+            to: $this->appPath('Http/Indexes')
+        );
+
+        // Resources
+        $this->publishDir(
+            from: $this->publishesPath('app/resources'),
+            to: $this->appPath('Http/Resources')
+        );
+
+        // Migrations
+        $this->publishDir(
+            from: $this->publishesPath('migrations'),
+            to: database_path('migrations')
+        );
+
+        // Models
+        $this->publishDir(
+            from: $this->publishesPath('models'),
+            to: app_path('Models')
+        );
+
+        $name = $this->name();
+        $route = $this->route();
+        $insert = "
+    // {$name}
+    Route::get('/{$route}', [FileController::class, 'index'])->name('{$route}.index');
+    Route::get('/{$route}/items', [FileController::class, '{$route}'])->name('{$route}.{$route}');
+    Route::post('/{$route}/upload', [FileController::class, 'upload'])->name('{$route}.upload');
+
+    // {$name} collections
+    Route::post('/{$route}', [FileCollectionController::class, 'store'])->name('{$name}-collections.show');
+    Route::get('/{$route}/{collection}', [FileCollectionController::class, 'show'])->name('{$name}-collections.show');
+    Route::post('/{$route}/{collection}/upload', [FileCollectionController::class, 'upload'])->name('{$name}-collections.upload');";
+        $before = ')};';
+
+        $this->insertBefore(base_path('routes/'.$this->app().'.php'), $insert, $before);
     }
 
     protected function makeResourcesFiles()
     {
-        // Create view file
-        $this->publishFile($this->publishesPath('views/'), resource_path());
+        // Pages
+        $this->publishDir(
+            from: $this->publishesPath('resources/Pages'),
+            to: resource_path($this->app().'/js/Pages/'.$this->page())
+        );
 
-        // Create directory
-        $this->files->ensureDirectoryExists($this->resourcesDir());
+        // Types
+        $insert = 'export type File = {
+    id?: number,
+    display_name: string,
+    group: string,
+    disk: string,
+    filepath: string,
+    filename: string,
+    mimetype: string,
+    size: number,
+}
+
+export type FileCollection = {
+    id?: number,
+    title: string,
+    key?: string,
+}';
     }
 
     protected function resourcesDir()
@@ -59,19 +125,34 @@ class MakeMediaManagerCommand extends BaseMakeCommand
         return $this->name();
     }
 
-    protected function appDir()
+    protected function appPath($path = '')
     {
-        return lcfirst($this->argument('name'));
+        return base_path(lcfirst($this->app())).($path != '' ? DIRECTORY_SEPARATOR.$path : '');
     }
 
     protected function namespace()
     {
-        return ucfirst(Str::kebab($this->argument('name')));
+        return ucfirst(Str::camel($this->argument('app')));
+    }
+
+    protected function app()
+    {
+        return Str::kebab($this->argument('app'));
+    }
+
+    protected function page()
+    {
+        return ucfirst(Str::camel($this->argument('name')));
     }
 
     protected function name()
     {
         return Str::kebab($this->argument('name'));
+    }
+
+    protected function route()
+    {
+        return Str::kebab(Str::plural($this->argument('name')));
     }
 
     /**
@@ -95,7 +176,8 @@ class MakeMediaManagerCommand extends BaseMakeCommand
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The name of the media-manager.'],
+            ['app', InputArgument::REQUIRED, 'The name of the admin application.'],
+            ['name', InputArgument::REQUIRED, 'The name of the media manager.'],
         ];
     }
 }

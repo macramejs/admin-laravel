@@ -106,7 +106,23 @@ abstract class BaseMakeCommand extends Command
         if (str_contains($content, $insert)) {
             return;
         }
-        $content = str_replace($after, $after.PHP_EOL.$insert, $content);
+        $content = Str::replaceFirst($after, $after.PHP_EOL.$insert, $content);
+
+        $this->files->put($path, $content);
+
+        $this->info("{$path} changed, please check it for correction and formatting.");
+    }
+
+    public function insertBefore(string $path, string $insert, string $before)
+    {
+        $content = $this->files->get($path);
+
+        if (str_contains($content, $insert)) {
+            return;
+        }
+
+        $content = Str::replaceFirst($before, $insert.PHP_EOL.$before, $content);
+        dd(str_contains($content, $before), $before, $content);
 
         $this->files->put($path, $content);
 

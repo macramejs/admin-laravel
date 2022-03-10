@@ -11,19 +11,19 @@ trait IsPage
 {
     use IsTree;
 
-    public static function routes()
+    public static function routes($controller)
     {
         try {
             static::where('parent_id', null)
                 ->get()
-                ->each(function (self $site) {
+                ->each(function (self $site) use ($controller) {
                     if (! $site->is_live) {
                         return;
                     }
 
                     Route::get(
                         $site->getFullSlug(),
-                        $site->getController()
+                        $controller,
                     )->name("site.{$site->id}");
                 });
         } catch (QueryException $e) {

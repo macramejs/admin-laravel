@@ -47,7 +47,7 @@ class {{ model }}Controller
         $pages = {{ model }}::root();
 
         return $adminPage
-            ->with('page', new {{ model }}Resource($page));
+            ->with('page', new {{ model }}Resource($page))
             ->with('pages', {{ model }}ListResource::collection($pages));
     }
 

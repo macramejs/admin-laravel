@@ -58,10 +58,15 @@ class MakePageBuilderCommand extends BaseMakeCommand
 
     protected function makeAppFiles()
     {
-        // Controllers
+        // Admin-Controllers
         $this->publishDir(
             from: $this->publishesPath('app/controllers'),
             to: $this->appPath('Http/Controllers')
+        );
+        // App-Controllers
+        $this->publishDir(
+            from: $this->publishesPath('controllers'),
+            to: app_path('Http/Controllers')
         );
 
         // Indexes
@@ -98,10 +103,30 @@ class MakePageBuilderCommand extends BaseMakeCommand
         $providerPath = app_path('Providers/RouteServiceProvider.php');
         $this->insertAfter($providerPath, $insert, $after);
 
-        $insert = "\nuse App\Http\Controllers\{$model}Controller;";
+        $insert = "\nuse App\Http\Controllers\\{$model}Controller;";
         $after = "namespace App\Providers;";
 
         $this->insertAfter($providerPath, $insert, $after);
+
+        $route = $this->route();
+        $insert = "
+    // {$route}
+    Route::get('/{$route}', [{$model}Controller::class, 'index'])->name('{$route}.index');
+    Route::get('/{$route}/items', [{$model}Controller::class, 'items'])->name('{$route}.items');
+    Route::get('/{$route}/{page}', [{$model}Controller::class, 'show'])->name('{$route}.show');
+    Route::post('/{$route}', [{$model}Controller::class, 'store'])->name('{$route}.store');
+    Route::post('/{$route}/order', [{$model}Controller::class, 'order'])->name('{$route}.order');
+    Route::post('/{$route}/{page}', [{$model}Controller::class, 'update'])->name('{$route}.update');
+    Route::post('/{$route}/{page}/upload', [{$model}Controller::class, 'upload'])->name('{$route}.upload');";
+        $before = '});';
+
+        $routesPath = base_path('routes/'.$this->app().'.php');
+        $this->insertBefore($routesPath, $insert, $before);
+
+        $insert = "use Admin\Http\Controllers\\{$model}Controller;";
+        $before = "use Illuminate\Support\Facades\Route;";
+
+        $this->insertBefore($routesPath, $insert, $before);
     }
 
     protected function makeResourcesFiles()

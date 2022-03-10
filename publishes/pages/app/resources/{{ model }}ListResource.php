@@ -8,7 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @mixin {{ model }}
  */
-class SiteListResource extends JsonResource
+class {{ model }}ListResource extends JsonResource
 {
     /**
      * The resource instance.

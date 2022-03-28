@@ -4,12 +4,10 @@ namespace {{ namespace }}\Http\Indexes;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Macrame\Table\Table;
+use Macrame\Index\Index;
 
-class {{ page }}Index extends Table
+class {{ page }}Index extends Index
 {
-    protected $defaultPerPage = 10;
-
     protected $mimeTypes = [
         'images'    => ['image/%'],
         'documents' => ['application/%'],

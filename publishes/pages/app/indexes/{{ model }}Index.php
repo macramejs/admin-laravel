@@ -4,12 +4,10 @@ namespace Admin\Http\Indexes;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Macrame\Table\Table;
+use Macrame\Index\Index;
 
-class {{ model }}Index extends Table
+class {{ model }}Index extends Index
 {
-    protected $defaultPerPage = 10;
-
     /**
      * Handle search.
      *

@@ -1,16 +1,16 @@
 <template>
-    <PagesList :list="list" />
+    <PagesTree :tree="tree" />
 </template>
 
 <script lang="ts" setup>
 import { PropType } from 'vue';
-import PagesList from './PagesList.vue';
-import { useList, TList } from '@macramejs/macrame-vue3';
+import PagesTree from './PagesTree.vue';
+import { Tree } from '@macramejs/macrame-vue3';
 import { {{ model }} } from '@{{ app }}/types';
 
 const props = defineProps({
-    list: {
-        type: Object as PropType<TList<{{ model }}>>,
+    tree: {
+        type: Object as PropType<Tree<{{ model }}>>,
         required: true,
     },
 });

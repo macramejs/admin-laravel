@@ -3,12 +3,12 @@
 namespace Admin\Http\Resources;
 
 use App\Models\{{ model }};
-use Illuminate\Http\Resources\Json\JsonResource;
+use Macrame\Tree\TreeResource;
 
 /**
  * @mixin {{ model }}
  */
-class {{ model }}ListResource extends JsonResource
+class {{ model }}TreeResource extends TreeResource
 {
     /**
      * The resource instance.
@@ -18,16 +18,13 @@ class {{ model }}ListResource extends JsonResource
     public $resource;
 
     /**
-     * Transform the resource into an array.
+     * Gets the value array containing all required attributes.
      *
      * @param  \Illuminate\Http\Request                                        $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request)
+    public function value($request)
     {
-        return [
-            'value'    => parent::toArray($request),
-            'children' => static::collection($this->children->sortBy('order_column')),
-        ];
+        return parent::value($request);
     }
 }

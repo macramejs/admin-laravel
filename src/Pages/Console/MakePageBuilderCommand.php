@@ -147,11 +147,11 @@ export type {$model} = {
     name: string;
 };
 
-export type {$model}ListItem = RawListItem<{$model}>;
+export type {$model}TreeItem = RawTreeItem<{$model}>;
 export type {$model}Resource = Resource<{$model}>;
 export type {$model}CollectionResource = CollectionResource<{$model}>;
-export type {$model}ListResource = Resource<{$model}ListItem>;
-export type {$model}ListCollectionResource = CollectionResource<{$model}ListItem>;";
+export type {$model}TreeResource = Resource<{$model}TreeItem>;
+export type {$model}TreeCollectionResource = CollectionResource<{$model}TreeItem>;";
         $this->insertAtEnd(
             resource_path($this->app().'/js/types/resources.ts'),
             $insert
@@ -159,7 +159,7 @@ export type {$model}ListCollectionResource = CollectionResource<{$model}ListItem
 
         $this->insertAtStart(
             resource_path($this->app().'/js/types/resources.ts'),
-            'import { RawListItem } from "@macramejs/macrame-vue3";'
+            'import { RawTreeItem } from "@macramejs/macrame-vue3";'
         );
     }
 

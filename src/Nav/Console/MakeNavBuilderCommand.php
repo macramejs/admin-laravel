@@ -104,7 +104,7 @@ export type NavItem = {
     parent_id: number,
     children: NavItem[],
 }
-export type NavItemTreeItem = RawListItem<NavItem>;
+export type NavItemTreeItem = RawTreeItem<NavItem>;
 export type NavItemTreeResource = Resource<NavItemTreeItem>;
 export type NavItemTreeCollectionResource = CollectionResource<NavItemTreeItem>;';
         $this->insertAtEnd(
@@ -114,7 +114,7 @@ export type NavItemTreeCollectionResource = CollectionResource<NavItemTreeItem>;
 
         $this->insertAtStart(
             resource_path($this->app().'/js/types/resources.ts'),
-            'import { RawListItem } from "@macramejs/macrame-vue3";'
+            'import { RawTreeItem } from "@macramejs/macrame-vue3";'
         );
     }
 

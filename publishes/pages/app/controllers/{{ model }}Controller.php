@@ -3,7 +3,7 @@
 namespace {{ namespace }}\Http\Controllers;
 
 use {{ namespace }}\Http\Indexes\{{ model }}Index;
-use {{ namespace }}\Http\Resources\{{ model }}ListResource;
+use {{ namespace }}\Http\Resources\{{ model }}TreeResource;
 use {{ namespace }}\Http\Resources\{{ model }}Resource;
 use {{ namespace }}\Ui\Page as AdminPage;
 use App\Models\{{ model }};
@@ -40,7 +40,7 @@ class {{ model }}Controller
 
         return $adminPage
             ->page('Page/Index')
-            ->with('pages', {{ model }}ListResource::collection($pages));
+            ->with('pages', {{ model }}TreeResource::collection($pages));
     }
 
     public function show({{ model }} $page, AdminPage $adminPage)
@@ -50,7 +50,7 @@ class {{ model }}Controller
         return $adminPage
             ->page('Page/Show')
             ->with('page', new {{ model }}Resource($page))
-            ->with('pages', {{ model }}ListResource::collection($pages));
+            ->with('pages', {{ model }}TreeResource::collection($pages));
     }
 
     public function update(Request $request, {{ model }} $page)

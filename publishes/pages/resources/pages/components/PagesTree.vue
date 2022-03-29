@@ -1,5 +1,5 @@
 <template>
-    <List :list="list" :group="{ name: 'page-list' }">
+    <BaseTree :tree="tree" :group="{ name: 'page-list' }">
         <template v-slot:default="{ item }">
             <Link
                 class="flex-1 py-1 cursor-pointer"
@@ -11,23 +11,23 @@
             <!-- <Dropdown /> -->
         </template>
         <template v-slot:disclosure="{ children }">
-            <PagesList :list="children" />
+            <PagesTree :list="children" />
         </template>
-    </List>
+    </BaseTree>
 </template>
 
 <script setup lang="ts">
 import { {{ model }} } from '@{{ app }}/types';
 import { defineProps, PropType } from 'vue';
-import { TList } from '@macramejs/macrame-vue3';
-import { List } from '@macramejs/admin-vue3';
+import { Tree } from '@macramejs/macrame-vue3';
+import { Tree as BaseTree } from '@macramejs/admin-vue3';
 import { Link } from '@inertiajs/inertia-vue3';
 // import Dropdown from './Dropdown.vue';
-import PagesList from './PagesList.vue';
+import PagesTree from './PagesTree.vue';
 
 const props = defineProps({
-    list: {
-        type: Object as PropType<TList<{{ model }}>>,
+    tree: {
+        type: Object as PropType<Tree<{{ model }}>>,
         required: true,
     },
 });

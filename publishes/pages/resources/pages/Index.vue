@@ -17,11 +17,11 @@ import { {{ namespace }} } from '@{{ app }}/layout';
 // import { showCreateModal, Create } from './components/Create';
 import PageSidebar from './components/PagesSidebar.vue';
 import { SidebarSecondary, Button } from '@macramejs/admin-vue3';
-import { {{ model }}ListCollectionResource } from '@{{ app }}/types';
+import { {{ model }}TreeCollectionResource } from '@{{ app }}/types';
 
 const props = defineProps({
     pages: {
-        type: Object as PropType<{{ model }}ListCollectionResource>,
+        type: Object as PropType<{{ model }}TreeCollectionResource>,
         required: true,
     },
 });

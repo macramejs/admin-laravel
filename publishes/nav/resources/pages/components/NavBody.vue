@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 import { PropType, ref, watch } from 'vue';
 import { NavItemTreeItem, NavItem } from '@{{ app }}/types';
-import { useList, useOriginal } from '@macramejs/macrame-vue3';
+import { useTree, useOriginal } from '@macramejs/macrame-vue3';
 import { Button } from '@macramejs/admin-vue3';
 import { saveQueue } from '@admin/modules/save-queue';
 import NavTree from './NavTree.vue';
@@ -37,7 +37,7 @@ const props = defineProps({
     },
 });
 
-const tree = useList<NavItem>(props.items, {
+const tree = useTree<NavItem>(props.items, {
     onOrderChange,
 });
 tree.updateOnChange(props.items);

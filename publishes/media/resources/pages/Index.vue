@@ -1,5 +1,5 @@
 <template>
-    <Admin sidebar-secondary>
+    <{{ namespace }} sidebar-secondary>
         <template v-slot:sidebar-secondary>
             <FilesSidebar
                 :collections="collections.data"
@@ -13,12 +13,12 @@
         <slot>
             <FilesTabs />
         </slot>
-    </Admin>
+    </{{ namespace }}>
 </template>
 
 <script lang="ts" setup>
 import { PropType, watch } from 'vue';
-import { Admin } from '@admin/layout';
+import { {{ namespace }} } from '@{{ app }}/layout';
 import { index } from './modules';
 import {
     {{ page }}CollectionCollectionResource,

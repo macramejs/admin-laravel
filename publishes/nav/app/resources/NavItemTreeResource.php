@@ -25,6 +25,6 @@ class NavItemTreeResource extends TreeResource
      */
     public function value($request)
     {
-        return parent::toArray($request);
+        return parent::value($request);
     }
 }

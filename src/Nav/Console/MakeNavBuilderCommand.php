@@ -1,6 +1,6 @@
 <?php
 
-namespace Macrame\Admin\Media\Console;
+namespace Macrame\Admin\Nav\Console;
 
 use Illuminate\Support\Str;
 use Macrame\Admin\Foundation\Console\BaseMakeCommand;
@@ -110,6 +110,11 @@ export type NavItemTreeCollectionResource = CollectionResource<NavItemTreeItem>;
         $this->insertAtEnd(
             resource_path($this->app().'/js/types/resources.ts'),
             $insert
+        );
+
+        $this->insertAtStart(
+            resource_path($this->app().'/js/types/resources.ts'),
+            'import { RawListItem } from "@macramejs/macrame-vue3";'
         );
     }
 

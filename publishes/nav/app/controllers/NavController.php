@@ -20,7 +20,7 @@ class NavController
     public function show(Page $page, NavType $type)
     {
         $items = NavItem::whereRoot()
-            ->where('type', $type)
+            ->where('type', $type->value)
             ->orderBy('order_column')
             ->get();
 
@@ -42,7 +42,7 @@ class NavController
 
     public function order(Request $request, NavType $type)
     {
-        NavItem::updateOrder($type, $request->order);
+        NavItem::updateOrder($request->order);
 
         return redirect()->back();
     }

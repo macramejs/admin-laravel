@@ -16,7 +16,7 @@ import { ref, toRefs, watch } from 'vue';
 import { Index } from '@macramejs/admin-vue3';
 import FileMenu from './FileMenu.vue';
 import { PropType } from 'vue';
-import { index, updateCollectionFilter } from '../modules';
+import { index } from '../modules';
 import { {{ page }}Collection } from '@{{ app }}/types';
 import FilesGridTable from './FilesGridTable.vue';
 import FileUpload from './FileUpload.vue';

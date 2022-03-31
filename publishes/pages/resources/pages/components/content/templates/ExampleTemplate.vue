@@ -5,12 +5,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onBeforeMount } from 'vue';
 import { Card, Input } from '@macramejs/admin-vue3';
+import { PageContentForm } from '@{{ app }}/types/forms';
+import { PropType } from 'vue';
 
 const props = defineProps({
     form: {
-        type: Object,
+        type: Object as PropType<PageContentForm>,
         required: true,
     },
 });

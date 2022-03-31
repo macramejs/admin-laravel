@@ -15,6 +15,11 @@ class MakePageBuilderCommand extends BaseMakeCommand
      */
     protected $name = 'make:page-builder';
 
+    /**
+     * The name of the publishes directory.
+     *
+     * @var string
+     */
     protected $publishes = 'pages';
 
     /**
@@ -24,6 +29,11 @@ class MakePageBuilderCommand extends BaseMakeCommand
      */
     protected $description = 'Create a Macrame Admin page builder.';
 
+    /**
+     * Handle the execution of the console command.
+     *
+     * @return int
+     */
     public function handle()
     {
         $this->makeAppFiles();
@@ -32,6 +42,11 @@ class MakePageBuilderCommand extends BaseMakeCommand
         return 0;
     }
 
+    /**
+     * The attributes that should be replaced.
+     *
+     * @return array
+     */
     protected function replaces(): array
     {
         return [
@@ -117,6 +132,7 @@ class MakePageBuilderCommand extends BaseMakeCommand
     Route::post('/{$route}', [{$model}Controller::class, 'store'])->name('{$route}.store');
     Route::post('/{$route}/order', [{$model}Controller::class, 'order'])->name('{$route}.order');
     Route::post('/{$route}/{page}', [{$model}Controller::class, 'update'])->name('{$route}.update');
+    Route::post('/{$route}/{page}/meta', [{$model}Controller::class, 'meta'])->name('{$route}.meta');
     Route::post('/{$route}/{page}/upload', [{$model}Controller::class, 'upload'])->name('{$route}.upload');";
         $before = '});';
 
@@ -160,6 +176,25 @@ export type {$model}TreeCollectionResource = CollectionResource<{$model}TreeItem
         $this->insertAtStart(
             resource_path($this->app().'/js/types/resources.ts'),
             'import { RawTreeItem } from "@macramejs/macrame-vue3";'
+        );
+
+        $insert = "// {$model}
+
+export type {$model}Content = {
+    name: string,
+    content: {[k:string]: any}[],
+    attributes: {[k:string]: any}
+}
+export type {$model}ContentForm = Form<{$model}Content>;
+
+export type {$model}Meta = {
+    title: string,
+    // ...
+}
+export type {$model}MetaForm = Form<{$model}Meta>;";
+        $this->insertAtEnd(
+            resource_path($this->app().'/js/types/forms.ts'),
+            $insert
         );
     }
 

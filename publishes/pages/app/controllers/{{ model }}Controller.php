@@ -43,6 +43,13 @@ class {{ model }}Controller
             ->with('pages', {{ model }}TreeResource::collection($pages));
     }
 
+    /**
+     * Show the {{ name }}.
+     *
+     * @param {{ Model }} $page
+     * @param AdminPage $adminPage
+     * @return AdminPage
+     */
     public function show({{ model }} $page, AdminPage $adminPage)
     {
         $pages = {{ model }}::root();
@@ -53,15 +60,49 @@ class {{ model }}Controller
             ->with('pages', {{ model }}TreeResource::collection($pages));
     }
 
+    /**
+     * Update the {{ name }}.
+     *
+     * @param Request $request
+     * @param {{ model }} $page
+     * @return void
+     */
     public function update(Request $request, {{ model }} $page)
     {
-        $page->update([
-            'content' => $request->content,
+        $validated = $request->validate([
+            'content' => 'array',
+            'attributes' => 'array'
         ]);
+
+        $page->update($validated);
 
         return redirect()->back();
     }
 
+    /**
+     * Update the meta information of the {{ name }}.
+     *
+     * @param Request $request
+     * @param {{ model }} $page
+     * @return void
+     */
+    public function meta(Request $request, {{ model }} $page)
+    {
+        $validated = $request->validate([
+            // ...
+        ]);
+
+        $page->update($validated);
+
+        return redirect()->back();
+    }
+
+    /**
+     * Store a new {{ name }}.
+     *
+     * @param Request $request
+     * @return void
+     */
     public function store(Request $request)
     {
         $page = {{ model }}::make([
@@ -75,23 +116,17 @@ class {{ model }}Controller
         return redirect()->back();
     }
 
+    /**
+     * Update the order for of the {{ name }} tree.
+     *
+     * @param Request $request
+     * @return void
+     */
     public function order(Request $request)
     {
-        $this->updateOrder($request->order);
+        {{ model }}::updateOrder($request->order);
 
         return redirect()->back();
-    }
-
-    public function updateOrder($order, $parentId = null)
-    {
-        foreach ($order as $position => $page) {
-            Page::whereKey($page['id'])->update([
-                'parent_id'    => $parentId,
-                'order_column' => $position,
-            ]);
-
-            $this->updateOrder($page['children'], $page['id']);
-        }
     }
 
     public function upload(Request $request, {{ model }} $page)

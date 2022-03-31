@@ -11,7 +11,7 @@
             <!-- <Dropdown /> -->
         </template>
         <template v-slot:disclosure="{ children }">
-            <PagesTree :list="children" />
+            <PagesTree :tree="children" />
         </template>
     </BaseTree>
 </template>

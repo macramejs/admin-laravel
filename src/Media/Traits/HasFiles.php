@@ -8,6 +8,13 @@ use Macrame\Admin\Media\Contracts\AttachableFile;
 
 trait HasFiles
 {
+    /**
+     * Files relationship.
+     *
+     * @param string $collection
+     * @param string $fileModel
+     * @return BelongsToMany
+     */
     public function files($collection = null, $fileModel = null): BelongsToMany
     {
         if (is_null($fileModel)) {
@@ -26,18 +33,11 @@ trait HasFiles
             ->wherePivot('model_type', static::class);
     }
 
-    public function attachFile(AttachableFile $file, ?string $collection = null, array $attributes = [])
-    {
-        $file->attach($this, $collection, $attributes);
-    }
-
-    public function attachFiles(Collection $files, ?string $collection = null, array $attributes = [])
-    {
-        foreach ($files as $file) {
-            $this->attachFile($file, $collection, $attributes);
-        }
-    }
-
+    /**
+     * Gets the name of the file model.
+     *
+     * @return string
+     */
     public function getFileModel(): string
     {
         if (property_exists($this, 'fileModel')) {
@@ -45,26 +45,5 @@ trait HasFiles
         }
 
         return \App\Models\File::class;
-    }
-
-    /**
-     * Gets the file attachmend model.
-     *
-     * @return string
-     */
-    public function getFileAttachmentModel(): string
-    {
-        if (property_exists($this, 'fileAttachmentModel')) {
-            return $this->fileAttachmentModel;
-        }
-
-        return \App\Models\FileAttachment::class;
-    }
-
-    public function getFileAttachmentTable(): string
-    {
-        $fileAttachmentModel = $this->getFileAttachmentModel();
-
-        return (new $fileAttachmentModel)->getTable();
     }
 }

@@ -2,10 +2,14 @@
 
 namespace Macrame\Admin\Media\Traits;
 
+use Illuminate\Database\Eloquent\InvalidCastException;
+use Illuminate\Database\Eloquent\MassAssignmentException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\LazyLoadingViolationException;
 use Illuminate\Support\Collection;
+use LogicException;
 
 trait IsAttachableFile
 {
@@ -37,6 +41,11 @@ trait IsAttachableFile
         return \App\Models\FileAttachment::class;
     }
 
+    /**
+     * Gets the file attachment table name.
+     *
+     * @return string
+     */
     public function getFileAttachmentTable(): string
     {
         $fileAttachmentModel = $this->getFileAttachmentModel();
@@ -44,11 +53,22 @@ trait IsAttachableFile
         return (new $fileAttachmentModel)->getTable();
     }
 
+    /**
+     * Attached files relationship.
+     *
+     * @return MorphMany
+     */
     public function file_attachments(): MorphMany
     {
         return $this->morphMany($this->getFileAttachmentModel(), 'file');
     }
 
+    /**
+     * File attachments relationship.
+     *
+     * @param string $model
+     * @return BelongsToMany
+     */
     public function attached(string $model): BelongsToMany
     {
         return $this
@@ -68,6 +88,14 @@ trait IsAttachableFile
         //
     }
 
+    /**
+     * Attach a file to the model.
+     *
+     * @param Collection|Model $model
+     * @param mixed $collection
+     * @param array $attributes
+     * @return void
+     */
     public function attach(Collection | Model $model, $collection = null, $attributes = []): void
     {
         if ($model instanceof Collection) {

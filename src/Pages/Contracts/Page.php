@@ -31,7 +31,17 @@ interface Page extends Tree
      */
     public function getFullSlug(): string;
 
+    /**
+     * Parent relationship.
+     *
+     * @return BelongsTo
+     */
     public function parent(): BelongsTo;
 
+    /**
+     * Children relationship.
+     *
+     * @return HasMany
+     */
     public function children(): HasMany;
 }

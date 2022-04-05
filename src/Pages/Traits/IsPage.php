@@ -11,6 +11,12 @@ trait IsPage
 {
     use IsTree;
 
+    /**
+     * Generate the routes for the pages.
+     *
+     * @param string $controller
+     * @return void
+     */
     public static function routes($controller)
     {
         try {
@@ -30,11 +36,21 @@ trait IsPage
         }
     }
 
+    /**
+     * Get the route action.
+     *
+     * @return void
+     */
     public function getRouteAction(): string | Closure
     {
         return $this->controller;
     }
 
+    /**
+     * Get the full slug of the page.
+     *
+     * @return string
+     */
     public function getFullSlug(): string
     {
         if (! $this->parent) {

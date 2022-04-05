@@ -57,6 +57,6 @@ trait IsPage
             return '/'.$this->slug;
         }
 
-        return $this->parent->slug.'/'.$this->slug;
+        return $this->parent->getFullSlug().'/'.$this->slug;
     }
 }

@@ -22,20 +22,18 @@ const props = defineProps({
 
 const emit = defineEmits(['itemAdded', 'close']);
 
-const form = useForm(
-    `/{{ app }}/{{ route }}/${props.type}`,
-    {
+const form = useForm({
+    route: `/{{ app }}/{{ route }}/${props.type}`,
+    data: {
         title: '',
         route: '',
     },
-    {
-        method: 'post',
-        onSuccess() {
-            emit('itemAdded', this);
-            emit('close');
-        },
-    }
-);
+    method: 'post',
+    onSuccess() {
+        emit('itemAdded', this);
+        emit('close');
+    },
+});
 
 const submit = function () {
     form.submit();

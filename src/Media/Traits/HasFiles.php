@@ -3,6 +3,8 @@
 namespace Macrame\Admin\Media\Traits;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Collection;
+use Macrame\Admin\Media\Contracts\AttachableFile;
 
 trait HasFiles
 {
@@ -32,6 +34,34 @@ trait HasFiles
     }
 
     /**
+     * Attach a file to the model.
+     *
+     * @param AttachableFile $file
+     * @param string|null $collection
+     * @param array $attributes
+     * @return void
+     */
+    public function attachFile(AttachableFile $file, ?string $collection = null, array $attributes = [])
+    {
+        $file->attach($this, $collection, $attributes);
+    }
+
+    /**
+     * Attach a collection of files to the model.
+     *
+     * @param Collection $files
+     * @param string|null $collection
+     * @param array $attributes
+     * @return void
+     */
+    public function attachFiles(Collection $files, ?string $collection = null, array $attributes = [])
+    {
+        foreach ($files as $file) {
+            $this->attachFile($file, $collection, $attributes);
+        }
+    }
+
+    /**
      * Gets the name of the file model.
      *
      * @return string
@@ -43,5 +73,31 @@ trait HasFiles
         }
 
         return \App\Models\File::class;
+    }
+
+    /**
+     * Gets the file attachmend model.
+     *
+     * @return string
+     */
+    public function getFileAttachmentModel(): string
+    {
+        if (property_exists($this, 'fileAttachmentModel')) {
+            return $this->fileAttachmentModel;
+        }
+
+        return \App\Models\FileAttachment::class;
+    }
+
+    /**
+     * Getes the name of the file attachmenet table.
+     *
+     * @return string
+     */
+    public function getFileAttachmentTable(): string
+    {
+        $fileAttachmentModel = $this->getFileAttachmentModel();
+
+        return (new $fileAttachmentModel)->getTable();
     }
 }

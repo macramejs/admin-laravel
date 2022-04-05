@@ -2,77 +2,54 @@
 
 namespace Macrame\Admin\Media\Traits;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Filesystem\FilesystemAdapter;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 trait IsFile
 {
-    protected ?File $file;
-
     /**
-     * Boot the IsAttachableFile trait.
-     *
-     * @return void
-     */
-    public static function bootIsFile(): void
+    * Create a new file model from the uploaded file.
+    *
+    * @param UploadedFile $file
+    * @param array $attributes
+    * @return static
+    */
+    public static function createFromUploadedFile(UploadedFile $file, array $attributes = []): static
     {
-        self::saved(function (self $file) {
-            $file->setFilepath($file->id);
+        return DB::transaction(function () use ($file, $attributes) {
+            $model = static::create(array_merge([
+                'filepath' => Str::uuid(),
+                'filename' => $file->getClientOriginalName(),
+                'mimetype' => $file->getClientMimeType(),
+                'size'     => $file->getSize(),
+            ], $attributes));
 
-            $file->storeFileOnDisk();
+            $model->setFilepath($model->getKey());
 
-            if ($file->isDirty('filepath')) {
-                $file->save();
+            $model->storage()->putFileAs(
+                $model->getFilepath(),
+                $file,
+                $model->filename
+            );
+
+            if ($model->isDirty('filepath')) {
+                $model->save();
             }
+
+            return $model;
         });
     }
 
-    public function storeFileOnDisk()
-    {
-        if (! isset($this->file)) {
-            return;
-        }
-
-        $this->storage()->putFileAs(
-            $this->getFilepath(),
-            $this->file,
-            $this->filename
-        );
-    }
-
-    public function setFile(File $file)
-    {
-        $this->file = $file;
-    }
-
-    public function unsetFile(): void
-    {
-        unset($this->file);
-    }
-
-    public function getFile(): ?File
-    {
-        return $this->file;
-    }
-
-    public static function newFromUploadedFile(UploadedFile $file, array $attributes = [])
-    {
-        $model = new static([
-            'filepath' => Str::uuid(),
-            'filename' => $file->getClientOriginalName(),
-            'mimetype' => $file->getClientMimeType(),
-            'size'     => $file->getSize(),
-        ]);
-
-        $model->setFile($file);
-
-        return $model;
-    }
-
+    /**
+     * Gets the url to the file.
+     *
+     * @return string
+     */
     public function getUrl()
     {
         return $this->storage()->url(
@@ -81,7 +58,7 @@ trait IsFile
     }
 
     /**
-     * The filesystem that should be used.
+     * Gets hhe filesystem for the model.
      *
      * @return FilesystemAdapter
      */
@@ -90,16 +67,31 @@ trait IsFile
         return Storage::disk($this->getDiskName());
     }
 
+    /**
+     * Get the disk name of the file model.
+     *
+     * @return void
+     */
     public function getDiskName(): string
     {
         return $this->disk;
     }
 
+    /**
+     * Set the file path of the model.
+     *
+     * @return string|null
+     */
     public function setFilepath(string $path)
     {
         $this->filepath = $path;
     }
 
+    /**
+     * Get the file path of the model.
+     *
+     * @return string|null
+     */
     public function getFilepath(): ?string
     {
         return $this->filepath;

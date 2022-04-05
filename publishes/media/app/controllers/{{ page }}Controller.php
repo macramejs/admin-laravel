@@ -49,7 +49,7 @@ class {{ page }}Controller
     {
         collect($request->files->get('files'))
             ->each(function (UploadedFile $file) {
-                {{ file_model }}::newFromUploadedFile($file)->save();
+                {{ file_model }}::createFromUploadedFile($file);
             });
     }
 }

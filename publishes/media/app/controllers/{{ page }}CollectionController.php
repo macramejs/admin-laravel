@@ -70,7 +70,7 @@ class {{ page }}CollectionController
     {
         collect($request->files->get('images'))
             ->each(function (UploadedFile $file) use ($collection) {
-                $file = {{ file_model }}::newFromUploadedFile($file);
+                $file = {{ file_model }}::createFromUploadedFile($file);
 
                 $file->save();
 

@@ -22,20 +22,18 @@ import { templateOptions } from '../templates';
 
 const emit = defineEmits(['pageAdded', 'close']);
 
-const form = useForm(
-    `/{{ app }}/{{ route }}`,
-    {
+const form = useForm({
+    route: `/{{ app }}/{{ route }}`,
+    data: {
         name: '',
         template: '',
     },
-    {
-        method: 'post',
-        onSuccess() {
-            emit('pageAdded', this);
-            emit('close');
-        },
-    }
-);
+    method: 'post',
+    onSuccess() {
+        emit('pageAdded', this);
+        emit('close');
+    },
+});
 
 const submit = function () {
     form.submit();

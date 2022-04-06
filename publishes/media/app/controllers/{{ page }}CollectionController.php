@@ -7,6 +7,7 @@ use {{ namespace }}\Http\Resources\{{ page }}CollectionResource;
 use {{ namespace }}\Ui\Page;
 use App\Models\{{ file_model }};
 use App\Models\{{ page }}Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -47,7 +48,7 @@ class {{ page }}CollectionController
      * Create a new {{ page }}Collection.
      *
      * @param Request $request
-     * @return void
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
@@ -55,6 +56,56 @@ class {{ page }}CollectionController
             'title' => $request->title,
             'key'   => Str::slug($request->title),
         ]);
+
+        return redirect()->back();
+    }
+
+    /**
+     * Add a list of files to the collection.
+     *
+     * @param Request $request
+     * @param {{ page }}Collection $collection
+     * @return RedirectResponse
+     */
+    public function add(Request $request, {{ page }}Collection $collection)
+    {
+        $request->validate([
+            'files' => 'required|array'
+        ]);
+
+        {{ file_model }}::whereIn('id', $request->files)->get()
+            ->each(function ({{ file_model }} $file) use ($collection) {
+                if ($collection->isAttachedTo($file)) {
+                    return;
+                }
+
+                $file->attach($collection);
+            });
+
+        return redirect()->back();
+    }
+
+    /**
+     * Remove a list of files from the collection.
+     *
+     * @param Request $request
+     * @param {{ page }}Collection $collection
+     * @return RedirectResponse
+     */
+    public function remove(Request $request, {{ page }}Collection $collection)
+    {
+        $request->validate([
+            'files' => 'required|array'
+        ]);
+
+        {{ file_model }}::whereIn('id', $request->files)->get()
+            ->each(function ({{ file_model }} $file) use ($collection) {
+                if (! $collection->isAttachedTo($file)) {
+                    return;
+                }
+
+                $file->detach($collection);
+            });
 
         return redirect()->back();
     }

@@ -97,7 +97,9 @@ class MakeMediaManagerCommand extends BaseMakeCommand
     // {$name} collections
     Route::post('/{$route}', [{$page}CollectionController::class, 'store'])->name('{$name}-collections.show');
     Route::get('/{$route}/{collection}', [{$page}CollectionController::class, 'show'])->name('{$name}-collections.show');
-    Route::post('/{$route}/{collection}/upload', [{$page}CollectionController::class, 'upload'])->name('{$name}-collections.upload');";
+    Route::post('/{$route}/{collection}/upload', [{$page}CollectionController::class, 'upload'])->name('{$name}-collections.upload');
+    Route::post('/{$route}/{collection}/remove', [{$page}CollectionController::class, 'remove'])->name('{$name}-collections.remove');
+    Route::post('/{$route}/{collection}/add', [{$page}CollectionController::class, 'add'])->name('{$name}-collections.add');";
         $before = '});';
 
         $routesPath = base_path('routes/'.$this->app().'.php');

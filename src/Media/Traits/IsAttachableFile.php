@@ -2,12 +2,9 @@
 
 namespace Macrame\Admin\Media\Traits;
 
-use Illuminate\Database\Eloquent\InvalidCastException;
-use Illuminate\Database\Eloquent\MassAssignmentException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\LazyLoadingViolationException;
 use Illuminate\Support\Collection;
 use LogicException;
 
@@ -83,11 +80,6 @@ trait IsAttachableFile
             ->wherePivot('file_type', static::class);
     }
 
-    public function getAttachedModelsAttribute()
-    {
-        //
-    }
-
     /**
      * Attach a file to the model.
      *
@@ -104,11 +96,33 @@ trait IsAttachableFile
             return;
         }
 
-        $m = $this->file_attachments()
+        $this->file_attachments()
             ->create(array_merge($attributes, [
                 'model_type' => get_class($model),
                 'model_id'   => $model->getKey(),
                 'collection' => $collection,
             ]));
+    }
+
+    /**
+     * Detach a file from the given model('s).
+     *
+     * @param Collection|Model $model
+     * @return void
+     */
+    public function detach(Collection | Model $model): void
+    {
+        if ($model instanceof Collection) {
+            $model->each(fn (Model $m) => $this->detach($m));
+
+            return;
+        }
+
+        $this->file_attachments()
+            ->where([
+                'model_type' => get_class($model),
+                'model_id'   => $model->getKey(),
+            ])
+            ->delete();
     }
 }

@@ -28,6 +28,7 @@ class DateTimeResource extends JsonResource
         $this->setLocale(app()->getLocale());
 
         return [
+            'label' => $this->toRfc7231String(),
             'readable_diff' => $this->diffForHumans(),
         ];
     }

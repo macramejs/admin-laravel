@@ -96,4 +96,20 @@ trait IsFile
     {
         return $this->filepath;
     }
+
+    /**
+     * Get the human readable file size.
+     *
+     * @return string
+     */
+    public function getReadableSize()
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+
+        for ($i = 0; $this->size > 1024; $i++) {
+            $this->size /= 1024;
+        }
+
+        return round($this->size, 2) . ' ' . $units[$i];
+    }
 }

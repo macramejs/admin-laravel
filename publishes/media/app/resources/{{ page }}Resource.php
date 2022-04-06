@@ -27,6 +27,9 @@ class {{ page }}Resource extends JsonResource
     {
         return array_merge(parent::toArray($request), [
             'url' => $this->getUrl(),
+            'readable_size' => $this->getReadableSize(),
+            'created_at' => new DateTimeResource($this->created_at),
+            'updated_at' => new DateTimeResource($this->updated_at),
         ]);
     }
 }

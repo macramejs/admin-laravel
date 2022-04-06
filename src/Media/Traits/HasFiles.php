@@ -34,6 +34,17 @@ trait HasFiles
     }
 
     /**
+     * Determines whether the model is attached to the given file.
+     *
+     * @param AttachableFile $file
+     * @return boolean
+     */
+    public function isAttachedTo(AttachableFile $file)
+    {
+        return (bool) $this->files->where('id', $file->id)->first();
+    }
+
+    /**
      * Attach a file to the model.
      *
      * @param AttachableFile $file

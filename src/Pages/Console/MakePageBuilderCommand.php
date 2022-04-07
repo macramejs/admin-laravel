@@ -159,6 +159,7 @@ class MakePageBuilderCommand extends BaseMakeCommand
         
 export type {$model} = {
     content: { [key: string]: any };
+    attributes: { [key: string]: any };
     id?: number;
     name: string;
 };

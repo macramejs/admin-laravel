@@ -1,5 +1,7 @@
 
-function request(url, options = {}) {
+type TRequestInit = RequestInit | { body: {[k:string]: any}};
+
+function request(url: RequestInfo, options: TRequestInit = {}) {
     const token = (<HTMLInputElement>document.querySelector('input[name="_token"]')).value;
     const headers = {
         "Content-Type": "application/json",
@@ -8,12 +10,16 @@ function request(url, options = {}) {
         "X-CSRF-TOKEN": token
     };
 
-    return fetch(url, { headers, ...options });
+    if('body' in options) {
+        options.body = JSON.stringify(options.body)
+    }
+
+    return fetch(url, { headers, ...<RequestInit>options  });
 }
 
-const get = (url, options = {}) => request(url, { ...options, method: 'GET'});
-const put = (url, options = {}) => request(url, { ...options, method: 'PUT'});
-const post = (url, options = {}) => request(url, { ...options, method: 'POST'});
-const del = (url, options = {}) => request(url, { ...options, method: 'DELETE'});
+const get = (url: RequestInfo, options: TRequestInit = {}) => request(url, { ...options, method: 'GET'});
+const put = (url: RequestInfo, options: TRequestInit = {}) => request(url, { ...options, method: 'PUT'});
+const post = (url: RequestInfo, options: TRequestInit = {}) => request(url, { ...options, method: 'POST'});
+const del = (url: RequestInfo, options: RequestInit = {}) => request(url, { ...options, method: 'DELETE'});
 
 export { request, post, get, put, del };

@@ -1,7 +1,6 @@
 import { useIndex, Index } from '@macramejs/macrame-vue3';
 import { {{ page }} } from '@{{ app }}/types';
-import { reactive, ref, watch } from 'vue'
-import axios from 'axios'
+export { selection } from './selection'
 
 export type {{ page }}Index = Index<{{ page }}>;
 
@@ -33,5 +32,3 @@ export const index = useIndex<{{ page }}>({
 });
 
 index.reloadOnChange(index.filters);
-
-export const selectedFiles = ref<{{ page }}[]>([]);

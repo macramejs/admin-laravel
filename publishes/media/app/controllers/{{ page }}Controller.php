@@ -40,6 +40,23 @@ class {{ page }}Controller
     }
 
     /**
+     * Destroy multiple files.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array'
+        ]);
+
+        {{ file_model }}::whereIn('id', $request->ids)->delete();
+
+        return redirect()->back();
+    }
+
+    /**
      * Upload files.
      *
      * @param Request $request

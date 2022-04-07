@@ -93,6 +93,7 @@ class MakeMediaManagerCommand extends BaseMakeCommand
     Route::get('/{$route}', [{$page}Controller::class, 'index'])->name('{$route}.index');
     Route::get('/{$route}/items', [{$page}Controller::class, '{$route}'])->name('{$route}.{$route}');
     Route::post('/{$route}/upload', [{$page}Controller::class, 'upload'])->name('{$route}.upload');
+    Route::post('/{$route}/delete', [{$page}Controller::class, 'destroy'])->name('{$route}.destroy');
 
     // {$name} collections
     Route::post('/{$route}', [{$page}CollectionController::class, 'store'])->name('{$name}-collections.show');

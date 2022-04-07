@@ -1,35 +1,21 @@
 <template>
     <ContextMenu placement="bottom" customButton>
         <template #button>
-            <Button secondary :disabled="selectedFiles.length == 0">
+            <Button secondary :disabled="selection.files.length == 0">
                 Edit Selection
             </Button>
         </template>
         <div class="flex flex-col">
             <button
                 class="w-full py-2.5 px-[14px] text-left hover:bg-white hover:bg-opacity-20 rounded-[8px]"
+                @click="selection.addToCollection({ id: 1 })"
             >
-                Edit
-            </button>
-            <button
-                class="w-full py-2.5 px-[14px] text-left hover:bg-white hover:bg-opacity-20 rounded-[8px]"
-            >
-                Duplicate
-            </button>
-            <div class="bg-white w-full my-1.5 h-px bg-opacity-20"></div>
-            <button
-                class="w-full py-2.5 px-[14px] text-left hover:bg-white hover:bg-opacity-20 rounded-[8px]"
-            >
-                Archive
-            </button>
-            <button
-                class="w-full py-2.5 px-[14px] text-left hover:bg-white hover:bg-opacity-20 rounded-[8px]"
-            >
-                Move
+                Add to collection
             </button>
             <div class="bg-white w-full my-1.5 h-px bg-opacity-20"></div>
             <button
                 class="w-full flex items-center text-red-signal gap-2 py-2.5 px-[14px] text-left hover:bg-red-signal hover:bg-opacity-20 rounded-[8px]"
+                @click="selection.delete"
             >
                 <svg
                     width="24"
@@ -54,5 +40,5 @@
 
 <script lang="ts" setup>
 import { Button, ContextMenu } from '@macramejs/admin-vue3';
-import { selectedFiles } from '../modules';
+import { selection } from '../modules';
 </script>

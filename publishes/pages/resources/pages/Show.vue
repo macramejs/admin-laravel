@@ -33,8 +33,6 @@ import Layout from './package/Layout.vue';
 import { useForm } from '@macramejs/macrame-vue3';
 import { TabGroup, TabList, Tab, TabPanel } from '@macramejs/admin-vue3';
 import { TabPanels } from '@headlessui/vue';
-import { TextSection, CardsSection, UploadSection } from './sections';
-import { TextDrawer, CardsDrawer } from './drawers';
 import BaseLayout from './Index.vue';
 import { saveQueue } from '@admin/modules/save-queue';
 import { {{ model }}Resource } from '@{{ app }}/types/resources';

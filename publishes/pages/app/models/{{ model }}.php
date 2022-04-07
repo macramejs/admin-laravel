@@ -22,6 +22,7 @@ class {{ model }} extends Model implements PageContract
      */
     protected $fillable = [
         'content',
+        'attributes',
         'name',
         'slug',
         'template',

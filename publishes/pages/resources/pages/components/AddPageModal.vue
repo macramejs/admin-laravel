@@ -18,7 +18,7 @@
 import { defineEmits } from 'vue';
 import { Modal, Input, Select, Button } from '@macramejs/admin-vue3';
 import { useForm } from '@macramejs/macrame-vue3';
-import { templateOptions } from '../templates';
+import { templateOptions } from './content/templates';
 
 const emit = defineEmits(['pageAdded', 'close']);
 

@@ -11,7 +11,7 @@
                     :id="file.id"
                     class="absolute opacity-0"
                     :value="file"
-                    v-model="selectedFiles"
+                    v-model="selection.files"
                 />
                 <div
                     class="absolute top-0 left-0 w-full cursor-pointer h-full bg-black border-[3px] border-transparent bg-opacity-0 hover:bg-opacity-80"
@@ -58,7 +58,7 @@
 import { ref, toRefs, watch } from 'vue';
 import { FileUpload, Index } from '@macramejs/admin-vue3';
 import FileMenu from './FileMenu.vue';
-import { index, selectedFiles } from '../modules/index';
+import { index, selection } from '../modules';
 </script>
 
 <style scoped>

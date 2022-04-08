@@ -20,7 +20,7 @@ import PagesTreeItem from './PagesTreeItem.vue';
 
 defineProps({
     tree: {
-        type: Object as PropType<Tree<Page>>,
+        type: Object as PropType<Tree<{{ model }}>>,
         required: true,
     },
 });

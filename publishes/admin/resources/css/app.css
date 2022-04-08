@@ -41,3 +41,8 @@
          url('../fonts/dm-sans-v10-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
          url('../fonts/dm-sans-v10-latin-700.svg#DMSans') format('svg'); /* Legacy iOS */
   }
+
+html, body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

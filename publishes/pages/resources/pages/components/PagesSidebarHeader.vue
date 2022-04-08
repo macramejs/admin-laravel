@@ -1,6 +1,6 @@
 <template>
-    <div class="flex justify-between w-full">
-        <span class="inline-block text-xl"> Seiten </span>
+    <div class="flex items-center justify-between w-full">
+        <span class="inline-block text-xl font-medium"> Seiten </span>
         <AddPageModal />
     </div>
 </template>

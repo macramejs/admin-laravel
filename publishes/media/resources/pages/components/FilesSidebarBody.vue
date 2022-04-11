@@ -2,23 +2,23 @@
     <div class="flex flex-col gap-1 p-2 border-b border-gray-400">
         <button
             :class="
-                index.filters.types.value.includes('images')
+                mediaIndex.filters.types.value.includes('images')
                     ? 'bg-gray-100'
                     : ''
             "
             class="px-4 py-2 mb-1 rounded-[8px] transition-colors w-full text-left duration-300 hover:bg-gray-100"
-            @click="index.filters.types.toggle('images')"
+            @click="mediaIndex.filters.types.toggle('images')"
         >
             Images
         </button>
         <button
             :class="
-                index.filters.types.value.includes('documents')
+                mediaIndex.filters.types.value.includes('documents')
                     ? 'bg-gray-100'
                     : ''
             "
             class="px-4 py-2 mb-1 rounded-[8px] transition-colors w-full text-left duration-300 hover:bg-gray-100"
-            @click="index.filters.types.toggle('documents')"
+            @click="mediaIndex.filters.types.toggle('documents')"
         >
             Documents
         </button>
@@ -99,7 +99,7 @@ import { RadioGroup, RadioGroupOption } from '@headlessui/vue';
 import { PropType, ref, computed } from 'vue';
 import { {{ page }}Collection } from '@{{ app }}/types';
 import AddCollectionForm from './AddCollectionForm.vue';
-import { index } from '../modules';
+import { mediaIndex } from './{{ app }}/modules/{{ name }}';
 
 const props = defineProps({
     collections: {

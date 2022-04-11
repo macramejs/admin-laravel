@@ -9,7 +9,6 @@ import BaseLayout from './Index.vue';
 import FilesTabs from './components/FilesTabs.vue';
 import { PropType } from 'vue';
 import { {{ page }}CollectionResource } from '@{{ app }}/types';
-import { index } from './modules';
 
 const props = defineProps({
     collection: {

@@ -121,6 +121,12 @@ use Admin\Http\Controllers\\{$page}Controller;";
             to: resource_path($this->app().'/js/Pages/'.$this->page())
         );
 
+        // Modules
+        $this->publishDir(
+            from: $this->publishesPath('resources/modules'),
+            to: resource_path($this->app().'/js/modules/'.$this->name())
+        );
+
         // Types
         $page = $this->page();
         $insert = "// {$page}

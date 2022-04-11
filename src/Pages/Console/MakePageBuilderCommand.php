@@ -75,7 +75,7 @@ class MakePageBuilderCommand extends BaseMakeCommand
     {
         // Admin-Controllers
         $this->publishDir(
-            from: $this->publishesPath('app/controllers_admin'),
+            from: $this->publishesPath('app/controllers'),
             to: $this->appPath('Http/Controllers')
         );
         // App-Controllers

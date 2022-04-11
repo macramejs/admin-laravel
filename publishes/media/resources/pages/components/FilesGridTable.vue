@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            v-for="file in index.items"
+            v-for="file in mediaIndex.items"
             :key="file.id"
             class="flex items-center justify-center cursor-pointer col-span-full md:col-span-6 xl:col-span-3"
         >
@@ -58,7 +58,8 @@
 import { ref, toRefs, watch } from 'vue';
 import { FileUpload, Index } from '@macramejs/admin-vue3';
 import FileMenu from './FileMenu.vue';
-import { index, selection } from '../modules';
+import { selection } from '../modules';
+import { mediaIndex } from './{{ app }}/modules/{{ name }}';
 </script>
 
 <style scoped>

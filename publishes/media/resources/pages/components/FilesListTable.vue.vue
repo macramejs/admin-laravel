@@ -4,13 +4,13 @@
             <FileUpload :collection="collection" />
         </div>
         <div>
-            <Index :table="index">
-                <Table :table="index">
+            <Index :table="mediaIndex">
+                <Table :table="mediaIndex">
                     <template v-slot:thead>
-                        <FilesListTableHead :table="index" />
+                        <FilesListTableHead :table="mediaIndex" />
                     </template>
                     <template v-slot:tbody>
-                        <FilesListTableBody :table="index" />
+                        <FilesListTableBody :table="mediaIndex" />
                     </template>
                 </Table>
             </Index>
@@ -22,7 +22,7 @@
 import { {{ page }}Collection } from '@{{ app }}/types';
 import { Index, Table } from '@macramejs/admin-vue3';
 import { PropType } from 'vue';
-import { index } from '../modules/index';
+import { mediaIndex } from './{{ app }}/modules/{{ name }}';
 import FilesListTableBody from './FilesListTableBody.vue';
 import FilesListTableHead from './FilesListTableHead.vue';
 import FileUpload from './FileUpload.vue';

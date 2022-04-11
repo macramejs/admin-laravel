@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 import { PropType, watch } from 'vue';
 import { {{ namespace }} } from '@{{ app }}/layout';
-import { index } from './modules';
+import { mediaIndex } from './{{ app }}/modules/{{ name }}';
 import {
     {{ page }}CollectionCollectionResource,
     {{ page }}CollectionResource,
@@ -39,13 +39,13 @@ const props = defineProps({
     },
 });
 
-index.filters.collection.update(props.collection?.data);
+mediaIndex.filters.collection.update(props.collection?.data);
 watch(
     props.collection,
-    () => index.filters.collection.update(props.collection?.data),
+    () => mediaIndex.filters.collection.update(props.collection?.data),
     { immediate: true }
 );
 
 // initially load files.
-index.loadItems();
+mediaIndex.loadItems();
 </script>

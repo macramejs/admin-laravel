@@ -9,10 +9,11 @@
     "allowSyntheticDefaultImports": false,
     "paths": {
         "@admin/*": ["./resources/admin/js/*"],
+        "@app/*": ["./resources/app/js/*"],
     }
   },
   "include": [
-    "resources/js/**/*",
+    "resources/app/js/**/*",
     "resources/admin/js/**/*"
   ],
   "exclude": [

@@ -2,10 +2,10 @@ export { default as CardsSection } from './CardsSection.vue';
 export { default as TextSection } from './TextSection.vue';
 
 import CardsSection from './CardsSection.vue';
-import TextSection from './TextSection.vue';
+import TextFullSection from './TextFullSection.vue';
 
 const sections = {
-    text: TextSection,
+    text_full: TextFullSection,
     cards: CardsSection,
 };
 

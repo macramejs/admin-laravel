@@ -91,6 +91,7 @@ class MakeMediaManagerCommand extends BaseMakeCommand
         $insert = "
     // {$name}
     Route::get('/{$route}', [{$page}Controller::class, 'index'])->name('{$route}.index');
+    Route::get('/{$route}/{file}', [{$page}Controller::class, 'show'])->name('{$route}.show');
     Route::get('/{$route}/items', [{$page}Controller::class, '{$route}'])->name('{$route}.{$route}');
     Route::post('/{$route}/upload', [{$page}Controller::class, 'upload'])->name('{$route}.upload');
     Route::post('/{$route}/delete', [{$page}Controller::class, 'destroy'])->name('{$route}.destroy');

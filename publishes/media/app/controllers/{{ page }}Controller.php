@@ -25,6 +25,18 @@ class {{ page }}Controller
     }
 
     /**
+     * Show a single file.
+     *
+     * @param Request $request
+     * @param {{ model }} $file
+     * @return {{ page }}Resource
+     */
+    public function show(Request $request, {{ model }} $file)
+    {
+        return new {{ page }}Resource($file);
+    }
+
+    /**
      * Show the {{ page }} index.
      *
      * @param  Page $page

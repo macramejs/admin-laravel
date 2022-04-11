@@ -3,9 +3,10 @@
 namespace Macrame\Admin\Pages\Contracts;
 
 use Closure;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Http\Request;
 use Macrame\Contracts\Tree\Tree;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 interface Page extends Tree
 {
@@ -16,6 +17,14 @@ interface Page extends Tree
      * @return void
      */
     public static function routes($controller);
+
+    /**
+     * Get the page model from the given request.
+     *
+     * @param Request $request
+     * @return self
+     */
+    public static function fromRequestOrFail(Request $request);
 
     /**
      * Gets the route action for the page.

@@ -3,9 +3,10 @@
 namespace Macrame\Admin\Pages\Traits;
 
 use Closure;
-use Illuminate\Database\QueryException;
-use Illuminate\Routing\Route;
+use Illuminate\Http\Request;
 use Macrame\Tree\Traits\IsTree;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Database\QueryException;
 
 trait IsPage
 {
@@ -34,6 +35,23 @@ trait IsPage
                 });
         } catch (QueryException $e) {
         }
+    }
+
+    /**
+     * Get the page model from the given request.
+     *
+     * @param Request $request
+     * @return self
+     */
+    public static function fromRequestOrFail(Request $request)
+    {
+        $id = last(explode('.', $request->route()->getName()));
+
+        if (!$id) {
+            abort(404);
+        }
+
+        return static::findOrFail($id);
     }
 
     /**

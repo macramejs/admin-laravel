@@ -75,7 +75,7 @@ class MakePageBuilderCommand extends BaseMakeCommand
     {
         // Admin-Controllers
         $this->publishDir(
-            from: $this->publishesPath('app/controllers'),
+            from: $this->publishesPath('app/controllers_admin'),
             to: $this->appPath('Http/Controllers')
         );
         // App-Controllers
@@ -109,13 +109,14 @@ class MakePageBuilderCommand extends BaseMakeCommand
         );
 
         $model = $this->model();
-        $insert = '
-            Page::routes(PageController::class);';
+        $app = $this->app();
+        $insert = "
+        {$model}::routes({$model}Controller::class);";
         $after = "Route::middleware('web')
-        ->prefix('admin')
-        ->as('admin.')
+        ->prefix('{$app}')
+        ->as('{$app}.')
         ->namespace($this->namespace)
-        ->group(base_path('routes/admin.php'));";
+        ->group(base_path('routes/{$app}.php'));";
 
         $providerPath = app_path('Providers/RouteServiceProvider.php');
         $this->insertAfter($providerPath, $insert, $after);

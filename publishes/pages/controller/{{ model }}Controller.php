@@ -3,33 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\{{ model }};
+use Inertia\Inertia;
 use Illuminate\Http\Request;
 
-class {{ model }}Controller
+class {{ model }}Controller extends Controller
 {
     /**
-     * Get the site from the given request.
+     * Show the page.
      *
-     * @param  Request $request
-     * @return {{ model }}
-     */
-    protected function getSiteFromRequest(Request $request): {{ model }}
-    {
-        $id = last(explode('.', $request->route()->getName()));
-
-        return {{ model }}::findOrFail($id);
-    }
-
-    /**
-     * Handle the incomming request.
-     *
-     * @param  Request $request
      * @return void
      */
     public function __invoke(Request $request)
     {
-        $site = $this->getSiteFromRequest($request);
+        $page = {{ model }}::fromRequestOrFail($request);
 
-        return $site;
+        $page->content->parse();
+        $page->attributes->parse();
+
+        return Inertia::render('Pages/Show', [
+            'page' => $page
+        ]);
     }
 }

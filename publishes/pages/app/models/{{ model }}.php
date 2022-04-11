@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Casts\PageAttributes;
+use App\Casts\PageContent;
 use App\Contracts\Restrictable;
 use App\Http\Controllers\PageController;
 use App\Models\Concerns\IsRestricted;
@@ -37,23 +39,19 @@ class {{ model }} extends Model implements PageContract
      * @var array
      */
     protected $casts = [
-        'content'    => 'json',
-        'attributes' => 'json',
+        'content'    => PageContent::class,
+        'attributes' => PageAttributes::class,
         'is_live'    => 'boolean',
     ];
 
+    /**
+     * Default model attributes.
+     *
+     * @var array
+     */
     protected $attributes = [
         'content'    => '[]',
         'attributes' => '[]',
+        'is_live'    => true
     ];
-
-    // public function addFile(File $file)
-    // {
-    //     $this->files()->attach($file->id);
-    // }
-
-    // public function files()
-    // {
-
-    // }
 }

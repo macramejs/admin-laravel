@@ -1,2 +1,1 @@
-export { default as TextDrawer } from './TextDrawer.vue'
-export { default as CardsDrawer } from './CardsDrawer.vue'
+export { default as TextFullDrawer } from './TextFullDrawer.vue'

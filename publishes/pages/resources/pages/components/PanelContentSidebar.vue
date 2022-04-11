@@ -1,7 +1,7 @@
 <template>
     <DrawerSection title="Text Komponenten">
         <Cabinet>
-            <TextDrawer :draws="TextSection" />
+            <TextFullDrawer :draws="TextFullSection" />
         </Cabinet>
     </DrawerSection>
     <DrawerSection title="Other">
@@ -12,8 +12,8 @@
 </template>
 
 <script lang="ts" setup>
-import { TextSection, CardsSection } from './content/sections';
-import { CardsDrawer, TextDrawer } from './content/drawers';
+import { TextFullSection } from './content/sections';
+import { TextFullDrawer } from './content/drawers';
 import { DrawerSection } from '@macramejs/admin-vue3';
 import { Cabinet } from '@macramejs/macrame-vue3';
 </script>

@@ -26,8 +26,9 @@ import { Tree as BaseTree, TreeItem } from '@macramejs/admin-vue3';
 import { Link } from '@inertiajs/inertia-vue3';
 // import Dropdown from './Dropdown.vue';
 import PagesTree from './PagesTree.vue';
+import PagesTreeItem from './PagesTreeItem.vue';
 
-const props = defineProps({
+defineProps({
     tree: {
         type: Object as PropType<Tree<{{ model }}>>,
         required: true,

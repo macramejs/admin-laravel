@@ -11,12 +11,9 @@
 </template>
 
 <script setup lang="ts">
-import { watch, ref, PropType } from 'vue';
-import { Inertia } from '@inertiajs/inertia';
-import { {{ namespace }} } from '@{{ app }}/layout';
-// import { showCreateModal, Create } from './components/Create';
+import { PropType } from 'vue';
+import { Admin } from '@admin/layout';
 import PageSidebar from './components/PagesSidebar.vue';
-import { SidebarSecondary, Button } from '@macramejs/admin-vue3';
 import { {{ model }}TreeCollectionResource } from '@{{ app }}/types';
 
 const props = defineProps({

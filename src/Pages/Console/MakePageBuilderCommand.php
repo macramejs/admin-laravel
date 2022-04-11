@@ -83,6 +83,11 @@ class MakePageBuilderCommand extends BaseMakeCommand
             from: $this->publishesPath('controllers'),
             to: app_path('Http/Controllers')
         );
+        // Casts
+        $this->publishDir(
+            from: $this->publishesPath('app/casts'),
+            to: app_path('Casts')
+        );
 
         // Indexes
         $this->publishDir(
@@ -111,17 +116,14 @@ class MakePageBuilderCommand extends BaseMakeCommand
         $model = $this->model();
         $app = $this->app();
         $insert = "
-        {$model}::routes({$model}Controller::class);";
-        $after = "Route::middleware('web')
-        ->prefix('{$app}')
-        ->as('{$app}.')
-        ->namespace($this->namespace)
-        ->group(base_path('routes/{$app}.php'));";
+            {$model}::routes({$model}Controller::class);";
+        $after = "->group(base_path('routes/web.php'));";
 
         $providerPath = app_path('Providers/RouteServiceProvider.php');
         $this->insertAfter($providerPath, $insert, $after);
 
-        $insert = "use App\Http\Controllers\PageController;";
+        $insert = "use App\Http\Controllers\PageController;
+use App\Models\\{$model};";
         $before = "use Illuminate\Http\Request;";
         $this->insertBefore($providerPath, $insert, $before);
 
@@ -169,6 +171,10 @@ export type {$model} = {
     attributes: { [key: string]: any };
     id?: number;
     name: string;
+    meta: {
+        title: string,
+        description: string,
+    };
 };
 
 export type {$model}TreeItem = RawTreeItem<{$model}>;

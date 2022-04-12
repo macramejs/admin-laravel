@@ -1,19 +1,19 @@
 <template>
-    <DrawerSection title="Text Komponenten">
+    <DrawerSection title="Text Components">
         <Cabinet>
-            <TextFullDrawer :draws="TextFullSection" />
+            <DrawerTextFull :draws="SectionTextFull" />
         </Cabinet>
     </DrawerSection>
-    <DrawerSection title="Other">
+    <DrawerSection title="Image Components">
         <Cabinet>
-            <CardsDrawer :draws="CardsSection" />
+            <DrawerImageFull :draws="SectionImageFull" />
         </Cabinet>
     </DrawerSection>
 </template>
 
 <script lang="ts" setup>
-import { TextFullSection } from './content/sections';
-import { TextFullDrawer } from './content/drawers';
+import { SectionTextFull, SectionImageFull } from './content/sections';
+import { DrawerTextFull, DrawerImageFull } from './content/drawers';
 import { DrawerSection } from '@macramejs/admin-vue3';
 import { Cabinet } from '@macramejs/macrame-vue3';
 </script>

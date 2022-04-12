@@ -16,12 +16,17 @@ class {{ page }}Controller
     /**
      * {{ page }} index page.
      *
-     * @param  Page $page
-     * @return Page
+     * @param  Request $request
+     * @param  {{ model }}Index $index
+     * @return {{ model }}Index
      */
-    public function {{ route }}(Request $request, {{ page }}Index $index)
+    public function items(Request $request, {{ page }}Index $index)
     {
-        return $index->items($request, {{ file_model }}::query(), {{ page }}Resource::class);
+        return $index->items(
+            request: $request, 
+            query: {{ file_model }}::query(), 
+            resource: {{ page }}Resource::class
+        );
     }
 
     /**
@@ -31,7 +36,7 @@ class {{ page }}Controller
      * @param {{ model }} $file
      * @return {{ page }}Resource
      */
-    public function show(Request $request, {{ model }} $file)
+    public function item(Request $request, {{ model }} $file)
     {
         return new {{ page }}Resource($file);
     }

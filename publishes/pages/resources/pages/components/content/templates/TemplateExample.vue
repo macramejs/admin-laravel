@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import { Card, Input } from '@macramejs/admin-vue3';
-import { PageContentForm } from '@{{ app }}/types/forms';
+import { PageContentForm } from '@admin/types/forms';
 import { PropType } from 'vue';
 
 const props = defineProps({

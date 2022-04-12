@@ -1,13 +1,13 @@
-import ExampleTemplate from './ExampleTemplate.vue';
+import TemplateExample from './TemplateExample.vue';
 
 const templates = {
-    ExampleTemplate,
+    example: TemplateExample,
 };
 
 let templateOptions = [
     {
         label: "Beispiel",
-        value: "ExampleTemplate",
+        value: "example",
     }
 ]
-export { ExampleTemplate, templateOptions, templates }
+export { TemplateExample, templateOptions, templates }

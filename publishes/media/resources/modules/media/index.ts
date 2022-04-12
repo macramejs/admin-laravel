@@ -37,3 +37,9 @@ export const use{{ model }}Index = () => {
 }
 
 export const {{ name }}Index = use{{ model }}Index();
+
+export const get{{ model }}ById = async (id: number) => {
+    const { data } = await (await get(`/{{ app }}/{{ route }}/items/${id}`)).json();
+
+    return <Media>data;
+}

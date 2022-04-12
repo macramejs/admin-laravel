@@ -116,14 +116,13 @@ class MakePageBuilderCommand extends BaseMakeCommand
         $model = $this->model();
         $app = $this->app();
         $insert = "
-            {$model}::routes({$model}Controller::class);";
+            {$model}::routes();";
         $after = "->group(base_path('routes/web.php'));";
 
         $providerPath = app_path('Providers/RouteServiceProvider.php');
         $this->insertAfter($providerPath, $insert, $after);
 
-        $insert = "use App\Http\Controllers\PageController;
-use App\Models\\{$model};";
+        $insert = "use App\Models\\{$model};";
         $before = "use Illuminate\Http\Request;";
         $this->insertBefore($providerPath, $insert, $before);
 

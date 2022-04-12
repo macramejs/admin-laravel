@@ -4,9 +4,10 @@ namespace Macrame\Admin\Pages\Traits;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Macrame\Tree\Traits\IsTree;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Route as RouteFactory;
 
 trait IsPage
 {
@@ -15,23 +16,19 @@ trait IsPage
     /**
      * Generate the routes for the pages.
      *
-     * @param string $controller
      * @return void
      */
-    public static function routes($controller)
+    public static function routes()
     {
         try {
-            static::where('parent_id', null)
+            return static::where('parent_id', null)
                 ->get()
-                ->each(function (self $site) use ($controller) {
+                ->map(function (self $site) {
                     if (! $site->is_live) {
                         return;
                     }
 
-                    Route::get(
-                        $site->getFullSlug(),
-                        $controller,
-                    )->name("site.{$site->id}");
+                    return $site->getRoute();
                 });
         } catch (QueryException $e) {
         }
@@ -52,6 +49,18 @@ trait IsPage
         }
 
         return static::findOrFail($id);
+    }
+
+    /**
+     * Get the associated route.
+     *
+     * @return Route
+     */
+    public function getRoute(): Route
+    {
+        return RouteFactory::middleware('web')
+            ->get($this->getFullSlug(), $this->controller)
+            ->name("site.{$this->id}");
     }
 
     /**

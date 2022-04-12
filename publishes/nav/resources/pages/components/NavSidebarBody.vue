@@ -2,12 +2,12 @@
     <SidebarSection :expandable="true" title="foo">
         <SidebarLink
             title="Main Navigation"
-            href="/admin/navigations/main"
+            href="/{{ app }}/{{ route }}/main"
             secondary
         />
         <SidebarLink
             title="Footer Navigation"
-            href="/admin/navigations/footer"
+            href="/{{ app }}/{{ route }}/footer"
             secondary
         />
     </SidebarSection>

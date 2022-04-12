@@ -4,6 +4,7 @@ namespace Macrame\Admin\Pages\Contracts;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Macrame\Contracts\Tree\Tree;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,10 +14,9 @@ interface Page extends Tree
     /**
      * Build the routes.
      *
-     * @param  string $controller
      * @return void
      */
-    public static function routes($controller);
+    public static function routes();
 
     /**
      * Get the page model from the given request.
@@ -25,6 +25,13 @@ interface Page extends Tree
      * @return self
      */
     public static function fromRequestOrFail(Request $request);
+
+    /**
+     * Get the associated route.
+     *
+     * @return Route
+     */
+    public function getRoute(): Route;
 
     /**
      * Gets the route action for the page.

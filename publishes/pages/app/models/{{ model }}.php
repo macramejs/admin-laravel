@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\PageController;
 use App\Casts\PageAttributes;
 use App\Casts\PageContent;
 use App\Contracts\Restrictable;
@@ -16,6 +17,13 @@ use Macrame\Admin\Pages\Traits\IsPage;
 class {{ model }} extends Model implements PageContract
 {
     use HasFactory, HasFiles, IsPage;
+
+    /**
+     * The route controller.
+     *
+     * @var string
+     */
+    protected $controller = PageController::class;
 
     /**
      * Attributes that are mass assignable.

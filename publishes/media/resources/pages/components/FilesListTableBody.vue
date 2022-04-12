@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue';
-import { {{ page }}Index } from '../modules/index';
+import { {{ page }}Index } from '@{{ app }}/modules/{{ name }}';
 import { Tr, Td } from '@macramejs/admin-vue3';
 import FileMenu from './FileMenu.vue';
 

@@ -59,6 +59,7 @@ abstract class BaseMakeCommand extends Command
                     $this->applyReplacesToContent($file);
                 }
 
+
                 $this->applyReplacesToName($file);
             });
     }

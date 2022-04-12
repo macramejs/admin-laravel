@@ -22,7 +22,7 @@
 import { {{ page }}Collection } from '@{{ app }}/types';
 import { Index, Table } from '@macramejs/admin-vue3';
 import { PropType } from 'vue';
-import { mediaIndex } from './{{ app }}/modules/{{ name }}';
+import { mediaIndex } from '@{{ app }}/modules/{{ name }}';
 import FilesListTableBody from './FilesListTableBody.vue';
 import FilesListTableHead from './FilesListTableHead.vue';
 import FileUpload from './FileUpload.vue';

@@ -102,7 +102,7 @@
 import { ref, toRefs, watch } from 'vue';
 import { FileUpload, Index } from '@macramejs/admin-vue3';
 import FileMenu from './FileMenu.vue';
-import { mediaIndex } from './{{ app }}/modules/{{ name }}';
+import { mediaIndex } from '@{{ app }}/modules/{{ name }}';
 
 const emit = defineEmits(['update:modelValue']);
 

@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 import { PropType, watch } from 'vue';
 import { {{ namespace }} } from '@{{ app }}/layout';
-import { mediaIndex } from './{{ app }}/modules/{{ name }}';
+import { mediaIndex } from '@{{ app }}/modules/{{ name }}';
 import {
     {{ page }}CollectionCollectionResource,
     {{ page }}CollectionResource,

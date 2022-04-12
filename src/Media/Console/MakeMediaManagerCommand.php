@@ -118,7 +118,7 @@ use Admin\Http\Controllers\\{$page}Controller;";
     {
         // Pages
         $this->publishDir(
-            from: $this->publishesPath('resources/Pages'),
+            from: $this->publishesPath('resources/pages'),
             to: resource_path($this->app().'/js/Pages/'.$this->page())
         );
 

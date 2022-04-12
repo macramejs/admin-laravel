@@ -1,10 +1,11 @@
 import { useIndex, Index } from "@macramejs/macrame-vue3"
-import { {{ model }} } from '@{{ app }}/types/resources';
+import { {{ page }} } from '@{{ app }}/types/resources';
+import { get } from "../request";
 
-export type {{ model }}Index = Index<{{ model }}>;
+export type {{ page }}Index = Index<{{ page }}>;
 
-export const use{{ model }}Index = () => {
-    const index = useIndex<{{ model }}>({
+export const use{{ page }}Index = () => {
+    const index = useIndex<{{ page }}>({
         route: '/{{ app }}/{{ route }}/items',
         syncUrl: true,
         sortBy: [],
@@ -36,10 +37,10 @@ export const use{{ model }}Index = () => {
     return index;
 }
 
-export const {{ name }}Index = use{{ model }}Index();
+export const {{ name }}Index = use{{ page }}Index();
 
-export const get{{ model }}ById = async (id: number) => {
+export const get{{ page }}ById = async (id: number) => {
     const { data } = await (await get(`/{{ app }}/{{ route }}/items/${id}`)).json();
 
-    return <Media>data;
+    return <{{ page }}>data;
 }

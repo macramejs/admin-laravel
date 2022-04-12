@@ -99,7 +99,7 @@ import { RadioGroup, RadioGroupOption } from '@headlessui/vue';
 import { PropType, ref, computed } from 'vue';
 import { {{ page }}Collection } from '@{{ app }}/types';
 import AddCollectionForm from './AddCollectionForm.vue';
-import { mediaIndex } from './{{ app }}/modules/{{ name }}';
+import { mediaIndex } from '@{{ app }}/modules/{{ name }}';
 
 const props = defineProps({
     collections: {

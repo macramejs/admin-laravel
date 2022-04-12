@@ -12,7 +12,6 @@
 import { {{ page }}Collection } from '@{{ app }}/types';
 import { FileUpload } from '@macramejs/admin-vue3';
 import { PropType } from 'vue';
-import { index } from '../modules';
 
 const props = defineProps({
     collection: {

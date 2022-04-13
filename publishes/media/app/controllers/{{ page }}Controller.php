@@ -36,7 +36,7 @@ class {{ page }}Controller
      * @param {{ model }} $file
      * @return {{ page }}Resource
      */
-    public function item(Request $request, {{ model }} $file)
+    public function item(Request $request, {{ file_model }} $file)
     {
         return new {{ page }}Resource($file);
     }

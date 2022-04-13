@@ -6,7 +6,6 @@ use App\Http\Controllers\PageController;
 use App\Casts\PageAttributes;
 use App\Casts\PageContent;
 use App\Contracts\Restrictable;
-use App\Http\Controllers\PageController;
 use App\Models\Concerns\IsRestricted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

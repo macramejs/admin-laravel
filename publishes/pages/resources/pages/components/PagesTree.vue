@@ -1,19 +1,7 @@
 <template>
-    <BaseTree :tree="tree" :group="{ name: '{{ name }}-list' }">
+    <BaseTree :tree="tree" :group="{ name: 'page-list' }">
         <template v-slot:default="{ item, children }">
-            <TreeItem :item="item" :children="children">
-                <Link
-                    class="flex-1 py-1 cursor-pointer"
-                    :href="`/{{ app }}/{{ route }}/${item.id}`"
-                >
-                    {{ item.name }}
-                </Link>
-
-                <template v-slot:disclosure>
-                    <PagesTree :tree="children" />
-                </template>
-            </TreeItem>
-            <!-- <Dropdown /> -->
+            <PagesTreeItem :page="item" :children="children" />
         </template>
     </BaseTree>
 </template>
@@ -22,10 +10,8 @@
 import { {{ model }} } from '@{{ app }}/types';
 import { defineProps, PropType } from 'vue';
 import { Tree } from '@macramejs/macrame-vue3';
-import { Tree as BaseTree, TreeItem } from '@macramejs/admin-vue3';
+import { Tree as BaseTree } from '@macramejs/admin-vue3';
 import { Link } from '@inertiajs/inertia-vue3';
-// import Dropdown from './Dropdown.vue';
-import PagesTree from './PagesTree.vue';
 import PagesTreeItem from './PagesTreeItem.vue';
 
 defineProps({

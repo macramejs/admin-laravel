@@ -1,15 +1,14 @@
 <template>
-    <Button square secondary @click="isOpen = true" @keyup.esc="isOpen = false">
-        +
-    </Button>
-    <Modal :open="isOpen" @close="isOpen = false" v-bind="$attrs" md>
-        <h2>Add Navigation Item</h2>
+    <ContextButton @click="isOpen = true" @keyup.esc="isOpen = false" />
+    <Modal v-model:open="isOpen" md>
+        <h2>Edit Navigation Item</h2>
         <div>
             <FormField>
                 <Input label="Title" v-model="form.title" />
             </FormField>
             <FormField>
                 <Select
+                    v-if="routeItems"
                     label="Route"
                     v-model="form.route"
                     :options="routeItems"
@@ -24,14 +23,25 @@
 
 <script lang="ts" setup>
 import { defineEmits, defineProps, PropType, ref } from 'vue';
-import { Modal, Input, Select, Button, FormField } from '@macramejs/admin-vue3';
+import {
+    Modal,
+    Input,
+    Select,
+    Button,
+    FormField,
+    ContextButton,
+} from '@macramejs/admin-vue3';
 import { useForm } from '@macramejs/macrame-vue3';
-import { RouteItem } from '@{{ app }}/types/resources';
 import { useNavItemForm } from '@{{ app }}/modules/nav';
+import { NavItem, RouteItem } from '@{{ app }}/types/resources';
 
 const isOpen = ref<boolean>(false);
 
 const props = defineProps({
+    navItem: {
+        type: Object as PropType<NavItem>,
+        required: true,
+    },
     type: {
         type: String,
         required: true,
@@ -44,6 +54,12 @@ const props = defineProps({
 const emit = defineEmits(['itemAdded']);
 
 const form = useNavItemForm(props.type, {
+    route: `/{{ app }}/{{ route }}/${props.type}/${props.navItem.id}`,
+    method: 'put',
+    data: {
+        title: props.navItem.title,
+        route: props.navItem.route,
+    },
     onSuccess() {
         emit('itemAdded', this);
         isOpen.value = false;

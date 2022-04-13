@@ -6,16 +6,23 @@
         <template v-slot:topbar-left>
             <slot name="topbar-left" />
         </template>
-        <NavBody :items="items.data" :type="type" />
+        <NavBody
+            :items="items.data"
+            :type="type"
+            :route-items="routeItems.data"
+        />
     </Admin>
 </template>
 
 <script setup lang="ts">
 import { PropType } from 'vue';
-import { Admin } from '@{{ app }}/layout';
+import { {{ namespace }} } from '@{{ app }}/layout';
 import NavSidebar from './components/NavSidebar.vue';
 import NavBody from './components/NavBody.vue';
-import { NavItemTreeCollectionResource } from '@{{ app }}/types';
+import {
+    NavItemTreeCollectionResource,
+    RouteItemCollectionResource,
+} from '@{{ app }}/types';
 
 const props = defineProps({
     type: {
@@ -24,6 +31,10 @@ const props = defineProps({
     },
     items: {
         type: Object as PropType<NavItemTreeCollectionResource>,
+        required: true,
+    },
+    routeItems: {
+        type: Object as PropType<RouteItemCollectionResource>,
         required: true,
     },
 });

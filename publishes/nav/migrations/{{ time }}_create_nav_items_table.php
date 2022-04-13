@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('route')->nullable();
             $table->string('type');
-
+            
+            $table->boolean('new_tab')->nullable();
             $table->integer('order_column')->default(0);
             $table->foreignId('parent_id')->nullable();
 

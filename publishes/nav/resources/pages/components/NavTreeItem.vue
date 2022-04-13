@@ -1,0 +1,44 @@
+<template>
+    <TreeItem :item="navItem" :children="children">
+        <span class="flex-1 py-1 cursor-pointer">
+            {{ navItem.title }}
+        </span>
+
+        <EditItemModal
+            :nav-item="navItem"
+            :route-items="routeItems"
+            :type="type"
+        />
+
+        <template v-slot:disclosure>
+            <NavTree :tree="children" :type="type" :route-items="routeItems" />
+        </template>
+    </TreeItem>
+</template>
+
+<script lang="ts" setup>
+import { Tree } from '@macramejs/macrame-vue3';
+import { NavItem, RouteItem } from '@{{ app }}/types/resources';
+import { TreeItem } from '@macramejs/admin-vue3';
+import NavTree from './NavTree.vue';
+import { PropType } from 'vue';
+import EditItemModal from './EditItemModal.vue';
+
+const props = defineProps({
+    navItem: {
+        type: Object as PropType<NavItem>,
+        required: true,
+    },
+    children: {
+        type: Object as PropType<Tree<NavItem>>,
+        required: true,
+    },
+    type: {
+        type: String,
+        required: true,
+    },
+    routeItems: {
+        type: Object as PropType<RouteItem[]>,
+    },
+});
+</script>

@@ -74,6 +74,7 @@ class MakeNavBuilderCommand extends BaseMakeCommand
     // nav
     Route::get('/{$route}/{type}', [NavController::class, 'show'])->name('nav.show');
     Route::post('/{$route}/{type}', [NavController::class, 'store'])->name('nav.store');
+    Route::put('/{$route}/{type}/{item}', [NavController::class, 'update'])->name('nav.update');
     Route::post('/{$route}/{type}/order', [NavController::class, 'order'])->name('nav.order');";
         $before = '});';
 
@@ -92,6 +93,12 @@ class MakeNavBuilderCommand extends BaseMakeCommand
         $this->publishDir(
             from: $this->publishesPath('resources/Pages'),
             to: resource_path($this->app().'/js/Pages/Nav')
+        );
+
+        // Modules
+        $this->publishDir(
+            from: $this->publishesPath('resources/modules'),
+            to: resource_path($this->app().'/js/modules/nav')
         );
 
         // Types

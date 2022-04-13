@@ -1,10 +1,10 @@
 <template>
     <Card>
-        <textarea type="text" v-model="model.text" />
+        <Wysiwyg type="text" v-model="model.text" />
     </Card>
 </template>
 <script setup lang="ts">
-import { Card } from '@macramejs/admin-vue3';
+import { Card, Wysiwyg } from '@macramejs/admin-vue3';
 import { defineProps, watch, defineEmits, reactive } from 'vue';
 
 const emit = defineEmits(['update:modelValue']);

@@ -6,7 +6,7 @@
                 :collection="collection?.data"
             />
         </template>
-        <template v-slot:topbar-left> Topbar Left </template>
+        <template v-slot:topbar-left></template>
         <template v-slot:topbar-right>
             <FilesTopbarRight />
         </template>

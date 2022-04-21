@@ -3,6 +3,9 @@
         <Cabinet>
             <DrawerTextFull :draws="SectionTextFull" />
         </Cabinet>
+        <Cabinet>
+            <DrawerTextImage :draws="SectionTextImage" />
+        </Cabinet>
     </DrawerSection>
     <DrawerSection title="Image Components">
         <Cabinet>
@@ -12,8 +15,16 @@
 </template>
 
 <script lang="ts" setup>
-import { SectionTextFull, SectionImageFull } from './content/sections';
-import { DrawerTextFull, DrawerImageFull } from './content/drawers';
+import {
+    SectionTextFull,
+    SectionTextImage,
+    SectionImageFull,
+} from './content/sections';
+import {
+    DrawerTextFull,
+    DrawerTextImage,
+    DrawerImageFull,
+} from './content/drawers';
 import { DrawerSection } from '@macramejs/admin-vue3';
 import { Cabinet } from '@macramejs/macrame-vue3';
 </script>

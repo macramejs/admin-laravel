@@ -169,15 +169,17 @@ class MakePageBuilderCommand extends BaseMakeCommand
         // Types
         $model = $this->model();
         $insert = "// {$model}
-        
+
 export type {$model} = {
     content: { [key: string]: any };
     attributes: { [key: string]: any };
     id?: number;
     name: string;
+    slug: string;
+    full_slug: string;
     meta: {
-        title: string,
-        description: string,
+        title: string;
+        description: string;
     };
 };
 
@@ -207,7 +209,7 @@ export type {$model}ContentForm = Form<{$model}Content>;
 
 export type {$model}Meta = {
     title: string,
-    // ...
+    description: string
 }
 export type {$model}MetaForm = Form<{$model}Meta>;";
         $this->insertAtEnd(

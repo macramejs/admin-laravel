@@ -29,9 +29,6 @@ import {
     Button,
     ContextMenuItem,
 } from '@macramejs/admin-vue3';
-import { useForm } from '@macramejs/macrame-vue3';
-import { templateOptions } from './content/templates';
-import { Page } from '@admin/types/resources';
 import { Selection } from '../modules';
 import { MediaCollection } from '@admin/types/resources';
 

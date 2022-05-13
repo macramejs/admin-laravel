@@ -22,7 +22,7 @@ import { defineProps, watch, defineEmits, reactive } from 'vue';
 // import { TextSection, CardsSection } from './index';
 // import { TextDrawer } from './../drawers';
 import { v4 as uuid } from 'uuid';
-import { Cabinet } from '@macramejs/page-builder-vue3';
+import { Cabinet } from '@macramejs/macrame-vue3';
 
 const emit = defineEmits(['update:modelValue']);
 

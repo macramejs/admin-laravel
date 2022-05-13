@@ -1,30 +1,36 @@
-import { {{ page }}, {{ page }}Collection } from '@admin/types';
+import { Media, MediaCollection } from '@admin/types';
 import { Inertia } from '@inertiajs/inertia';
 import { reactive, ref, watch } from 'vue'
 import { post } from '@admin/modules/request';
 
-interface Selection {
-    files: {{ page }}[],
-    addToCollection: (collection: {{ page }}Collection) => void,
+export interface Selection {
+    files: Media[],
+    addToCollection: (collection: MediaCollection) => void,
     delete: () => void
 }
 
-const selection = reactive<Selection>({
-    files: [],
-    addToCollection(collection) {
-        if(this.files.length == 0) {
+const useSelection = function(files: []) {
+    const sel = reactive<Selection>({ files, addToCollection() {}, delete() {} });
+
+    sel.addToCollection = (collection) => {
+        if(sel.files.length == 0) {
             return;
         }
 
-        return Inertia.post(`/{{ app }}/{{ route }}/${collection.id}/add`, { 
-            ids: this.files.map((file) => file.id)
-        });
-    },
-    delete() {
-        return Inertia.post(`/{{ app }}/{{ route }}/delete`, { 
-            ids: this.files.map((file) => file.id)
+        return Inertia.post(`/admin/media/${collection.id}/add`, { 
+            ids: sel.files.map((file) => file.id)
         });
     }
-});
 
-export { selection };
+    sel.delete = () => {
+        return Inertia.post(`/admin/media/delete`, { 
+            ids: sel.files.map((file) => file.id)
+        });
+    }
+
+    return sel;
+};
+
+const selection = useSelection([]);
+
+export { selection, useSelection };

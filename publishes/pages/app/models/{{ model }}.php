@@ -9,11 +9,12 @@ use App\Contracts\Restrictable;
 use App\Models\Concerns\IsRestricted;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Macrame\Admin\Media\Traits\HasFiles;
 use Macrame\Admin\Pages\Contracts\Page as PageContract;
 use Macrame\Admin\Pages\Traits\IsPage;
 
-class {{ model }} extends Model implements PageContract
+class Page extends Model implements PageContract
 {
     use HasFactory, HasFiles, IsPage;
 
@@ -38,6 +39,9 @@ class {{ model }} extends Model implements PageContract
         'full_slug',
         'order_column',
         'is_live',
+        'parent_id',
+        'meta_title',
+        'meta_description',
     ];
 
     /**
@@ -61,4 +65,14 @@ class {{ model }} extends Model implements PageContract
         'attributes' => '[]',
         'is_live'    => true
     ];
+
+    /**
+     * The creator of the page.
+     *
+     * @return BelongsTo
+     */
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'creator_id');
+    }
 }

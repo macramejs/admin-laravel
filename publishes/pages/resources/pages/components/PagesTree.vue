@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { {{ model }} } from '@{{ app }}/types';
+import { Page } from '@admin/types';
 import { defineProps, PropType } from 'vue';
 import { Tree } from '@macramejs/macrame-vue3';
 import { Tree as BaseTree } from '@macramejs/admin-vue3';
@@ -16,7 +16,7 @@ import PagesTreeItem from './PagesTreeItem.vue';
 
 defineProps({
     tree: {
-        type: Object as PropType<Tree<{{ model }}>>,
+        type: Object as PropType<Tree<Page>>,
         required: true,
     },
 });

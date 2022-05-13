@@ -6,11 +6,11 @@
 import { PropType } from 'vue';
 import PagesTree from './PagesTree.vue';
 import { Tree } from '@macramejs/macrame-vue3';
-import { {{ model }} } from '@{{ app }}/types';
+import { Page } from '@admin/types';
 
 const props = defineProps({
     tree: {
-        type: Object as PropType<Tree<{{ model }}>>,
+        type: Object as PropType<Tree<Page>>,
         required: true,
     },
 });

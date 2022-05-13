@@ -1,18 +1,18 @@
 <?php
 
-namespace {{ namespace }}\Http\Controllers;
+namespace Admin\Http\Controllers;
 
-use {{ namespace }}\Http\Indexes\{{ page }}Index;
-use {{ namespace }}\Http\Resources\{{ page }}CollectionResource;
-use {{ namespace }}\Ui\Page;
-use App\Models\{{ file_model }};
-use App\Models\{{ page }}Collection;
+use Admin\Http\Indexes\MediaIndex;
+use Admin\Http\Resources\MediaCollectionResource;
+use Admin\Ui\Page;
+use App\Models\File;
+use App\Models\MediaCollection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class {{ page }}CollectionController
+class MediaCollectionController
 {
     /**
      * Ship index page.
@@ -22,8 +22,8 @@ class {{ page }}CollectionController
      */
     public function items(
         Request $request,
-        {{ page }}Collection $collection,
-        {{ page }}Index $index
+        MediaCollection $collection,
+        MediaIndex $index
     ) {
         return $index->items($request, $collection->files());
     }
@@ -34,25 +34,25 @@ class {{ page }}CollectionController
      * @param  Page $page
      * @return Page
      */
-    public function show(Page $page, {{ page }}Collection $collection)
+    public function show(Page $page, MediaCollection $collection)
     {
-        $collections = {{ page }}Collection::withCount('files')->get();
+        $collections = MediaCollection::withCount('files')->get();
 
         return $page
-            ->page('{{ page }}/Index')
-            ->with('collection', new {{ page }}CollectionResource($collection))
-            ->with('collections', {{ page }}CollectionResource::collection($collections));
+            ->page('Media/Index')
+            ->with('collection', new MediaCollectionResource($collection))
+            ->with('collections', MediaCollectionResource::collection($collections));
     }
 
     /**
-     * Create a new {{ page }}Collection.
+     * Create a new MediaCollection.
      *
      * @param Request $request
      * @return RedirectResponse
      */
     public function store(Request $request)
     {
-        {{ page }}Collection::create([
+        MediaCollection::create([
             'title' => $request->title,
             'key'   => Str::slug($request->title),
         ]);
@@ -64,17 +64,17 @@ class {{ page }}CollectionController
      * Add a list of files to the collection.
      *
      * @param Request $request
-     * @param {{ page }}Collection $collection
+     * @param MediaCollection $collection
      * @return RedirectResponse
      */
-    public function add(Request $request, {{ page }}Collection $collection)
+    public function add(Request $request, MediaCollection $collection)
     {
         $request->validate([
-            'files' => 'required|array'
+            'ids' => 'required|array'
         ]);
 
-        {{ file_model }}::whereIn('id', $request->files)->get()
-            ->each(function ({{ file_model }} $file) use ($collection) {
+        File::whereIn('id', $request->ids)->get()
+            ->each(function (File $file) use ($collection) {
                 if ($collection->isAttachedTo($file)) {
                     return;
                 }
@@ -89,17 +89,17 @@ class {{ page }}CollectionController
      * Remove a list of files from the collection.
      *
      * @param Request $request
-     * @param {{ page }}Collection $collection
+     * @param MediaCollection $collection
      * @return RedirectResponse
      */
-    public function remove(Request $request, {{ page }}Collection $collection)
+    public function remove(Request $request, MediaCollection $collection)
     {
         $request->validate([
-            'files' => 'required|array'
+            'ids' => 'required|array'
         ]);
 
-        {{ file_model }}::whereIn('id', $request->files)->get()
-            ->each(function ({{ file_model }} $file) use ($collection) {
+        File::whereIn('id', $request->ids)->get()
+            ->each(function (File $file) use ($collection) {
                 if (! $collection->isAttachedTo($file)) {
                     return;
                 }
@@ -114,18 +114,20 @@ class {{ page }}CollectionController
      * Upload files.
      *
      * @param Request $request
-     * @param {{ page }}Collection $collection
+     * @param MediaCollection $collection
      * @return void
      */
-    public function upload(Request $request, {{ page }}Collection $collection)
+    public function upload(Request $request, MediaCollection $collection)
     {
-        collect($request->files->get('images'))
+        collect($request->files->get('files'))
             ->each(function (UploadedFile $file) use ($collection) {
-                $file = {{ file_model }}::createFromUploadedFile($file);
+                $file = File::createFromUploadedFile($file);
 
                 $file->save();
 
                 $file->attach($collection);
             });
+
+        return response()->json();
     }
 }

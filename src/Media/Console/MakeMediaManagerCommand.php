@@ -89,19 +89,19 @@ class MakeMediaManagerCommand extends BaseMakeCommand
         $page = $this->page();
         $route = $this->route();
         $insert = "
-    // {$name}
-    Route::get('/{$route}', [{$page}Controller::class, 'index'])->name('{$route}.index');
-    Route::get('/{$route}/items', [{$page}Controller::class, 'items'])->name('{$route}.items');
-    Route::get('/{$route}/items/{file}', [{$page}Controller::class, 'item'])->name('{$route}.item');
-    Route::post('/{$route}/upload', [{$page}Controller::class, 'upload'])->name('{$route}.upload');
-    Route::post('/{$route}/delete', [{$page}Controller::class, 'destroy'])->name('{$route}.destroy');
+    // media
+    Route::get('/media', [MediaController::class, 'index'])->name('media.index');
+    Route::get('/media/items', [MediaController::class, 'items'])->name('media.items');
+    Route::get('/media/items/{file}', [MediaController::class, 'item'])->name('media.item');
+    Route::post('/media/upload', [MediaController::class, 'upload'])->name('media.upload');
+    Route::post('/media/delete', [MediaController::class, 'destroy'])->name('media.destroy');
 
-    // {$name} collections
-    Route::post('/{$route}', [{$page}CollectionController::class, 'store'])->name('{$name}-collections.show');
-    Route::get('/{$route}/{collection}', [{$page}CollectionController::class, 'show'])->name('{$name}-collections.show');
-    Route::post('/{$route}/{collection}/upload', [{$page}CollectionController::class, 'upload'])->name('{$name}-collections.upload');
-    Route::post('/{$route}/{collection}/remove', [{$page}CollectionController::class, 'remove'])->name('{$name}-collections.remove');
-    Route::post('/{$route}/{collection}/add', [{$page}CollectionController::class, 'add'])->name('{$name}-collections.add');";
+    // media collections
+    Route::post('/media', [MediaCollectionController::class, 'store'])->name('media-collections.show');
+    Route::get('/media/{collection}', [MediaCollectionController::class, 'show'])->name('media-collections.show');
+    Route::post('/media/{collection}/upload', [MediaCollectionController::class, 'upload'])->name('media-collections.upload');
+    Route::post('/media/{collection}/remove', [MediaCollectionController::class, 'remove'])->name('media-collections.remove');
+    Route::post('/media/{collection}/add', [MediaCollectionController::class, 'add'])->name('media-collections.add');";
         $before = '});';
 
         $routesPath = base_path('routes/'.$this->app().'.php');

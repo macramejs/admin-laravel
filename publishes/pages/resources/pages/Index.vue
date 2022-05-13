@@ -1,5 +1,5 @@
 <template>
-    <{{ namespace }} sidebar-secondary>
+    <Admin sidebar-secondary>
         <template v-slot:sidebar-secondary>
             <PageSidebar :pages="pages.data" />
         </template>
@@ -7,18 +7,18 @@
             <slot name="topbar-left" />
         </template>
         <slot />
-    </{{ namespace }}>
+    </Admin>
 </template>
 
 <script setup lang="ts">
 import { PropType } from 'vue';
 import { Admin } from '@admin/layout';
 import PageSidebar from './components/PagesSidebar.vue';
-import { {{ model }}TreeCollectionResource } from '@{{ app }}/types';
+import { PageTreeCollectionResource } from '@admin/types';
 
 const props = defineProps({
     pages: {
-        type: Object as PropType<{{ model }}TreeCollectionResource>,
+        type: Object as PropType<PageTreeCollectionResource>,
         required: true,
     },
 });

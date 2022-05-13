@@ -1,31 +1,31 @@
 <?php
 
-namespace {{ namespace }}\Http\Controllers;
+namespace Admin\Http\Controllers;
 
-use {{ namespace }}\Http\Indexes\{{ page }}Index;
-use {{ namespace }}\Http\Resources\{{ page }}CollectionResource;
-use {{ namespace }}\Http\Resources\{{ page }}Resource;
-use {{ namespace }}\Ui\Page;
-use App\Models\{{ file_model }};
-use App\Models\{{ page }}Collection;
+use Admin\Http\Indexes\MediaIndex;
+use Admin\Http\Resources\MediaCollectionResource;
+use Admin\Http\Resources\MediaResource;
+use Admin\Ui\Page;
+use App\Models\File;
+use App\Models\MediaCollection;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class {{ page }}Controller
+class MediaController
 {
     /**
-     * {{ page }} index page.
+     * Media index page.
      *
      * @param  Request $request
-     * @param  {{ model }}Index $index
-     * @return {{ model }}Index
+     * @param  PageIndex $index
+     * @return PageIndex
      */
-    public function items(Request $request, {{ page }}Index $index)
+    public function items(Request $request, MediaIndex $index)
     {
         return $index->items(
-            request: $request, 
-            query: {{ file_model }}::query(), 
-            resource: {{ page }}Resource::class
+            request: $request,
+            query: File::query(),
+            resource: MediaResource::class
         );
     }
 
@@ -33,27 +33,27 @@ class {{ page }}Controller
      * Show a single file.
      *
      * @param Request $request
-     * @param {{ model }} $file
-     * @return {{ page }}Resource
+     * @param File $file
+     * @return MediaResource
      */
-    public function item(Request $request, {{ file_model }} $file)
+    public function item(Request $request, File $file)
     {
-        return new {{ page }}Resource($file);
+        return new MediaResource($file);
     }
 
     /**
-     * Show the {{ page }} index.
+     * Show the Media index.
      *
      * @param  Page $page
      * @return Page
      */
     public function index(Page $page, $mimeType = null)
     {
-        $collections = {{ page }}Collection::withCount('files')->get();
+        $collections = MediaCollection::withCount('files')->get();
 
         return $page
-            ->page('{{ page }}/Index')
-            ->with('collections', {{ page }}CollectionResource::collection($collections));
+            ->page('Media/Index')
+            ->with('collections', MediaCollectionResource::collection($collections));
     }
 
     /**
@@ -68,7 +68,7 @@ class {{ page }}Controller
             'ids' => 'required|array'
         ]);
 
-        {{ file_model }}::whereIn('id', $request->ids)->delete();
+        File::whereIn('id', $request->ids)->delete();
 
         return redirect()->back();
     }
@@ -83,7 +83,9 @@ class {{ page }}Controller
     {
         collect($request->files->get('files'))
             ->each(function (UploadedFile $file) {
-                {{ file_model }}::createFromUploadedFile($file);
+                File::createFromUploadedFile($file);
             });
+
+        return response()->json();
     }
 }

@@ -1,19 +1,19 @@
 <template>
     <Card>
-        <!-- <Sections
+        <Sections
             v-model="model.cards"
             :group="id"
             :sections="{ text: TextSection, cards: CardsSection }"
             class="w-full h-12"
-        /> -->
+        />
 
-        <!-- <Cabinet class="w-full col-span-1 space-y-2" :group="id">
+        <Cabinet class="w-full col-span-1 space-y-2" :group="id">
             <TextDrawer :draws="TextSection" />
 
             <div :draws="CardsSection" class="px-6 py-4 bg-gray-100 rounded">
                 Cards
             </div>
-        </Cabinet> -->
+        </Cabinet>
     </Card>
 </template>
 <script setup lang="ts">

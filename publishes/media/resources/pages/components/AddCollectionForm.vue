@@ -11,10 +11,10 @@
 <script lang="ts" setup>
 import { useForm } from '@macramejs/macrame-vue3';
 import { Input } from '@macramejs/admin-vue3';
-import { {{ page }}Collection } from '@{{ app }}/types';
+import { MediaCollection } from '@admin/types';
 
-const form = useForm<{{ page }}Collection>({
-    route: '/{{ app }}/{{ route }}',
+const form = useForm<MediaCollection>({
+    route: '/admin/media',
     data: { title: '' },
     method: 'post',
     onSuccess: (request) => {

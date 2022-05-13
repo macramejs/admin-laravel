@@ -1,13 +1,13 @@
 <template>
     <Card>
-        <img :src="selectedImage?.url" v-if="selectedImage" class="mb-2" />
+        <img :src="selectedImage?.url" v-if="selectedImage" />
         <SelectImageModal v-model="selectedImage" v-if="!busy" />
     </Card>
 </template>
 <script setup lang="ts">
 import { getMediaById } from '@admin/modules/media';
 import { Media } from '@admin/types';
-import { Card } from '@macramejs/admin-vue3';
+import { Card, Button } from '@macramejs/admin-vue3';
 import { defineProps, watch, defineEmits, ref, onBeforeMount } from 'vue';
 import SelectImageModal from './SelectImageModal.vue';
 

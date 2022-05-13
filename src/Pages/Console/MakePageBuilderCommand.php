@@ -161,6 +161,10 @@ class MakePageBuilderCommand extends BaseMakeCommand
             from: $this->publishesPath('resources/Pages'),
             to: resource_path($this->app().'/js/Pages/'.$this->page())
         );
+        $this->publishDir(
+            from: $this->publishesPath('resources/modules'),
+            to: resource_path($this->app().'/js/modules')
+        );
 
         // Types
         $model = $this->model();

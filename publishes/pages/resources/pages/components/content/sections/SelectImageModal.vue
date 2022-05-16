@@ -2,7 +2,6 @@
     <Button @click="isOpen = true">Select Image</Button>
     <Modal v-model:open="isOpen" @close="isOpen = false">
         <div class="grid grid-cols-12 gap-4">
-
             <div
                 v-for="(image, key) in mediaIndex.items"
                 :key="key"
@@ -36,7 +35,7 @@ const props = defineProps({
 mediaIndex.loadItems();
 
 const selectImage = (image) => {
-    emit('update:modelValue', image)
+    emit('update:modelValue', image);
     isOpen.value = false;
-}
+};
 </script>

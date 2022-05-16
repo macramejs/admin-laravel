@@ -40,7 +40,12 @@
                     {{ file.author }}
                 </span>
                 <div class="absolute btn-wrapper hidden right-4 bottom-2.5">
-                    <FileMenu />
+                    <SelectionMenu
+                        :selection="useSelection([file])"
+                        :collections="collections"
+                    >
+                        <template #button><ContextButton /></template>
+                    </SelectionMenu>
                 </div>
             </div>
             <img
@@ -53,9 +58,19 @@
 </template>
 
 <script lang="ts" setup>
-import FileMenu from './FileMenu.vue';
-import { selection } from '../modules';
-import { mediaIndex } from '@{{ app }}/modules/{{ name }}';
+import { ref, toRefs, watch, PropType } from 'vue';
+import { FileUpload, Index, ContextButton } from '@macramejs/admin-vue3';
+import SelectionMenu from './SelectionMenu.vue';
+import { selection, useSelection } from '../modules';
+import { mediaIndex } from '@admin/modules/media';
+import { MediaCollection } from '@admin/types/resources';
+
+const props = defineProps({
+    collections: {
+        type: Array as PropType<MediaCollection[]>,
+        required: true,
+    },
+});
 </script>
 
 <style scoped>

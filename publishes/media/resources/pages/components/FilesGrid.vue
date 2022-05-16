@@ -6,7 +6,7 @@
             >
                 <FileUpload :collection="collection" />
             </div>
-            <FilesGridTable />
+            <FilesGridTable :collections="collections" />
         </div>
     </div>
 </template>
@@ -16,13 +16,17 @@ import { ref, toRefs, watch } from 'vue';
 import { Index } from '@macramejs/admin-vue3';
 import FileMenu from './FileMenu.vue';
 import { PropType } from 'vue';
-import { {{ page }}Collection } from '@{{ app }}/types';
+import { MediaCollection } from '@admin/types';
 import FilesGridTable from './FilesGridTable.vue';
 import FileUpload from './FileUpload.vue';
 
 const props = defineProps({
     collection: {
-        type: Object as PropType<{{ page }}Collection>,
+        type: Object as PropType<MediaCollection>,
+    },
+    collections: {
+        type: Array as PropType<MediaCollection[]>,
+        required: true,
     },
 });
 </script>

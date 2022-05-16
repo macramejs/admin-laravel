@@ -2,12 +2,12 @@
     <TreeItem :item="page" :children="children" :is-active="isActive">
         <Link
             class="flex-1 py-1 cursor-pointer"
-            :href="`/{{ app }}/{{ route }}/${page.id}`"
+            :href="`/admin/pages/${page.id}`"
         >
             {{ page.name }}
         </Link>
 
-        <ContextButton />
+        <PageContextMenu :page="page" />
 
         <template v-slot:disclosure>
             <PagesTree :tree="children" />
@@ -17,24 +17,25 @@
 
 <script lang="ts" setup>
 import { Tree } from '@macramejs/macrame-vue3';
-import { {{ model }} } from '@{{ app }}/types';
-import { TreeItem, ContextButton } from '@macramejs/admin-vue3';
+import { Page } from '@admin/types';
+import { TreeItem } from '@macramejs/admin-vue3';
 import { Link } from '@inertiajs/inertia-vue3';
 import PagesTree from './PagesTree.vue';
+import PageContextMenu from './PageContextMenu.vue';
 import { computed, PropType } from 'vue';
 
 const props = defineProps({
     page: {
-        type: Object as PropType<{{ model }}>,
+        type: Object as PropType<Page>,
         required: true,
     },
     children: {
-        type: Object as PropType<Tree<{{ model }}>>,
+        type: Object as PropType<Tree<Page>>,
         required: true,
     },
 });
 
 const isActive = computed(
-    () => `/{{ app }}/{{ route }}/${props.page.id}` == window.location.pathname
+    () => `/admin/pages/${props.page.id}` == window.location.pathname
 );
 </script>

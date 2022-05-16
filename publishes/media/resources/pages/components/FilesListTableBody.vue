@@ -47,11 +47,11 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue';
-import { {{ page }}Index } from '@{{ app }}/modules/{{ name }}';
+import { MediaIndex } from '@admin/modules/media';
 import { Tr, Td } from '@macramejs/admin-vue3';
 import FileMenu from './FileMenu.vue';
 
 defineProps({
-    table: Object as PropType<{{ page }}Index>,
+    table: Object as PropType<MediaIndex>,
 });
 </script>

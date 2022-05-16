@@ -1,1 +1,1 @@
-export { selection } from './selection'
+export * from './selection'

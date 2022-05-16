@@ -133,15 +133,16 @@ class MakePageBuilderCommand extends BaseMakeCommand
 
         $route = $this->route();
         $insert = "
-    // {$route}
-    Route::get('/{$route}', [{$model}Controller::class, 'index'])->name('{$route}.index');
-    Route::get('/{$route}/items', [{$model}Controller::class, 'items'])->name('{$route}.items');
-    Route::get('/{$route}/{page}', [{$model}Controller::class, 'show'])->name('{$route}.show');
-    Route::post('/{$route}', [{$model}Controller::class, 'store'])->name('{$route}.store');
-    Route::post('/{$route}/order', [{$model}Controller::class, 'order'])->name('{$route}.order');
-    Route::post('/{$route}/{page}', [{$model}Controller::class, 'update'])->name('{$route}.update');
-    Route::post('/{$route}/{page}/meta', [{$model}Controller::class, 'meta'])->name('{$route}.meta');
-    Route::post('/{$route}/{page}/upload', [{$model}Controller::class, 'upload'])->name('{$route}.upload');";
+    // pages
+    Route::get('/pages', [PageController::class, 'index'])->name('pages.index');
+    Route::get('/pages/items', [PageController::class, 'items'])->name('pages.items');
+    Route::get('/pages/{page}/{tab?}', [PageController::class, 'show'])->name('pages.show');
+    Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
+    Route::post('/pages', [PageController::class, 'store'])->name('pages.store');
+    Route::post('/pages/order', [PageController::class, 'order'])->name('pages.order');
+    Route::put('/pages/{page}', [PageController::class, 'update'])->name('pages.update');
+    Route::post('/pages/{page}/meta', [PageController::class, 'meta'])->name('pages.meta');
+    Route::post('/pages/{page}/upload', [PageController::class, 'upload'])->name('pages.upload');";
         $before = '});';
 
         $routesPath = base_path('routes/'.$this->app().'.php');
@@ -160,19 +161,25 @@ class MakePageBuilderCommand extends BaseMakeCommand
             from: $this->publishesPath('resources/Pages'),
             to: resource_path($this->app().'/js/Pages/'.$this->page())
         );
+        $this->publishDir(
+            from: $this->publishesPath('resources/modules'),
+            to: resource_path($this->app().'/js/modules')
+        );
 
         // Types
         $model = $this->model();
         $insert = "// {$model}
-        
+
 export type {$model} = {
     content: { [key: string]: any };
     attributes: { [key: string]: any };
     id?: number;
     name: string;
+    slug: string;
+    full_slug: string;
     meta: {
-        title: string,
-        description: string,
+        title: string;
+        description: string;
     };
 };
 
@@ -202,7 +209,7 @@ export type {$model}ContentForm = Form<{$model}Content>;
 
 export type {$model}Meta = {
     title: string,
-    // ...
+    description: string
 }
 export type {$model}MetaForm = Form<{$model}Meta>;";
         $this->insertAtEnd(

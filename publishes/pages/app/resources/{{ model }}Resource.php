@@ -2,18 +2,18 @@
 
 namespace Admin\Http\Resources;
 
-use App\Models\{{ model }};
+use App\Models\Page;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin {{ model }}
+ * @mixin Page
  */
-class {{ model }}Resource extends JsonResource
+class PageResource extends JsonResource
 {
     /**
      * The resource instance.
      *
-     * @var {{ model }}
+     * @var Page
      */
     public $resource;
 
@@ -25,8 +25,23 @@ class {{ model }}Resource extends JsonResource
      */
     public function toArray($request)
     {
-        return array_merge(parent::toArray($request), [
+        return [
+            'id' => $this->id,
+
+            // static
+            'name' => $this->name,
+            'slug' => $this->slug,
+
+            // dynamic
+            'content' => $this->content->toArray(),
+            'attributes' => $this->attributes,
+
             'full_slug' => $this->getFullSlug(),
-        ]);
+            
+            'meta' => [
+                'title' => $this->meta_title,
+                'description' => $this->meta_description,
+            ]
+        ];
     }
 }

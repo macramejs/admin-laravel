@@ -17,16 +17,16 @@ import { Sections } from '@macramejs/admin-vue3';
 import { defineProps, PropType } from 'vue';
 import { templates } from './content/templates';
 import { sections } from './content/sections';
-import { {{ model }}Resource } from '@{{ app }}/types/resources';
-import { {{ model }}ContentForm } from '@{{ app }}/types/forms';
+import { PageResource } from '@admin/types/resources';
+import { PageContentForm } from '@admin/types/forms';
 
 const props = defineProps({
     page: {
-        type: Object as PropType<{{ model }}Resource>,
+        type: Object as PropType<PageResource>,
         required: true,
     },
     form: {
-        type: Object as PropType<{{ model }}ContentForm>,
+        type: Object as PropType<PageContentForm>,
         required: true,
     },
 });

@@ -1,10 +1,9 @@
 <template>
     <BaseLayout v-bind="$attrs">
-        <TabGroup>
+        <TabGroup :default-index="tabs.indexOf(tab)">
             <TabList>
-                <Tab> Content </Tab>
-                <Tab> Meta </Tab>
-                <Tab> Settings </Tab>
+                <Tab :href="`/admin/pages/${page.data.id}`">Content</Tab>
+                <Tab :href="`/admin/pages/${page.data.id}/meta`">Meta</Tab>
             </TabList>
             <TabPanels>
                 <TabPanel has-sidebar sidebar-top-position="118">
@@ -14,47 +13,74 @@
                     <PanelContentBody :form="contentForm" :page="page.data" />
                 </TabPanel>
                 <TabPanel>
-                    <PanelMetaBody :form="metaForm" :page="page" />
+                    <PanelMetaBody
+                        :form="metaForm"
+                        :page="page"
+                        :full-slug="fullSlug"
+                    />
                 </TabPanel>
             </TabPanels>
         </TabGroup>
         <template v-slot:topbar-left>
             <span>{{ contentForm.name }}</span>
             <div class="ml-4 text-sm text-gray">
-                {{ page.data.full_slug }}
+                <span v-html="fullSlug" /> <EditSlugModal :form="contentForm" />
             </div>
         </template>
     </BaseLayout>
 </template>
 
 <script setup lang="ts">
-import { defineProps, PropType } from 'vue';
+import { defineProps, PropType, computed } from 'vue';
 import Layout from './package/Layout.vue';
 import { useForm } from '@macramejs/macrame-vue3';
 import { TabGroup, TabList, Tab, TabPanel } from '@macramejs/admin-vue3';
 import { TabPanels } from '@headlessui/vue';
 import BaseLayout from './Index.vue';
 import { saveQueue } from '@admin/modules/save-queue';
-import { {{ model }}Resource } from '@{{ app }}/types/resources';
-import { {{ model }}Content, {{ model }}Meta } from '@{{ app }}/types/forms';
+import { PageResource } from '@admin/types/resources';
+import { PageContent, PageMeta } from '@admin/types/forms';
 import PanelMetaBody from './components/PanelMetaBody.vue';
 import PanelContentBody from './components/PanelContentBody.vue';
 import PanelContentSidebar from './components/PanelContentSidebar.vue';
+import EditSlugModal from './components/EditSlugModal.vue';
+
+const tabs = ['content', 'meta'];
 
 const props = defineProps({
     page: {
         type: Object as PropType<PageResource>,
         required: true,
     },
+    tab: {
+        type: String,
+        required: false,
+        default: 'content',
+    },
 });
 
+const changedTab = function (index) {
+    const metaIndex = 1;
+
+    console.log('changed tab: ' + index);
+
+    if (index == metaIndex) {
+        window.history.pushState(
+            'foo',
+            'bar',
+            `${window.location.pathname}/met`
+        );
+    }
+};
+
 const contentFormQueueKey = `page.${props.page.data.id}.content`;
-const contentForm = useForm<{{ model }}Content>({
-    route: `/{{ app }}/{{ route }}/${props.page.data.id}`,
-    method: 'post',
+const contentForm = useForm<PageContent>({
+    route: `/admin/pages/${props.page.data.id}`,
+    method: 'put',
     data: {
         name: props.page.data.name,
         content: props.page.data.content || [],
+        slug: props.page.data.slug,
         attributes: Array.isArray(props.page.data.attributes)
             ? {}
             : props.page.data.attributes,
@@ -65,12 +91,20 @@ const contentForm = useForm<{{ model }}Content>({
 });
 
 const metaFormQueueKey = `page.${props.page.data.id}.meta`;
-const metaForm = useForm<{{ model }}Meta>({
-    route: `/{{ app }}/{{ route }}/${props.page.data.id}/meta`,
+const metaForm = useForm<PageMeta>({
+    route: `/admin/pages/${props.page.data.id}/meta`,
     method: 'post',
     data: props.page.data.meta || {},
-    onDirty: (form) =>
-        saveQueue.add(metaFormQueueKey, async () => form.submit()),
+    onDirty: (form) => {
+        console.log('foooo');
+        saveQueue.add(metaFormQueueKey, async () => form.submit());
+    },
     onClean: () => saveQueue.remove(metaFormQueueKey),
+});
+
+const fullSlug = computed(() => {
+    let parts = props.page.data.full_slug.split('/');
+    parts.pop();
+    return `${parts.join('/')}/<strong>${contentForm.slug}</strong>`;
 });
 </script>

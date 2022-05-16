@@ -1,31 +1,10 @@
 <template>
     <ContextMenu>
-        <div class="flex flex-col">
-            <button
-                class="w-full py-2.5 px-[14px] text-left hover:bg-white hover:bg-opacity-20 rounded-[8px]"
-            >
-                Edit
-            </button>
-            <button
-                class="w-full py-2.5 px-[14px] text-left hover:bg-white hover:bg-opacity-20 rounded-[8px]"
-            >
-                Duplicate
-            </button>
-            <div class="bg-white w-full my-1.5 h-px bg-opacity-20"></div>
-            <button
-                class="w-full py-2.5 px-[14px] text-left hover:bg-white hover:bg-opacity-20 rounded-[8px]"
-            >
-                Archive
-            </button>
-            <button
-                class="w-full py-2.5 px-[14px] text-left hover:bg-white hover:bg-opacity-20 rounded-[8px]"
-            >
-                Move
-            </button>
-            <div class="bg-white w-full my-1.5 h-px bg-opacity-20"></div>
-            <button
-                class="w-full flex items-center text-red-signal gap-2 py-2.5 px-[14px] text-left hover:bg-red-signal hover:bg-opacity-20 rounded-[8px]"
-            >
+        <ContextMenuItem
+            class="hover:bg-red-signal text-red-signal"
+            @click="deleteFile(props.file)"
+        >
+            <template #icon>
                 <svg
                     width="24"
                     height="24"
@@ -41,12 +20,26 @@
                         stroke-linejoin="round"
                     />
                 </svg>
-                <span>Delete</span>
-            </button>
-        </div>
+            </template>
+            <span>Delete</span>
+        </ContextMenuItem>
     </ContextMenu>
 </template>
 
 <script lang="ts" setup>
-import { ContextMenu } from '@macramejs/admin-vue3';
+import { Media } from "@admin/types/resources";
+import { deleteFile } from "@admin/modules/media";
+import { PropType } from "vue";
+import {
+    ContextMenu,
+    ContextMenuItem,
+    ContextMenuDivider,
+} from "@macramejs/admin-vue3";
+
+const props = defineProps({
+    file: {
+        type: Object as PropType<Media>,
+        required: true,
+    },
+});
 </script>

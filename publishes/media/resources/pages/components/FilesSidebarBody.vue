@@ -80,8 +80,8 @@
             class="px-4 py-2 rounded-[8px] transition-colors text-left duration-300 hover:bg-gray-100"
             :href="
                 c.id == collection?.id
-                    ? `/{{ app }}/{{ route }}`
-                    : `/{{ app }}/{{ route }}/${c.id}`
+                    ? `/admin/media`
+                    : `/admin/media/${c.id}`
             "
         >
             <div class="flex justify-between">
@@ -97,17 +97,17 @@ import { Input } from '@macramejs/admin-vue3';
 import { Link } from '@inertiajs/inertia-vue3';
 import { RadioGroup, RadioGroupOption } from '@headlessui/vue';
 import { PropType, ref, computed } from 'vue';
-import { {{ page }}Collection } from '@{{ app }}/types';
+import { MediaCollection } from '@admin/types';
 import AddCollectionForm from './AddCollectionForm.vue';
-import { mediaIndex } from '@{{ app }}/modules/{{ name }}';
+import { mediaIndex } from '@admin/modules/media';
 
 const props = defineProps({
     collections: {
-        type: Array as PropType<{{ page }}Collection[]>,
+        type: Array as PropType<MediaCollection[]>,
         required: true,
     },
     collection: {
-        type: Object as PropType<{{ page }}Collection>,
+        type: Object as PropType<MediaCollection>,
         required: false,
     },
 });

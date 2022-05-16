@@ -1,12 +1,12 @@
 <template>
     <Drawer title="Text" hint="just a simple text input" color="purple">
         <svg
+            class="w-4 h-4"
             width="24"
             height="24"
             stroke-width="1.5"
             viewBox="0 0 24 24"
             fill="none"
-            class="w-4 h-4"
             xmlns="http://www.w3.org/2000/svg"
         >
             <path

@@ -1,22 +1,22 @@
-import { useIndex, Index } from "@macramejs/macrame-vue3"
-import { {{ page }} } from '@{{ app }}/types/resources';
-import { get } from "../request";
+import { useIndex, Index } from "@macramejs/macrame-vue3";
+import { Media } from "@admin/types/resources";
+import { get, post } from "../request";
 
-export type {{ page }}Index = Index<{{ page }}>;
+export type MediaIndex = Index<Media>;
 
-export const use{{ page }}Index = () => {
-    const index = useIndex<{{ page }}>({
-        route: '/{{ app }}/{{ route }}/items',
+export const useMediaIndex = () => {
+    const index = useIndex<Media>({
+        route: "/admin/media/items",
         syncUrl: true,
         sortBy: [],
         filters: {
             collection: {
                 update(collection) {
-                    index.filters.collection.value = collection 
-                        ? collection.key 
+                    index.filters.collection.value = collection
+                        ? collection.key
                         : null;
                 },
-                value: null
+                value: null,
             },
             types: {
                 toggle(type) {
@@ -27,20 +27,30 @@ export const use{{ page }}Index = () => {
                         index.filters.types.value.push(type);
                     }
                 },
-                value: []
-            }
-        }
+                value: [],
+            },
+        },
     });
 
     index.reloadOnChange(index.filters);
 
     return index;
-}
+};
 
-export const {{ name }}Index = use{{ page }}Index();
+export const mediaIndex = useMediaIndex();
 
-export const get{{ page }}ById = async (id: number) => {
-    const { data } = await (await get(`/{{ app }}/{{ route }}/items/${id}`)).json();
+export const getMediaById = async (id: number) => {
+    const { data } = await (await get(`/admin/media/items/${id}`)).json();
 
-    return <{{ page }}>data;
-}
+    return <Media>data;
+};
+
+export const deleteFile = async (file: Media) => {
+    await post(`/admin/media/delete/`, {
+        body: {
+            ids: [file.id],
+        },
+    });
+
+    mediaIndex.reload();
+};

@@ -19,17 +19,17 @@
 </template>
 
 <script lang="ts" setup>
-import { {{ page }}Collection } from '@{{ app }}/types';
+import { MediaCollection } from '@admin/types';
 import { Index, Table } from '@macramejs/admin-vue3';
 import { PropType } from 'vue';
-import { mediaIndex } from '@{{ app }}/modules/{{ name }}';
+import { mediaIndex } from '@admin/modules/media';
 import FilesListTableBody from './FilesListTableBody.vue';
 import FilesListTableHead from './FilesListTableHead.vue';
 import FileUpload from './FileUpload.vue';
 
 const props = defineProps({
     collection: {
-        type: Object as PropType<{{ page }}Collection>,
+        type: Object as PropType<MediaCollection>,
     },
 });
 </script>

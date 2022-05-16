@@ -1,40 +1,46 @@
 <template>
-    <{{ namespace }} sidebar-secondary>
+    <Admin sidebar-secondary>
         <template v-slot:sidebar-secondary>
             <FilesSidebar
                 :collections="collections.data"
                 :collection="collection?.data"
             />
         </template>
-        <template v-slot:topbar-left></template>
+        <template v-slot:topbar-left>
+            <FilesTopbarLeft />
+        </template>
         <template v-slot:topbar-right>
-            <FilesTopbarRight />
+            <FilesTopbarRight :collections="collections.data" />
         </template>
         <slot>
-            <FilesTabs />
+            <FilesTabs
+                :collection="collection?.data"
+                :collections="collections.data"
+            />
         </slot>
-    </{{ namespace }}>
+    </Admin>
 </template>
 
 <script lang="ts" setup>
-import { PropType, watch } from 'vue';
-import { {{ namespace }} } from '@{{ app }}/layout';
-import { mediaIndex } from '@{{ app }}/modules/{{ name }}';
+import { onMounted, PropType, watch } from 'vue';
+import { Admin } from '@admin/layout';
+import { mediaIndex } from '@admin/modules/media';
 import {
-    {{ page }}CollectionCollectionResource,
-    {{ page }}CollectionResource,
-} from '@{{ app }}/types';
+    MediaCollectionCollectionResource,
+    MediaCollectionResource,
+} from '@admin/types';
 import FilesSidebar from './components/FilesSidebar.vue';
+import FilesTopbarLeft from './components/FilesTopbarLeft.vue';
 import FilesTopbarRight from './components/FilesTopbarRight.vue';
 import FilesTabs from './components/FilesTabs.vue';
 
 const props = defineProps({
     collections: {
-        type: Object as PropType<{{ page }}CollectionCollectionResource>,
+        type: Object as PropType<MediaCollectionCollectionResource>,
         requried: true,
     },
     collection: {
-        type: Object as PropType<{{ page }}CollectionResource>,
+        type: Object as PropType<MediaCollectionResource>,
         requried: false,
     },
 });

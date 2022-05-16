@@ -54,7 +54,10 @@
                     <FilesListTable :collection="collection" />
                 </TabPanel>
                 <TabPanel>
-                    <FilesGrid :collection="collection" />
+                    <FilesGrid
+                        :collection="collection"
+                        :collections="collections"
+                    />
                 </TabPanel>
             </TabPanels>
         </TabGroup>
@@ -66,11 +69,15 @@ import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
 import FilesListTable from './FilesListTable.vue';
 import FilesGrid from './FilesGrid.vue';
 import { PropType } from 'vue';
-import { {{ page }}Collection } from '@{{ app }}/types';
+import { MediaCollection } from '@admin/types';
 
 const props = defineProps({
     collection: {
-        type: Object as PropType<{{ page }}Collection>,
+        type: Object as PropType<MediaCollection>,
+        required: true,
+    },
+    collections: {
+        type: Array as PropType<MediaCollection[]>,
         required: true,
     },
 });

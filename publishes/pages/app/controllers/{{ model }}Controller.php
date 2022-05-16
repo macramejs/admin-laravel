@@ -1,19 +1,20 @@
 <?php
 
-namespace {{ namespace }}\Http\Controllers;
+namespace Admin\Http\Controllers;
 
-use {{ namespace }}\Http\Indexes\{{ model }}Index;
-use {{ namespace }}\Http\Resources\{{ model }}TreeResource;
-use {{ namespace }}\Http\Resources\{{ model }}Resource;
-use {{ namespace }}\Ui\Page as AdminPage;
-use App\Models\{{ model }};
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
+use App\Models\Page;
 use Illuminate\Support\Str;
-use Macrame\Admin\Pages\Ui\PagesIndexPage;
+use Illuminate\Http\Request;
+use Admin\Ui\Page as AdminPage;
+use Admin\Http\Indexes\PageIndex;
+use Illuminate\Http\RedirectResponse;
+use Admin\Http\Resources\PageResource;
+use Illuminate\Support\Facades\Redirect;
 use Macrame\Admin\Pages\Ui\PagesShowPage;
+use Admin\Http\Resources\PageTreeResource;
+use Macrame\Admin\Pages\Ui\PagesIndexPage;
 
-class {{ model }}Controller
+class PageController
 {
     /**
      * Ship index page.
@@ -21,11 +22,11 @@ class {{ model }}Controller
      * @param  Page $page
      * @return Page
      */
-    public function items(Request $request, {{ model }}Index $index)
+    public function items(Request $request, PageIndex $index)
     {
         return $index->items(
             $request,
-            {{ model }}::query()
+            Page::query()
         );
     }
 
@@ -36,43 +37,54 @@ class {{ model }}Controller
      */
     public function index(Request $request, AdminPage $adminPage): AdminPage
     {
-        $pages = {{ model }}::root();
+        $pages = Page::root();
 
         return $adminPage
             ->page('Page/Index')
-            ->with('pages', {{ model }}TreeResource::collection($pages));
+            ->with('pages', PageTreeResource::collection($pages));
     }
 
     /**
-     * Show the {{ name }}.
+     * Show the page.
      *
      * @param {{ Model }} $page
      * @param AdminPage $adminPage
      * @return AdminPage
      */
-    public function show({{ model }} $page, AdminPage $adminPage)
+    public function show(Page $page, AdminPage $adminPage, $tab = 'content')
     {
-        $pages = {{ model }}::root();
+        if (! in_array($tab, ['content', 'meta'])) {
+            abort(404);
+        }
+
+        $pages = Page::root();
 
         return $adminPage
             ->page('Page/Show')
-            ->with('page', new {{ model }}Resource($page))
-            ->with('pages', {{ model }}TreeResource::collection($pages));
+            ->with('tab', $tab)
+            ->with('page', new PageResource($page))
+            ->with('pages', PageTreeResource::collection($pages));
     }
 
     /**
-     * Update the {{ name }}.
+     * Update the page.
      *
      * @param Request $request
-     * @param {{ model }} $page
+     * @param Page $page
      * @return void
      */
-    public function update(Request $request, {{ model }} $page)
+    public function update(Request $request, Page $page)
     {
         $validated = $request->validate([
             'content' => 'array',
-            'attributes' => 'array'
+            'attributes' => 'array',
+            'slug' => 'sometimes|string'
         ]);
+
+        // Enforce sluggified slug
+        if (array_key_exists('slug', $validated)) {
+            $validated['slug'] = Str::slug($validated['slug']);
+        }
 
         $page->update($validated);
 
@@ -80,17 +92,22 @@ class {{ model }}Controller
     }
 
     /**
-     * Update the meta information of the {{ name }}.
+     * Update the meta information of the page.
      *
      * @param Request $request
-     * @param {{ model }} $page
+     * @param Page $page
      * @return void
      */
-    public function meta(Request $request, {{ model }} $page)
+    public function meta(Request $request, Page $page)
     {
         $validated = $request->validate([
-            // ...
+            'title' => 'sometimes|string',
+            'description' => 'sometimes|string'
         ]);
+
+        foreach ($validated as $key => $value) {
+            $validated['meta_'.$key] = $value;
+        }
 
         $page->update($validated);
 
@@ -98,18 +115,21 @@ class {{ model }}Controller
     }
 
     /**
-     * Store a new {{ name }}.
+     * Store a new page.
      *
      * @param Request $request
      * @return void
      */
     public function store(Request $request)
     {
-        $page = {{ model }}::make([
+        $page = Page::make([
+            'parent_id' => $request->parent,
             'name'     => $request->name,
-            'slug'     => Str::slug($request->name),
+            'slug'     => Str::slug($request->slug ?: $request->name),
             'template' => $request->template,
         ]);
+
+        $page->creator_id = $request->user()->id;
 
         $page->save();
 
@@ -117,19 +137,33 @@ class {{ model }}Controller
     }
 
     /**
-     * Update the order for of the {{ name }} tree.
+     * Destroy the given page.
+     *
+     * @param Request $request
+     * @param Page $page
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request, Page $page)
+    {
+        $page->delete();
+
+        return redirect(route('admin.pages.index'));
+    }
+
+    /**
+     * Update the order for of the page tree.
      *
      * @param Request $request
      * @return void
      */
     public function order(Request $request)
     {
-        {{ model }}::updateOrder($request->order);
+        Page::updateOrder($request->order);
 
         return redirect()->back();
     }
 
-    public function upload(Request $request, {{ model }} $page)
+    public function upload(Request $request, Page $page)
     {
         $validated = $request->validate([
             'file' => 'required',

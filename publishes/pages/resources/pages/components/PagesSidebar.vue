@@ -21,22 +21,22 @@ import {
 } from '@macramejs/macrame-vue3';
 import PagesSidebarHeader from './PagesSidebarHeader.vue';
 import PagesSidebarBody from './PagesSidebarBody.vue';
-import { {{ model }}TreeItem, {{ model }} } from '@{{ app }}/types';
+import { PageTreeItem, Page } from '@admin/types';
 import { saveQueue } from '@admin/modules/save-queue';
 import { Inertia } from '@inertiajs/inertia';
 
 const props = defineProps({
     pages: {
-        type: Object as PropType<{{ model }}TreeItem[]>,
+        type: Object as PropType<PageTreeItem[]>,
         required: true,
     },
 });
 
-type {{ model }}Tree = Tree<{{ model }}>;
+type PageTree = Tree<Page>;
 
-const tree: {{ model }}Tree = useTree<{{ model }}>(props.pages);
+const tree: PageTree = useTree<Page>(props.pages);
 
-tree.updateOnChange(props.pages);
+tree.updateOnChange(() => props.pages);
 
 const queueKey = `pages.order`;
 let originalOrder = useOriginal(tree.getOrder());
@@ -51,7 +51,7 @@ watch(
         } else {
             saveQueue.add(queueKey, async () => {
                 originalOrder.update(order);
-                Inertia.post('/{{ app }}/{{ route }}/order', { order });
+                Inertia.post('/admin/pages/order', { order });
             });
         }
     },

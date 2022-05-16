@@ -2,25 +2,26 @@
     <FileUpload
         inline
         :url="url"
-        @success="index.reload()"
+        @success="mediaIndex.reload()"
         multiple
         maxFiles="10"
     />
 </template>
 
 <script lang="ts" setup>
-import { {{ page }}Collection } from '@{{ app }}/types';
-import { FileUpload } from '@macramejs/admin-vue3';
-import { PropType } from 'vue';
+import { MediaCollection } from "@admin/types";
+import { FileUpload } from "@macramejs/admin-vue3";
+import { PropType } from "vue";
+import { mediaIndex } from "@admin/modules/media";
 
 const props = defineProps({
     collection: {
-        type: Object as PropType<{{ page }}Collection>,
+        type: Object as PropType<MediaCollection>,
         required: false,
     },
 });
 
 const url = props.collection
-    ? `/{{ app }}/{{ route }}/${props.collection.id}/upload`
-    : `/{{ app }}/{{ route }}/upload`;
+    ? `/admin/media/${props.collection.id}/upload`
+    : `/admin/media/upload`;
 </script>

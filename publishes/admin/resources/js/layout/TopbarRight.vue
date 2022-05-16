@@ -7,7 +7,8 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { Button } from '@macramejs/admin-vue3';
-import { saveQueue } from '@admin/modules/save-queue';
+import { saveQueue, saveKeyboardShortcut } from '@admin/modules/save-queue';
+saveKeyboardShortcut();
 </script>

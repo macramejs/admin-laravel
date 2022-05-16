@@ -23,6 +23,28 @@ class MakeAdminCommand extends BaseMakeCommand
      */
     protected $description = 'Create a Macrame Admin application.';
 
+    protected $npmDependencies = [
+        'tailwindcss',
+        'lodash.merge',
+        '@headlessui/vue',
+        '@macramejs/admin-vue3',
+        '@macramejs/admin-config',
+        '@macramejs/admin-vue3',
+        '@macramejs/macrame',
+        '@macramejs/macrame-vue3',
+        '@macramejs/page-builder-vue3',
+        'ts-loader',
+        'typescript',
+        'vue@next',
+        'vue-loader@next',
+        '@inertiajs/inertia',
+        '@inertiajs/inertia-vue3',
+        '@inertiajs/progress',
+        'vue3-dropzone',
+        'vue3-popper',
+        'v-calendar@next',
+    ];
+
     public function handle()
     {
         $this->makeApp();
@@ -33,7 +55,7 @@ class MakeAdminCommand extends BaseMakeCommand
         $this->line("Just a view more steps to get started:\n");
 
         $this->line('1. Make sure the following npm packages are installed:');
-        $this->info("npm i tailwindcss lodash.merge @headlessui/vue @macramejs/admin-vue3 @macramejs/admin-config @macramejs/admin-vue3 @macramejs/macrame @macramejs/macrame-vue3 @macramejs/page-builder-vue3 ts-loader typescript vue@next vue-loader@next @inertiajs/inertia @inertiajs/inertia-vue3 @inertiajs/progress vue3-dropzone vue3-popper v-calendar@next\n");
+        $this->info('npm i '.implode(' ', $this->npmDependencies)."\n");
 
         $this->line('2. Make sure to update composers autoloader:');
         $this->info("composer dumpautoload\n");

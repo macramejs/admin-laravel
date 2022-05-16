@@ -101,8 +101,8 @@ class PageController
     public function meta(Request $request, Page $page)
     {
         $validated = $request->validate([
-            'title' => 'sometimes|string',
-            'description' => 'sometimes|string'
+            'title'       => 'nullable|string',
+            'description' => 'nullable|string',
         ]);
 
         foreach ($validated as $key => $value) {

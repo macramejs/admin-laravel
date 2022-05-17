@@ -4,7 +4,7 @@
             <div
                 class="flex justify-center col-span-full md:col-span-6 xl:col-span-3"
             >
-                <FileUpload :collection="collection" />
+                <MediaUpload :collection="collection" />
             </div>
             <FilesGridTable :collections="collections" />
         </div>
@@ -18,7 +18,7 @@ import FileMenu from './FileMenu.vue';
 import { PropType } from 'vue';
 import { MediaCollection } from '@admin/types';
 import FilesGridTable from './FilesGridTable.vue';
-import FileUpload from './FileUpload.vue';
+import { MediaUpload } from '@admin/modules/media';
 
 const props = defineProps({
     collection: {

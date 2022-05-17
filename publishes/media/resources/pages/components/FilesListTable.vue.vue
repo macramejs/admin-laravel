@@ -1,7 +1,7 @@
 <template>
     <div class="w-full mt-10">
         <div class="mb-8">
-            <FileUpload :collection="collection" />
+            <MediaUpload :collection="collection" />
         </div>
         <div>
             <Index :table="mediaIndex">
@@ -25,7 +25,7 @@ import { PropType } from 'vue';
 import { mediaIndex } from '@admin/modules/media';
 import FilesListTableBody from './FilesListTableBody.vue';
 import FilesListTableHead from './FilesListTableHead.vue';
-import FileUpload from './FileUpload.vue';
+import { MediaUpload } from '@admin/modules/media';
 
 const props = defineProps({
     collection: {

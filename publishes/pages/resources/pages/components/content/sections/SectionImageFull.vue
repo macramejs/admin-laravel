@@ -1,17 +1,17 @@
 <template>
-    <Card>
+    <BaseSection>
         <img :src="selectedImage?.url" v-if="selectedImage" />
         <SelectImageModal v-model="selectedImage" v-if="!busy" />
-    </Card>
+    </BaseSection>
 </template>
 <script setup lang="ts">
-import { getMediaById } from '@admin/modules/media';
-import { Media } from '@admin/types';
-import { Card, Button } from '@macramejs/admin-vue3';
-import { defineProps, watch, defineEmits, ref, onBeforeMount } from 'vue';
-import SelectImageModal from './SelectImageModal.vue';
+import { getMediaById } from "@admin/modules/media";
+import { Media } from "@admin/types";
+import { Card, Button, Section as BaseSection } from "@macramejs/admin-vue3";
+import { defineProps, watch, defineEmits, ref, onBeforeMount } from "vue";
+import SelectImageModal from "./SelectImageModal.vue";
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
     modelValue: {
@@ -40,7 +40,7 @@ onBeforeMount(async () => {
 watch(
     () => selectedImage,
     () => {
-        emit('update:modelValue', { image: selectedImage.value?.id });
+        emit("update:modelValue", { image: selectedImage.value?.id });
     },
     { deep: true }
 );

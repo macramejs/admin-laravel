@@ -10,6 +10,7 @@
             >
                 <img :src="image.url" />
             </div>
+            <MediaUpload />
         </div>
     </Modal>
 </template>
@@ -18,7 +19,7 @@
 import { Button } from '@macramejs/admin-vue3';
 import { Modal } from '@macramejs/admin-vue3';
 import { defineEmits, PropType, ref } from 'vue';
-import { mediaIndex } from '@admin/modules/media';
+import { mediaIndex, MediaUpload } from '@admin/modules/media';
 import { Media } from '@admin/types/resources';
 
 const isOpen = ref<boolean>(false);

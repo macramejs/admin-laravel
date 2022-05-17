@@ -131,7 +131,7 @@ use Admin\Http\Controllers\\{$page}Controller;";
         // Types
         $page = $this->page();
         $insert = "// {$page}
-        
+
 export type {$page} = {
     id?: number,
     display_name: string,
@@ -155,6 +155,18 @@ export type {$page}CollectionResource = Resource<{$page}Collection>;
 export type {$page}CollectionCollectionResource = CollectionResource<{$page}Collection>;";
         $this->insertAtEnd(
             resource_path($this->app().'/js/types/resources.ts'),
+            $insert
+        );
+
+        $insert = '// Media links
+sidebarLinks.push({
+    title: "Medien",
+    href: "/admin/media",
+    icon: "📷"
+}); ';
+
+        $this->insertAtEnd(
+            resource_path($this->app().'/js/modules/sidebar-navigation/index.ts'),
             $insert
         );
     }

@@ -15,7 +15,7 @@
     </slot>
     <Modal lg v-model:open="isOpen" title="New Page">
         <div class="space-y-3">
-            <Input label="Name" v-model="form.name" />
+            <Input label="Name" v-model="form.name" @keydown.enter="submit" />
             <Input
                 label="Slug"
                 :modelValue="form.slug"

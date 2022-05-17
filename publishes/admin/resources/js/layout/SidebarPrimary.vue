@@ -9,8 +9,13 @@
                 :expandable="true"
                 title="Website"
             >
-                <SidebarLink title="Seiten" :hide-title="!expanded" href="#">
-                    <template #icon>#</template>
+                <SidebarLink
+                    v-for="link in sidebarLinks"
+                    :title="link.title"
+                    :hide-title="!expanded"
+                    :href="link.href"
+                >
+                    <template #icon v-if="link.icon">{{ link.icon }}</template>
                 </SidebarLink>
             </SidebarSection>
         </template>
@@ -23,5 +28,6 @@ import {
     SidebarLink,
     SidebarPrimary,
 } from '@macramejs/admin-vue3';
+import { sidebarLinks } from '@admin/modules/sidebar-navigation';
 import Logo from './Logo.vue';
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <Card>
+    <BaseSection>
         <Sections
             v-model="model.cards"
             :group="id"
@@ -14,17 +14,17 @@
                 Cards
             </div>
         </Cabinet>
-    </Card>
+    </BaseSection>
 </template>
 <script setup lang="ts">
-import { Card, Sections } from '@macramejs/admin-vue3';
-import { defineProps, watch, defineEmits, reactive } from 'vue';
+import { Card, Sections, Seciton as BaseSection } from "@macramejs/admin-vue3";
+import { defineProps, watch, defineEmits, reactive } from "vue";
 // import { TextSection, CardsSection } from './index';
 // import { TextDrawer } from './../drawers';
-import { v4 as uuid } from 'uuid';
-import { Cabinet } from '@macramejs/macrame-vue3';
+import { v4 as uuid } from "uuid";
+import { Cabinet } from "@macramejs/macrame-vue3";
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
     modelValue: {
@@ -40,11 +40,11 @@ const model = reactive(props.modelValue);
 
 const id = uuid();
 
-emit('update:modelValue', model);
+emit("update:modelValue", model);
 
 watch(
     () => model,
-    () => emit('update:modelValue', model),
+    () => emit("update:modelValue", model),
     { deep: true }
 );
 </script>

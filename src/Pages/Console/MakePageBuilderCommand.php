@@ -216,6 +216,18 @@ export type {$model}MetaForm = Form<{$model}Meta>;";
             resource_path($this->app().'/js/types/forms.ts'),
             $insert
         );
+
+        $insert = '// Pages links
+sidebarLinks.push({
+    title: "Seiten",
+    href: "/admin/pages",
+    icon: "📖"
+}); ';
+
+        $this->insertAtEnd(
+            resource_path($this->app().'/js/modules/sidebar-navigation/index.ts'),
+            $insert
+        );
     }
 
     protected function resourcesDir()

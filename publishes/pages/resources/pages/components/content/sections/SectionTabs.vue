@@ -1,5 +1,5 @@
 <template>
-    <Card>
+    <BaseSection>
         Tabs
 
         <div v-for="(item, key) in model.items" :key="key">
@@ -9,14 +9,21 @@
         </div>
 
         <Button sm square @click="addItem">+</Button>
-    </Card>
+    </BaseSection>
 </template>
 <script setup lang="ts">
-import { Card, Sections, Button, Input, Textarea } from '@macramejs/admin-vue3';
-import { defineProps, watch, defineEmits, reactive } from 'vue';
-import { v4 as uuid } from 'uuid';
+import {
+    Card,
+    Sections,
+    Button,
+    Input,
+    Textarea,
+    Section as BaseSection,
+} from "@macramejs/admin-vue3";
+import { defineProps, watch, defineEmits, reactive } from "vue";
+import { v4 as uuid } from "uuid";
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
     modelValue: {
@@ -34,8 +41,8 @@ const id = uuid();
 
 function addItem() {
     model.items.push({
-        title: '',
-        text: '',
+        title: "",
+        text: "",
     });
 }
 
@@ -43,11 +50,11 @@ function removeItem(index) {
     model.items.splice(index, 1);
 }
 
-emit('update:modelValue', model);
+emit("update:modelValue", model);
 
 watch(
     () => model,
-    () => emit('update:modelValue', model),
+    () => emit("update:modelValue", model),
     { deep: true }
 );
 </script>

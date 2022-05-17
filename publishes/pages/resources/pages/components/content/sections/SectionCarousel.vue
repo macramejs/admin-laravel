@@ -1,5 +1,5 @@
 <template>
-    <Card>
+    <BaseSection>
         Carousel
 
         <template v-if="!busy">
@@ -17,10 +17,17 @@
         </template>
 
         <Button sm square @click="addItem">+</Button>
-    </Card>
+    </BaseSection>
 </template>
 <script setup lang="ts">
-import { Card, Sections, Button, Input, Textarea } from '@macramejs/admin-vue3';
+import {
+    Card,
+    Sections,
+    Button,
+    Input,
+    Textarea,
+    Section as BaseSection,
+} from "@macramejs/admin-vue3";
 import {
     defineProps,
     watch,
@@ -29,12 +36,12 @@ import {
     ref,
     onBeforeMount,
     getCurrentInstance,
-} from 'vue';
-import { getMediaById } from '@admin/modules/media';
-import SelectImageModal from './SelectImageModal.vue';
-import { v4 as uuid } from 'uuid';
+} from "vue";
+import { getMediaById } from "@admin/modules/media";
+import SelectImageModal from "./SelectImageModal.vue";
+import { v4 as uuid } from "uuid";
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
     modelValue: {
@@ -55,9 +62,9 @@ const id = uuid();
 function addItem() {
     model.items.push({
         selectedImage: {},
-        image: '',
-        title: '',
-        text: '',
+        image: "",
+        title: "",
+        text: "",
     });
 }
 
@@ -75,7 +82,7 @@ onBeforeMount(async () => {
     busy.value = false;
 });
 
-emit('update:modelValue', model);
+emit("update:modelValue", model);
 
 watch(
     () => model,
@@ -87,7 +94,7 @@ watch(
             delete m.items[i].selectedImage;
         }
 
-        emit('update:modelValue', m);
+        emit("update:modelValue", m);
     },
     { deep: true }
 );

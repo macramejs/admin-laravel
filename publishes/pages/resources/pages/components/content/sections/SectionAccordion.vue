@@ -1,5 +1,5 @@
 <template>
-    <Card>
+    <BaseSection>
         Accordion
 
         <div v-for="(item, key) in model.items" :key="key">
@@ -9,10 +9,17 @@
         </div>
 
         <Button sm square @click="addItem">+</Button>
-    </Card>
+    </BaseSection>
 </template>
 <script setup lang="ts">
-import { Card, Sections, Button, Input, Textarea } from '@macramejs/admin-vue3';
+import {
+    Card,
+    Sections,
+    Button,
+    Input,
+    Textarea,
+    Section as BaseSection,
+} from '@macramejs/admin-vue3';
 import { defineProps, watch, defineEmits, reactive } from 'vue';
 import { v4 as uuid } from 'uuid';
 

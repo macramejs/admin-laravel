@@ -106,8 +106,8 @@ class MakeNavBuilderCommand extends BaseMakeCommand
 
 export type NavItem = {
     id?: number,
-    title: string,   
-    route: string,   
+    title: string,
+    route: string,
     parent_id: number,
     children: NavItem[],
 }
@@ -122,6 +122,18 @@ export type NavItemTreeCollectionResource = CollectionResource<NavItemTreeItem>;
         $this->insertAtStart(
             resource_path($this->app().'/js/types/resources.ts'),
             'import { RawTreeItem } from "@macramejs/macrame-vue3";'
+        );
+
+        $insert = '// Navigation links
+sidebarLinks.push({
+    title: "Navigation",
+    href: "/admin/nav/main",
+    icon: "🧭"
+}); ';
+
+        $this->insertAtEnd(
+            resource_path($this->app().'/js/modules/sidebar-navigation/index.ts'),
+            $insert
         );
     }
 

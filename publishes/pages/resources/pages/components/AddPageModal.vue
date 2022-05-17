@@ -14,19 +14,22 @@
         </Button>
     </slot>
     <Modal lg v-model:open="isOpen" title="New Page">
-        <div class="space-y-3">
-            <Input label="Name" v-model="form.name" @keydown.enter="submit" />
-            <Input
-                label="Slug"
-                :modelValue="form.slug"
-                @update:modelValue="updateSlug"
-            />
-            <Select
-                label="Template"
-                :options="templateOptions"
-                v-model="form.template"
-            />
-        </div>
+        <form @submit.prevent="submit">
+            <div class="space-y-3">
+                <Input label="Name" v-model="form.name" />
+                <Input
+                    label="Slug"
+                    :modelValue="form.slug"
+                    @update:modelValue="updateSlug"
+                />
+                <Select
+                    label="Template"
+                    :options="templateOptions"
+                    v-model="form.template"
+                />
+            </div>
+            <input type="submit" class="hidden" />
+        </form>
         <template v-slot:footer>
             <Button @click="submit"> Save </Button>
         </template>
@@ -40,6 +43,7 @@ import { useForm } from '@macramejs/macrame-vue3';
 import { templateOptions } from './content/templates';
 import { Page } from '@admin/types/resources';
 import { slugify } from '@admin/modules/helpers';
+import { Inertia } from '@inertiajs/inertia';
 
 const isOpen = ref<boolean>(false);
 
@@ -64,6 +68,7 @@ const form = useForm({
     onSuccess() {
         emit('pageAdded', this);
         isOpen.value = false;
+        form.reset();
     },
 });
 

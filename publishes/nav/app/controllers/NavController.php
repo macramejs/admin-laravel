@@ -1,10 +1,10 @@
 <?php
 
-namespace {{ namespace }}\Http\Controllers;
+namespace Admin\Http\Controllers;
 
-use {{ namespace }}\Http\Resources\NavItemTreeResource;
-use {{ namespace }}\Http\Resources\RouteItemResource;
-use {{ namespace }}\Ui\Page;
+use Admin\Http\Resources\NavItemTreeResource;
+use Admin\Http\Resources\RouteItemResource;
+use Admin\Ui\Page;
 use App\Models\NavItem;
 use App\Models\Types\NavType;
 use Illuminate\Http\RedirectResponse;
@@ -79,13 +79,27 @@ class NavController
     /**
      * Update the order of the navigation tree.
      *
-     * @param Request $request
-     * @param NavType $type
+     * @param  Request          $request
+     * @param  NavType          $type
      * @return RedirectResponse
      */
     public function order(Request $request, NavType $type)
     {
         NavItem::updateOrder($request->order);
+
+        return redirect()->back();
+    }
+
+    /**
+     * Remove an item from the navigation tree.
+     *
+     * @param  Request          $request
+     * @param  NavItem          $item
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request, NavType $type, NavItem $item)
+    {
+        $item->delete();
 
         return redirect()->back();
     }

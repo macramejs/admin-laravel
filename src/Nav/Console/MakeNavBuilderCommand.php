@@ -75,7 +75,8 @@ class MakeNavBuilderCommand extends BaseMakeCommand
     Route::get('/{$route}/{type}', [NavController::class, 'show'])->name('nav.show');
     Route::post('/{$route}/{type}', [NavController::class, 'store'])->name('nav.store');
     Route::put('/{$route}/{type}/{item}', [NavController::class, 'update'])->name('nav.update');
-    Route::post('/{$route}/{type}/order', [NavController::class, 'order'])->name('nav.order');";
+    Route::post('/{$route}/{type}/order', [NavController::class, 'order'])->name('nav.order');
+    Route::delete('/{$route}/{type}/{item}', [NavController::class, 'destroy'])->name('nav.item.delete');";
         $before = '});';
 
         $routesPath = base_path('routes/'.$this->app().'.php');

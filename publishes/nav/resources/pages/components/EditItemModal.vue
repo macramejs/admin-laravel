@@ -35,7 +35,7 @@ import {
 } from '@macramejs/admin-vue3';
 import { useForm } from '@macramejs/macrame-vue3';
 import { useNavItemForm } from '@{{ app }}/modules/nav';
-import { NavItem, RouteItem } from '@admin/types/resources';
+import { NavItem, RouteItem } from '@{{ app }}/types/resources';
 
 const isOpen = ref<boolean>(false);
 
@@ -56,7 +56,7 @@ const props = defineProps({
 const emit = defineEmits(['itemAdded']);
 
 const form = useNavItemForm(props.type, {
-    route: `/{{ app }}/nav/${props.type}/${props.navItem.id}`,
+    route: `/{{ app }}/{{ route }}/${props.type}/${props.navItem.id}`,
     method: 'put',
     data: {
         title: props.navItem.title,

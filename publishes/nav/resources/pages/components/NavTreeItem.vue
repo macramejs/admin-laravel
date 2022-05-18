@@ -37,7 +37,7 @@
 
 <script lang="ts" setup>
 import { Tree } from '@macramejs/macrame-vue3';
-import { NavItem, RouteItem } from '@admin/types/resources';
+import { NavItem, RouteItem } from '@{{ app }}/types/resources';
 import {
     TreeItem,
     ContextMenu,
@@ -48,7 +48,7 @@ import {
 import NavTree from './NavTree.vue';
 import { PropType } from 'vue';
 import EditItemModal from './EditItemModal.vue';
-import { deleteNavItem } from '@admin/modules/nav';
+import { deleteNavItem } from '@{{ app }}/modules/nav';
 
 const props = defineProps({
     navItem: {

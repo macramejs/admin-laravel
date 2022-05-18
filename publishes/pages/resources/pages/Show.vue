@@ -32,7 +32,6 @@
 
 <script setup lang="ts">
 import { defineProps, PropType, computed } from 'vue';
-import Layout from './package/Layout.vue';
 import { useForm } from '@macramejs/macrame-vue3';
 import { TabGroup, TabList, Tab, TabPanel } from '@macramejs/admin-vue3';
 import { TabPanels } from '@headlessui/vue';
@@ -59,20 +58,6 @@ const props = defineProps({
     },
 });
 
-const changedTab = function (index) {
-    const metaIndex = 1;
-
-    console.log('changed tab: ' + index);
-
-    if (index == metaIndex) {
-        window.history.pushState(
-            'foo',
-            'bar',
-            `${window.location.pathname}/met`
-        );
-    }
-};
-
 const contentFormQueueKey = `page.${props.page.data.id}.content`;
 const contentForm = useForm<PageContent>({
     route: `/admin/pages/${props.page.data.id}`,
@@ -85,7 +70,7 @@ const contentForm = useForm<PageContent>({
             ? {}
             : props.page.data.attributes,
     },
-    onDirty: (form) =>
+    onDirty: form =>
         saveQueue.add(contentFormQueueKey, async () => form.submit()),
     onClean: () => saveQueue.remove(contentFormQueueKey),
 });
@@ -95,8 +80,7 @@ const metaForm = useForm<PageMeta>({
     route: `/admin/pages/${props.page.data.id}/meta`,
     method: 'post',
     data: props.page.data.meta || {},
-    onDirty: (form) => {
-        console.log('foooo');
+    onDirty: form => {
         saveQueue.add(metaFormQueueKey, async () => form.submit());
     },
     onClean: () => saveQueue.remove(metaFormQueueKey),
@@ -105,6 +89,6 @@ const metaForm = useForm<PageMeta>({
 const fullSlug = computed(() => {
     let parts = props.page.data.full_slug.split('/');
     parts.pop();
-    return `${parts.join('/')}/<strong>${contentForm.slug}</strong>`;
+    return `${parts.join(' > ')} > <strong>${contentForm.slug}</strong>`;
 });
 </script>

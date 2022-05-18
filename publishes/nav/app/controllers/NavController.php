@@ -1,14 +1,13 @@
 <?php
 
-namespace Admin\Http\Controllers;
+namespace {{ namespace }}\Http\Controllers;
 
-use Admin\Http\Resources\NavItemTreeResource;
-use Admin\Http\Resources\RouteItemResource;
-use Admin\Ui\Page;
+use {{ namespace }}\Http\Resources\NavItemTreeResource;
+use {{ namespace }}\Http\Resources\RouteItemResource;
+use {{ namespace }}\Ui\Page;
 use App\Models\NavItem;
 use App\Models\Types\NavType;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class NavController
 {

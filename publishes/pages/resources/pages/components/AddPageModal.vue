@@ -65,10 +65,16 @@ const form = useForm({
         slug: '',
     },
     method: 'post',
-    onSuccess() {
+    onSuccess(response) {
         emit('pageAdded', this);
         isOpen.value = false;
         form.reset();
+
+        // Visit the recently created page, to refresh the Page/Show component
+        // when currently already on a page.
+        Inertia.visit(`/admin/pages/${response.props.page.data.id}`, {
+            only: ['page'],
+        });
     },
 });
 

@@ -1,17 +1,17 @@
 <template>
     <slot name="button" :open="() => (isOpen = true)">
-        <Button round dark @click="isOpen = true">
+        <ButtonRound white sm @click="isOpen = true">
             <!-- TODO: change icon -->
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="-4.5 -4.5 24 24"
-                class="w-4 h-4 fill-white"
+                class="w-4 h-4"
             >
                 <path
                     d="M8.9 6.9v-5a1 1 0 1 0-2 0v5h-5a1 1 0 1 0 0 2h5v5a1 1 0 1 0 2 0v-5h5a1 1 0 1 0 0-2h-5z"
                 ></path>
             </svg>
-        </Button>
+        </ButtonRound>
     </slot>
     <Modal lg v-model:open="isOpen" title="New Page">
         <form @submit.prevent="submit">
@@ -38,7 +38,7 @@
 
 <script lang="ts" setup>
 import { defineEmits, ref, PropType, watch } from 'vue';
-import { Modal, Input, Select, Button } from '@macramejs/admin-vue3';
+import { Modal, Input, Select, ButtonRound } from '@macramejs/admin-vue3';
 import { useForm } from '@macramejs/macrame-vue3';
 import { templateOptions } from './content/templates';
 import { Page } from '@admin/types/resources';

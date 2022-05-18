@@ -4,6 +4,7 @@
             v-model="form.title"
             @keyup.enter="form.submit"
             placeholder="Enter new name"
+            class="!text-gray-100"
         />
     </form>
 </template>
@@ -17,7 +18,7 @@ const form = useForm<MediaCollection>({
     route: '/admin/media',
     data: { title: '' },
     method: 'post',
-    onSuccess: (request) => {
+    onSuccess: request => {
         form.reset();
     },
 });

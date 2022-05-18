@@ -1,5 +1,5 @@
 <template>
-    <SidebarSection :expandable="true" title="foo">
+    <SidebarSection :expandable="false">
         <SidebarLink title="Main Navigation" href="/admin/nav/main" secondary />
         <SidebarLink
             title="Footer Navigation"

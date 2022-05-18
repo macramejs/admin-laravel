@@ -39,7 +39,8 @@ const props = defineProps({
 const tree = useTree<NavItem>(props.items, {
     onOrderChange,
 });
-tree.updateOnChange(props.items);
+
+tree.updateOnChange(() => props.items);
 
 let originalOrder = useOriginal(tree.getOrder());
 

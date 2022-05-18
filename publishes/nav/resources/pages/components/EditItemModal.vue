@@ -1,5 +1,7 @@
 <template>
-    <ContextButton @click="isOpen = true" @keyup.esc="isOpen = false" />
+    <slot name="button" :open="() => (isOpen = true)">
+        <span @click="isOpen = true" @keyup.esc="isOpen = false">Edit </span>
+    </slot>
     <Modal v-model:open="isOpen" md>
         <h2>Edit Navigation Item</h2>
         <div>

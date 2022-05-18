@@ -79,13 +79,27 @@ class NavController
     /**
      * Update the order of the navigation tree.
      *
-     * @param Request $request
-     * @param NavType $type
+     * @param  Request          $request
+     * @param  NavType          $type
      * @return RedirectResponse
      */
     public function order(Request $request, NavType $type)
     {
         NavItem::updateOrder($request->order);
+
+        return redirect()->back();
+    }
+
+    /**
+     * Remove an item from the navigation tree.
+     *
+     * @param  Request          $request
+     * @param  NavItem          $item
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request, NavType $type, NavItem $item)
+    {
+        $item->delete();
 
         return redirect()->back();
     }

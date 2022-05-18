@@ -1,5 +1,7 @@
 <template>
-    <ContextButton @click="isOpen = true" @keyup.esc="isOpen = false" />
+    <slot name="button" :open="() => (isOpen = true)">
+        <span @click="isOpen = true" @keyup.esc="isOpen = false">Edit </span>
+    </slot>
     <Modal v-model:open="isOpen" md>
         <h2>Edit Navigation Item</h2>
         <div>
@@ -32,8 +34,8 @@ import {
     ContextButton,
 } from '@macramejs/admin-vue3';
 import { useForm } from '@macramejs/macrame-vue3';
-import { useNavItemForm } from '@{{ app }}/modules/nav';
-import { NavItem, RouteItem } from '@{{ app }}/types/resources';
+import { useNavItemForm } from '@admin/modules/nav';
+import { NavItem, RouteItem } from '@admin/types/resources';
 
 const isOpen = ref<boolean>(false);
 
@@ -54,7 +56,7 @@ const props = defineProps({
 const emit = defineEmits(['itemAdded']);
 
 const form = useNavItemForm(props.type, {
-    route: `/{{ app }}/{{ route }}/${props.type}/${props.navItem.id}`,
+    route: `/admin/nav/${props.type}/${props.navItem.id}`,
     method: 'put',
     data: {
         title: props.navItem.title,

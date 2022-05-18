@@ -1,44 +1,42 @@
 <template>
-    <div class="flex flex-col gap-1 p-2 border-b border-gray-400 text-gray-100">
-        <button
-            :class="
-                mediaIndex.filters.types.value.includes('images')
-                    ? 'bg-gray-100'
-                    : ''
-            "
-            class="px-4 py-2 mb-1 rounded-[8px] transition-colors w-full text-left duration-300 hover:bg-gray-500 hover:bg-opacity-20"
+    <div class="flex flex-col gap-1 p-2 border-b border-gray-700 text-gray-100">
+        <SidebarLink
+            title="Images"
+            secondary
+            :active="mediaIndex.filters.types.value.includes('images')"
             @click="mediaIndex.filters.types.toggle('images')"
-        >
-            Images
-        </button>
-        <button
-            :class="
-                mediaIndex.filters.types.value.includes('documents')
-                    ? 'bg-gray-100'
-                    : ''
-            "
-            class="px-4 py-2 mb-1 rounded-[8px] transition-colors w-full text-left duration-300 hover:bg-gray-500 hover:bg-opacity-20"
+        />
+        <SidebarLink
+            title="Documents"
+            secondary
+            :active="mediaIndex.filters.types.value.includes('documents')"
             @click="mediaIndex.filters.types.toggle('documents')"
-        >
-            Documents
-        </button>
+        />
     </div>
-    <div class="flex flex-col gap-1 p-2 border-b border-gray-400 text-gray-100">
+    <div class="flex flex-col gap-1 p-2 border-b border-gray-700 text-gray-100">
         <div class="flex items-center gap-3 px-5 pt-16 pb-6 -mx-2">
             <IconBookStack />
             <span class="inline-block text-xl"> Collections </span>
-            <ButtonRound white sm @click="showForm = !showForm" class="ml-auto">
-                <IconPlus class="w-4 h-4"></IconPlus>
-            </ButtonRound>
+            <Button
+                secondary
+                outline
+                sm
+                square
+                @click="showForm = !showForm"
+                class="ml-auto border-white"
+            >
+                <IconPlus class="w-4 h-4 text-white"></IconPlus>
+            </Button>
         </div>
         <AddCollectionForm class="mb-4" v-if="showForm" />
     </div>
-    <div class="flex flex-col gap-1 p-2 border-b border-gray-400 text-gray-100">
-        <Link
+    <div class="flex flex-col gap-1 p-2 border-b border-gray-700 text-gray-100">
+        <SidebarLink
             v-for="c in collections"
             :key="c.id"
-            :class="c.id == collection?.id ? 'bg-gray-50 bg-opacity-10' : ''"
-            class="px-4 py-2 rounded-[8px] transition-colors text-left duration-300 hover:bg-gray-100 hover:bg-gray-50 hover:bg-opacity-20"
+            secondary
+            :active="c.id == collection?.id"
+            class="pr-4"
             :href="
                 c.id == collection?.id ? `/admin/media` : `/admin/media/${c.id}`
             "
@@ -47,7 +45,7 @@
                 {{ c.title }}
                 <span class="text-gray-300"> {{ c.files_count }}</span>
             </div>
-        </Link>
+        </SidebarLink>
     </div>
 </template>
 
@@ -55,8 +53,9 @@
 import {
     Input,
     IconBookStack,
-    ButtonRound,
+    Button,
     IconPlus,
+    SidebarLink,
 } from '@macramejs/admin-vue3';
 import { Link } from '@inertiajs/inertia-vue3';
 import { RadioGroup, RadioGroupOption } from '@headlessui/vue';

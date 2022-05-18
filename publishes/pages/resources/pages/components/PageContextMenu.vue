@@ -1,5 +1,12 @@
 <template>
     <ContextMenu>
+        <template v-slot:button>
+            <button
+                class="p-1 text-gray-100 opacity-0 hover:bg-black rounded-xs group-hover:opacity-100"
+            >
+                <IconMoreHorizontal class="w-4 h-4" />
+            </button>
+        </template>
         <AddPageModal :parent="page">
             <template #button="{ open }">
                 <ContextMenuItem @click="open">

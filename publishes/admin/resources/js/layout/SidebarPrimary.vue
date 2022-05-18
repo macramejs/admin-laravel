@@ -15,7 +15,17 @@
                     :hide-title="!expanded"
                     :href="link.href"
                 >
-                    <template #icon v-if="link.icon">{{ link.icon }}</template>
+                    <template #icon v-if="link.icon">
+                        <component
+                            v-if="typeof link.icon === 'object'"
+                            :is="link.icon"
+                            class="w-4 h-4"
+                        >
+                        </component>
+                        <template v-else>
+                            {{ link.icon }}
+                        </template>
+                    </template>
                 </SidebarLink>
             </SidebarSection>
         </template>

@@ -8,6 +8,7 @@ use {{ namespace }}\Ui\Page;
 use App\Models\NavItem;
 use App\Models\Types\NavType;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class NavController
 {

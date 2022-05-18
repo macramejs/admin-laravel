@@ -1,6 +1,6 @@
 <template>
     <Button square secondary @click="isOpen = true" @keyup.esc="isOpen = false">
-        +
+        <IconPlus class="w-5 h-5" />
     </Button>
     <Modal :open="isOpen" @close="isOpen = false" v-bind="$attrs" md>
         <h2>Add Navigation Item</h2>
@@ -24,7 +24,14 @@
 
 <script lang="ts" setup>
 import { defineEmits, defineProps, PropType, ref } from 'vue';
-import { Modal, Input, Select, Button, FormField } from '@macramejs/admin-vue3';
+import {
+    Modal,
+    Input,
+    Select,
+    Button,
+    FormField,
+    IconPlus,
+} from '@macramejs/admin-vue3';
 import { useForm } from '@macramejs/macrame-vue3';
 import { RouteItem } from '@{{ app }}/types/resources';
 import { useNavItemForm } from '@{{ app }}/modules/nav';

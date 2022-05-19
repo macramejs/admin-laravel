@@ -23,7 +23,7 @@
                 sm
                 square
                 @click="showForm = !showForm"
-                class="ml-auto border-white"
+                class="ml-auto !border-white"
             >
                 <IconPlus class="w-4 h-4 text-white"></IconPlus>
             </Button>

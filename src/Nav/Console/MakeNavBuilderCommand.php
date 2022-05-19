@@ -72,6 +72,7 @@ class MakeNavBuilderCommand extends BaseMakeCommand
         $namespace = $this->namespace();
         $insert = "
     // nav
+    Route::get('/{$route}', [NavController::class, 'index'])->name('nav.index');
     Route::get('/{$route}/{type}', [NavController::class, 'show'])->name('nav.show');
     Route::post('/{$route}/{type}', [NavController::class, 'store'])->name('nav.store');
     Route::put('/{$route}/{type}/{item}', [NavController::class, 'update'])->name('nav.update');
@@ -128,7 +129,7 @@ export type NavItemTreeCollectionResource = CollectionResource<NavItemTreeItem>;
         $insert = '// Navigation links
 sidebarLinks.push({
     title: "Navigation",
-    href: "/admin/nav/main",
+    href: "/admin/nav",
     icon: "🧭"
 }); ';
 

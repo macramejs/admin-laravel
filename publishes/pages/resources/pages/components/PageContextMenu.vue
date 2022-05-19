@@ -34,7 +34,7 @@
             @click="deletePage(page)"
         >
             <template #icon>
-                <IconMoreHorizontal class="origin-left scale-75" />
+                <IconTrash class="origin-left scale-75" />
             </template>
             <span>Delete</span>
         </ContextMenuItem>
@@ -46,6 +46,7 @@ import {
     ContextMenu,
     ContextMenuItem,
     ContextMenuDivider,
+    IconTrash,
     IconMoreHorizontal,
 } from '@macramejs/admin-vue3';
 import { PropType } from 'vue';

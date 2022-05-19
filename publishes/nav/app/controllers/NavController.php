@@ -13,6 +13,16 @@ use Illuminate\Http\Request;
 class NavController
 {
     /**
+     * Show a index page for all available navigations.
+     *
+     * @return Page
+     */
+    public function index(Request $request, Page $page, )
+    {
+        return $page->page('Nav/Index');
+    }
+
+    /**
      * Show the nav page for the admin application.
      *
      * @param  Page    $page

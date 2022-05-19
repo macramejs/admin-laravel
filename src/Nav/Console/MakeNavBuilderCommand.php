@@ -128,7 +128,7 @@ export type NavItemTreeCollectionResource = CollectionResource<NavItemTreeItem>;
         $insert = '// Navigation links
 sidebarLinks.push({
     title: "Navigation",
-    href: "/admin/nav/main",
+    href: "/admin/nav",
     icon: "🧭"
 }); ';
 

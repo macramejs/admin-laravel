@@ -126,11 +126,16 @@ export type NavItemTreeCollectionResource = CollectionResource<NavItemTreeItem>;
             'import { RawTreeItem } from "@macramejs/macrame-vue3";'
         );
 
+        $this->insertAtStart(
+            resource_path($this->app().'/js/modules/sidebar-navigation/index.ts'),
+            'import { IconList } from \'@macramejs/admin-vue3\';'
+        );
+
         $insert = '// Navigation links
 sidebarLinks.push({
     title: "Navigation",
     href: "/admin/nav",
-    icon: "🧭"
+    icon: IconList,
 }); ';
 
         $this->insertAtEnd(

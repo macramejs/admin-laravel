@@ -1,10 +1,10 @@
 <template>
-    <div
-        class="ml-2 p-2 px-2 bg-white cursor-pointer relative inline-flex items-center justify-center text-sm uppercase transition-all duration-300 focus:ring focus:outline-none rounded"
+    <button
         @click="isOpen = true"
+        class="p-1 text-gray hover:bg-black rounded-xs group-hover:opacity-100"
     >
-        <IconEditPencil />
-    </div>
+        <IconEditPencil class="text-gray" />
+    </button>
     <Modal lg v-model:open="isOpen" title="Edit Slug">
         <div class="space-y-3">
             <Input

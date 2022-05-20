@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, PropType, computed } from 'vue';
+import { defineProps, PropType, computed, onBeforeUnmount } from 'vue';
 import { useForm } from '@macramejs/macrame-vue3';
 import { TabGroup, TabList, Tab, TabPanel } from '@macramejs/admin-vue3';
 import { TabPanels } from '@headlessui/vue';
@@ -84,6 +84,14 @@ const metaForm = useForm<PageMeta>({
         saveQueue.add(metaFormQueueKey, async () => form.submit());
     },
     onClean: () => saveQueue.remove(metaFormQueueKey),
+});
+
+onBeforeUnmount(() => {
+    if (contentForm.isDirty || metaForm.isDirty) {
+        if (confirm('Do you want to save your unchanged changes?')) {
+            saveQueue.save();
+        }
+    }
 });
 
 const fullSlug = computed(() => {

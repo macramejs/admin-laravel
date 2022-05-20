@@ -158,11 +158,16 @@ export type {$page}CollectionCollectionResource = CollectionResource<{$page}Coll
             $insert
         );
 
+        $this->insertAtStart(
+            resource_path($this->app().'/js/modules/sidebar-navigation/index.ts'),
+            'import { IconMediaImageFolder } from \'@macramejs/admin-vue3\';'
+        );
+
         $insert = '// Media links
 sidebarLinks.push({
     title: "Medien",
     href: "/admin/media",
-    icon: "📷"
+    icon: IconMediaImageFolder,
 }); ';
 
         $this->insertAtEnd(

@@ -1,7 +1,7 @@
 <template>
     <SidebarPrimary :locked="locked">
         <template v-slot:logo>
-            <Logo class="pl-0.5" />
+            <Logo />
         </template>
         <template v-slot="{ expanded }">
             <SidebarSection

@@ -1,5 +1,5 @@
 <template>
-    <TreeItem :item="navItem" :children="children">
+    <TreeItem :item="navItem" :children="children" outline>
         <span class="flex-1 py-1 cursor-pointer">
             {{ navItem.title }}
         </span>

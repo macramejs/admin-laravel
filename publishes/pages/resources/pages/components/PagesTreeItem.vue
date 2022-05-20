@@ -1,5 +1,10 @@
 <template>
-    <TreeItem :item="page" :children="children" :is-active="isActive">
+    <TreeItem
+        :item="page"
+        :children="children"
+        :is-active="isActive"
+        background
+    >
         <Link
             class="flex-1 py-1 cursor-pointer"
             :href="`/admin/pages/${page.id}`"

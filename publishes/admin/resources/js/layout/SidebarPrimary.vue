@@ -1,5 +1,5 @@
 <template>
-    <SidebarPrimary>
+    <SidebarPrimary :locked="locked">
         <template v-slot:logo>
             <Logo class="pl-0.5" />
         </template>
@@ -40,4 +40,12 @@ import {
 } from '@macramejs/admin-vue3';
 import { sidebarLinks } from '@admin/modules/sidebar-navigation';
 import Logo from './Logo.vue';
+import { computed } from '@vue/reactivity';
+
+const locked = computed(() => {
+    if (localStorage.hasOwnProperty('sideBarLocked')) {
+        return JSON.parse(localStorage.getItem('sideBarLocked'));
+    }
+    return false;
+});
 </script>

@@ -176,6 +176,7 @@ export type {$model} = {
     id?: number;
     name: string;
     slug: string;
+    template: string;
     full_slug: string;
     meta: {
         title: string;

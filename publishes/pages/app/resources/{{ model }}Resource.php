@@ -32,16 +32,18 @@ class PageResource extends JsonResource
             'name' => $this->name,
             'slug' => $this->slug,
 
+            'template' => $this->template,
+
             // dynamic
-            'content' => $this->content->toArray(),
-            'attributes' => $this->attributes,
+            'content'    => $this->content->toArray(),
+            'attributes' => $this->attributes->toArray(),
 
             'full_slug' => $this->getFullSlug(),
-            
+
             'meta' => [
-                'title' => $this->meta_title,
+                'title'       => $this->meta_title,
                 'description' => $this->meta_description,
-            ]
+            ],
         ];
     }
 }

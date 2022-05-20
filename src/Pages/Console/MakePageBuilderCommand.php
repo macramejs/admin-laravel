@@ -217,11 +217,15 @@ export type {$model}MetaForm = Form<{$model}Meta>;";
             $insert
         );
 
+        $this->insertAtStart(
+            resource_path($this->app().'/js/modules/sidebar-navigation/index.ts'),
+            'import { IconPages } from \'@macramejs/admin-vue3\';'
+        );
         $insert = '// Pages links
 sidebarLinks.push({
     title: "Seiten",
     href: "/admin/pages",
-    icon: "📖"
+    icon: IconPages
 }); ';
 
         $this->insertAtEnd(

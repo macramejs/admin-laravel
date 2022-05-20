@@ -1,3 +1,5 @@
+import { IconDashboard } from '@macramejs/admin-vue3';
+
 type SidebarNavigationLink = {
     title: string;
     href: string;
@@ -6,8 +8,8 @@ type SidebarNavigationLink = {
 
 export const sidebarLinks = <SidebarNavigationLink[]>[
     {
-        title: 'Beispiel',
-        href: '#',
-        icon: '🏠',
+        title: 'Dashboard',
+        href: '/admin',
+        icon: IconDashboard,
     },
 ];

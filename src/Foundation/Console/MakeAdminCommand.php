@@ -151,6 +151,28 @@ class MakeAdminCommand extends BaseMakeCommand
                 app_path('Http/Requests/Auth')
             );
         }
+
+        // Add ResetPassword callback
+        $appServiceProvider = app_path('Providers/AppServiceProvider.php');
+        $insert = "
+        \Illuminate\Auth\Notifications\ResetPassword::createUrlUsing(function (\$notifiable, \$token) {
+            if (str_contains(request()->headers->get('referer'), 'admin')) {
+                return url(route('admin.password.reset', [
+                    'token' => \$token,
+                    'email' => \$notifiable->getEmailForPasswordReset(),
+                ], false));
+            }
+
+            return url(route('password.reset', [
+                'token' => \$token,
+                'email' => \$notifiable->getEmailForPasswordReset(),
+            ], false));
+        });";
+
+        $after = '    public function boot()
+    {';
+
+        $this->insertAfter($appServiceProvider, $insert, $after);
     }
 
     protected function makeResources()

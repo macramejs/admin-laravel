@@ -1,25 +1,30 @@
 <template>
     <BaseSection>
-        <Textarea v-model="model.text" class="w-full" label="foo" />
+        <template v-slot:title>
+            <DrawerTextFull preview />
+        </template>
+        <FormFieldLabel> Text </FormFieldLabel>
+        <Textarea v-model="model.text" class="w-full" />
     </BaseSection>
 </template>
 <script setup lang="ts">
 import {
-    Card,
     Textarea,
-    Input,
     Section as BaseSection,
-} from "@macramejs/admin-vue3";
-import { defineProps, watch, defineEmits, reactive } from "vue";
+    FormFieldLabel,
+} from '@macramejs/admin-vue3';
 
-const emit = defineEmits(["update:modelValue"]);
+import DrawerTextFull from './../drawers/DrawerTextFull.vue';
+import { defineProps, watch, defineEmits, reactive } from 'vue';
+
+const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps({
     modelValue: {
         type: Object,
         required: true,
         default: () => ({
-            text: "",
+            text: '',
         }),
     },
 });
@@ -31,7 +36,7 @@ watch(
     () => {
         console.log(model);
 
-        emit("update:modelValue", model);
+        emit('update:modelValue', model);
     },
     { deep: true }
 );

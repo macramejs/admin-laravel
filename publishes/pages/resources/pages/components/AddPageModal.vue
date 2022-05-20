@@ -58,7 +58,7 @@ const form = useForm({
     data: {
         parent: props.parent?.id,
         name: '',
-        template: '',
+        template: 'default',
         slug: '',
     },
     method: 'post',

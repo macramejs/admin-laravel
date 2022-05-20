@@ -1,6 +1,8 @@
 <template>
     <BaseSection>
-        Accordion
+        <template v-slot:title>
+            <DrawerAccordion preview />
+        </template>
 
         <div v-for="(item, key) in model.items" :key="key">
             <Input v-model="item.title" />
@@ -13,13 +15,12 @@
 </template>
 <script setup lang="ts">
 import {
-    Card,
-    Sections,
     Button,
     Input,
     Textarea,
     Section as BaseSection,
 } from '@macramejs/admin-vue3';
+import DrawerAccordion from './../drawers/DrawerAccordion.vue';
 import { defineProps, watch, defineEmits, reactive } from 'vue';
 import { v4 as uuid } from 'uuid';
 

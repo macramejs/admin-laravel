@@ -143,15 +143,6 @@ class MakeAdminCommand extends BaseMakeCommand
 
         $this->insertAfter($file, $insert, $after);
 
-        // Publish Laravel breeze's LoginRequest
-        if (! class_exists(\App\Http\Requests\Auth\LoginRequest::class)) {
-            $this->files->ensureDirectoryExists(app_path('Http/Requests/Auth'));
-            $this->files->copyDirectory(
-                base_path('vendor/laravel/breeze/stubs/default/App/Http/Requests/Auth'),
-                app_path('Http/Requests/Auth')
-            );
-        }
-
         // Add ResetPassword callback
         $appServiceProvider = app_path('Providers/AppServiceProvider.php');
         $insert = "

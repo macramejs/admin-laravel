@@ -133,7 +133,9 @@ class PageController
 
         $page->save();
 
-        return redirect()->back();
+        return redirect()->route('admin.pages.show', [
+            'page' => $page,
+        ]);
     }
 
     /**

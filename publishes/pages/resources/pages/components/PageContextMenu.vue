@@ -28,6 +28,16 @@
                 </ContextMenuItem>
             </template>
         </AddPageModal>
+        <DuplicatePageModal :page="page">
+            <template #button="{ open }">
+                <ContextMenuItem @click="open">
+                    <template #icon>
+                        <IconDuplicatePage class="w-4 h-4" />
+                    </template>
+                    Duplizieren
+                </ContextMenuItem>
+            </template>
+        </DuplicatePageModal>
         <ContextMenuDivider />
         <ContextMenuItem
             class="hover:bg-red-signal text-red-signal"
@@ -48,11 +58,13 @@ import {
     ContextMenuDivider,
     IconTrash,
     IconMoreHorizontal,
+    IconDuplicatePage,
 } from '@macramejs/admin-vue3';
 import { PropType } from 'vue';
 import { Page } from '@admin/types/resources';
 import { deletePage } from '@admin/modules/page';
 import AddPageModal from './AddPageModal.vue';
+import DuplicatePageModal from './DuplicatePageModal.vue';
 
 const props = defineProps({
     page: {

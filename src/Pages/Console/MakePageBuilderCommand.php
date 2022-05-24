@@ -142,7 +142,9 @@ class MakePageBuilderCommand extends BaseMakeCommand
     Route::post('/pages/order', [PageController::class, 'order'])->name('pages.order');
     Route::put('/pages/{page}', [PageController::class, 'update'])->name('pages.update');
     Route::post('/pages/{page}/meta', [PageController::class, 'meta'])->name('pages.meta');
-    Route::post('/pages/{page}/upload', [PageController::class, 'upload'])->name('pages.upload');";
+    Route::post('/pages/{page}/upload', [PageController::class, 'upload'])->name('pages.upload');
+    Route::post('/pages/{page}/duplicate', [PageController::class, 'duplicate'])->name('pages.duplicate');";
+
         $before = '});';
 
         $routesPath = base_path('routes/'.$this->app().'.php');

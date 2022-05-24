@@ -2,10 +2,10 @@
     <slot name="button" :open="() => (isOpen = true)">
         <IconDuplicatePage class="w-4 h-4"></IconDuplicatePage>
     </slot>
-    <Modal lg v-model:open="isOpen" title="New Page">
+    <Modal lg v-model:open="isOpen" title="Duplicate Page">
         <form @submit.prevent="form.submit">
             <div class="space-y-3">
-                <Input label="New Name" v-model="form.name" />
+                <Input label="New Page Name" v-model="form.name" />
             </div>
             <input type="submit" class="hidden" />
         </form>

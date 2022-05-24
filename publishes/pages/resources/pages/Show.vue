@@ -4,6 +4,9 @@
             <TabList>
                 <Tab :href="`/admin/pages/${page.data.id}`">Content</Tab>
                 <Tab :href="`/admin/pages/${page.data.id}/meta`">Meta</Tab>
+                <Tab :href="`/admin/pages/${page.data.id}/settings`">
+                    Settings
+                </Tab>
             </TabList>
             <TabPanels>
                 <TabPanel has-sidebar sidebar-top-position="118">
@@ -18,6 +21,9 @@
                         :page="page"
                         :full-slug="fullSlug"
                     />
+                </TabPanel>
+                <TabPanel>
+                    <PanelSettingsBody :page="page" :form="contentForm" />
                 </TabPanel>
             </TabPanels>
         </TabGroup>
@@ -43,8 +49,9 @@ import PanelMetaBody from './components/PanelMetaBody.vue';
 import PanelContentBody from './components/PanelContentBody.vue';
 import PanelContentSidebar from './components/PanelContentSidebar.vue';
 import EditSlugModal from './components/EditSlugModal.vue';
+import PanelSettingsBody from './components/PanelSettingsBody.vue';
 
-const tabs = ['content', 'meta'];
+const tabs = ['content', 'meta', 'settings'];
 
 const props = defineProps({
     page: {

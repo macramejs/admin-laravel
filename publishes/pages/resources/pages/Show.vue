@@ -6,11 +6,17 @@
                 <Tab :href="`/admin/pages/${page.data.id}/meta`">Meta</Tab>
             </TabList>
             <TabPanels>
-                <TabPanel has-sidebar sidebar-top-position="118">
-                    <template v-slot:sidebar>
+                <TabPanel>
+                    <Content>
+                        <PanelContentBody
+                            :form="contentForm"
+                            :page="page.data"
+                        />
                         <PanelContentSidebar />
-                    </template>
-                    <PanelContentBody :form="contentForm" :page="page.data" />
+                    </Content>
+                    <!-- <template v-slot:sidebar>
+                        
+                    </template> -->
                 </TabPanel>
                 <TabPanel>
                     <PanelMetaBody
@@ -33,8 +39,15 @@
 <script setup lang="ts">
 import { defineProps, PropType, computed, onBeforeUnmount } from 'vue';
 import { useForm } from '@macramejs/macrame-vue3';
-import { TabGroup, TabList, Tab, TabPanel } from '@macramejs/admin-vue3';
-import { TabPanels } from '@headlessui/vue';
+import {
+    TabGroup,
+    TabList,
+    Tab,
+    Content,
+    ContentSidebar,
+    ContentBody,
+} from '@macramejs/admin-vue3';
+import { TabPanels, TabPanel } from '@headlessui/vue';
 import BaseLayout from './Index.vue';
 import { saveQueue } from '@admin/modules/save-queue';
 import { PageResource } from '@admin/types/resources';
@@ -70,7 +83,7 @@ const contentForm = useForm<PageContent>({
             ? {}
             : props.page.data.attributes,
     },
-    onDirty: form =>
+    onDirty: (form) =>
         saveQueue.add(contentFormQueueKey, async () => form.submit()),
     onClean: () => saveQueue.remove(contentFormQueueKey),
 });
@@ -80,7 +93,7 @@ const metaForm = useForm<PageMeta>({
     route: `/admin/pages/${props.page.data.id}/meta`,
     method: 'post',
     data: props.page.data.meta || {},
-    onDirty: form => {
+    onDirty: (form) => {
         saveQueue.add(metaFormQueueKey, async () => form.submit());
     },
     onClean: () => saveQueue.remove(metaFormQueueKey),

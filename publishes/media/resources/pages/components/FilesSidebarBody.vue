@@ -1,19 +1,5 @@
 <template>
     <div class="flex flex-col gap-1 p-2 border-b border-gray-700 text-gray-100">
-        <SidebarLink
-            title="Images"
-            secondary
-            :active="mediaIndex.filters.types.value.includes('images')"
-            @click="mediaIndex.filters.types.toggle('images')"
-        />
-        <SidebarLink
-            title="Documents"
-            secondary
-            :active="mediaIndex.filters.types.value.includes('documents')"
-            @click="mediaIndex.filters.types.toggle('documents')"
-        />
-    </div>
-    <div class="flex flex-col gap-1 p-2 border-b border-gray-700 text-gray-100">
         <div class="flex items-center gap-3 px-5 pt-16 pb-6 -mx-2">
             <IconBookStack />
             <span class="inline-block text-xl"> Collections </span>

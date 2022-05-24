@@ -13,9 +13,9 @@
             <FilesTopbarRight :collections="collections.data" />
         </template>
         <slot>
-            <FilesTabs
-                :collection="collection?.data"
+            <FilesContent
                 :collections="collections.data"
+                :collection="collection?.data"
             />
         </slot>
     </Admin>
@@ -29,10 +29,12 @@ import {
     MediaCollectionCollectionResource,
     MediaCollectionResource,
 } from '@admin/types';
+import { Content, ContentSidebar, ContentBody } from '@macramejs/admin-vue3';
 import FilesSidebar from './components/FilesSidebar.vue';
 import FilesTopbarLeft from './components/FilesTopbarLeft.vue';
 import FilesTopbarRight from './components/FilesTopbarRight.vue';
-import FilesTabs from './components/FilesTabs.vue';
+import FilesContent from './components/FilesContent.vue';
+// import FilesFilters from './components/FilesFilters.vue';
 
 const props = defineProps({
     collections: {
@@ -46,6 +48,7 @@ const props = defineProps({
 });
 
 mediaIndex.filters.collection.update(props.collection?.data);
+
 watch(
     props.collection,
     () => mediaIndex.filters.collection.update(props.collection?.data),

@@ -184,4 +184,23 @@ class PageController
 
         return Redirect::route('admin.sites.show', ['site' => $page]);
     }
+
+    /**
+     * Duplicate a page with all contents.
+     *
+     * @param  Request          $request
+     * @param  Page             $page
+     * @return RedirectResponse
+     */
+    public function duplicate(Request $request, Page $page)
+    {
+        $page = $page->replicate();
+        $page->name = $request->name;
+        $page->slug = Str::slug($request->name);
+        $page->save();
+
+        return redirect()->route('admin.pages.show', [
+            'page' => $page,
+        ]);
+    }
 }

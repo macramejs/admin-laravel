@@ -3,28 +3,25 @@
         <template v-slot:title>
             <DrawerTextFull preview />
         </template>
-        <FormFieldLabel> Text </FormFieldLabel>
-        <Textarea v-model="model.text" class="w-full" />
+        <Card>
+            <Wysiwyg v-model="model.text" class="w-full" />
+        </Card>
     </BaseSection>
 </template>
 <script setup lang="ts">
-import {
-    Textarea,
-    Section as BaseSection,
-    FormFieldLabel,
-} from '@macramejs/admin-vue3';
+import { Wysiwyg, Section as BaseSection, Card } from "@macramejs/admin-vue3";
 
-import DrawerTextFull from './../drawers/DrawerTextFull.vue';
-import { defineProps, watch, defineEmits, reactive } from 'vue';
+import DrawerTextFull from "./../drawers/DrawerTextFull.vue";
+import { defineProps, watch, defineEmits, reactive } from "vue";
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
     modelValue: {
         type: Object,
         required: true,
         default: () => ({
-            text: '',
+            text: "",
         }),
     },
 });
@@ -36,7 +33,7 @@ watch(
     () => {
         console.log(model);
 
-        emit('update:modelValue', model);
+        emit("update:modelValue", model);
     },
     { deep: true }
 );

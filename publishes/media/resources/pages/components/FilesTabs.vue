@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col w-full h-full px-6 py-8">
+    <div class="flex flex-col w-full h-full py-8">
         <TabGroup :defaultIndex="1">
             <TabList class="flex justify-end w-full gap-2">
                 <Tab v-slot="{ selected }">

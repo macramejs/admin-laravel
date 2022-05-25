@@ -1,10 +1,38 @@
 <template>
-    <div class="flex items-center space-x-3">
-        <IconMediaImageFolder />
-        <span class="inline-block text-xl"> Files </span>
-    </div>
+    <Header>
+        <div class="flex items-center">
+            <IconBookStack />
+            <span class="inline-block text-xl"> Collections </span>
+        </div>
+        <Button
+            secondary
+            outline
+            sm
+            square
+            @click="emit('update:showForm', !showForm)"
+            class="ml-auto !border-white"
+        >
+            <IconPlus class="w-4 h-4 text-white"></IconPlus>
+        </Button>
+    </Header>
 </template>
 
 <script lang="ts" setup>
-import { IconMediaImageFolder } from '@macramejs/admin-vue3';
+import { ref } from 'vue';
+import {
+    IconMediaImageFolder,
+    Header,
+    Button,
+    IconPlus,
+    IconBookStack,
+} from '@macramejs/admin-vue3';
+
+const emit = defineEmits(['update:showForm']);
+
+defineProps({
+    showForm: {
+        type: Boolean,
+        required: true,
+    },
+});
 </script>

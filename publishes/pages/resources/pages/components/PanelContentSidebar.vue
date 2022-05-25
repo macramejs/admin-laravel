@@ -1,40 +1,42 @@
 <template>
-    <DrawerSection title="Text Components">
-        <Cabinet>
-            <DrawerTextFull :draws="SectionTextFull" />
-            <DrawerTextImage :draws="SectionTextImage" />
-            <DrawerInfoBox :draws="SectionInfoBox" />
-        </Cabinet>
-    </DrawerSection>
-    <DrawerSection title="Image Components">
-        <Cabinet>
-            <DrawerImageFull :draws="SectionImageFull" />
-            <DrawerGallery :draws="SectionGallery" />
-            <DrawerLogoWall :draws="SectionLogoWall" />
-        </Cabinet>
-    </DrawerSection>
-    <DrawerSection title="Sections">
-        <Cabinet>
-            <DrawerCards :draws="SectionCards" />
-            <DrawerAccordion :draws="SectionAccordion" />
-            <DrawerCarousel :draws="SectionCarousel" />
-            <DrawerTabs :draws="SectionTabs" />
-            <DrawerMap :draws="SectionMap" />
-        </Cabinet>
-    </DrawerSection>
-    <DrawerSection title="Sliders">
-        <Cabinet>
-            <DrawerSlider :draws="SectionSlider" />
-            <DrawerGallerySlider :draws="SectionGallerySlider" />
-        </Cabinet>
-    </DrawerSection>
-    <DrawerSection title="Misc">
-        <Cabinet>
-            <DrawerFiles :draws="SectionFiles" />
-            <DrawerDivider :draws="SectionDivider" />
-            <DrawerVideo :draws="SectionVideo" />
-        </Cabinet>
-    </DrawerSection>
+    <ContentSidebar v-model:open="isOpen">
+        <DrawerSection title="Text Components">
+            <Cabinet>
+                <DrawerTextFull :draws="SectionTextFull" />
+                <DrawerTextImage :draws="SectionTextImage" />
+                <DrawerInfoBox :draws="SectionInfoBox" />
+            </Cabinet>
+        </DrawerSection>
+        <DrawerSection title="Image Components">
+            <Cabinet>
+                <DrawerImageFull :draws="SectionImageFull" />
+                <DrawerGallery :draws="SectionGallery" />
+                <DrawerLogoWall :draws="SectionLogoWall" />
+            </Cabinet>
+        </DrawerSection>
+        <DrawerSection title="Sections">
+            <Cabinet>
+                <DrawerCards :draws="SectionCards" />
+                <DrawerAccordion :draws="SectionAccordion" />
+                <DrawerCarousel :draws="SectionCarousel" />
+                <DrawerTabs :draws="SectionTabs" />
+                <DrawerMap :draws="SectionMap" />
+            </Cabinet>
+        </DrawerSection>
+        <DrawerSection title="Sliders">
+            <Cabinet>
+                <DrawerSlider :draws="SectionSlider" />
+                <DrawerGallerySlider :draws="SectionGallerySlider" />
+            </Cabinet>
+        </DrawerSection>
+        <DrawerSection title="Misc">
+            <Cabinet>
+                <DrawerFiles :draws="SectionFiles" />
+                <DrawerDivider :draws="SectionDivider" />
+                <DrawerVideo :draws="SectionVideo" />
+            </Cabinet>
+        </DrawerSection>
+    </ContentSidebar>
 </template>
 
 <script lang="ts" setup>
@@ -74,6 +76,9 @@ import {
     DrawerDivider,
     DrawerVideo,
 } from './content/drawers';
-import { DrawerSection } from '@macramejs/admin-vue3';
+import { DrawerSection, ContentSidebar } from '@macramejs/admin-vue3';
 import { Cabinet } from '@macramejs/macrame-vue3';
+import { ref } from 'vue';
+
+const isOpen = ref(true);
 </script>

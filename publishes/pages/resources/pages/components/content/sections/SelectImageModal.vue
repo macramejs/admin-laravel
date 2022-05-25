@@ -37,8 +37,7 @@ const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps({
     modelValue: {
-        required: true,
-        type: Object as PropType<Media>,
+        type: Object as PropType<Media | null>,
     },
     hideButton: {
         type: Boolean,

@@ -34,6 +34,7 @@ import {
     Input,
     Select,
     ButtonRound,
+    Button,
     IconPlus,
 } from '@macramejs/admin-vue3';
 import { useForm } from '@macramejs/macrame-vue3';

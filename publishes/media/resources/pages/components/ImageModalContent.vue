@@ -11,7 +11,7 @@
                         :url="url"
                         @success="reload"
                         multiple
-                        maxFiles="10"
+                        :maxFiles="10"
                     />
                 </div>
             </div>

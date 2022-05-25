@@ -5,7 +5,7 @@
                 class="flex flex-col items-center justify-center w-full rounded cursor-pointer bg-gray-50 hover:bg-gray-200 h-28 text-gray"
             >
                 <IconAddImage class="w-12 h-12" />
-                Bild hinzufügen
+                Bild auswählen
             </div>
         </slot>
     </div>
@@ -25,15 +25,15 @@
 </template>
 
 <script lang="ts" setup>
-import { IconAddImage } from '@macramejs/admin-vue3';
-import { Modal } from '@macramejs/admin-vue3';
-import { defineEmits, PropType, ref } from 'vue';
-import { mediaIndex, MediaUpload } from '@admin/modules/media';
-import { Media } from '@admin/types/resources';
+import { IconAddImage } from "@macramejs/admin-vue3";
+import { Modal } from "@macramejs/admin-vue3";
+import { defineEmits, PropType, ref } from "vue";
+import { mediaIndex, MediaUpload } from "@admin/modules/media";
+import { Media } from "@admin/types/resources";
 
 const isOpen = ref<boolean>(false);
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
     modelValue: {
@@ -47,8 +47,8 @@ const props = defineProps({
 
 mediaIndex.loadItems();
 
-const selectImage = image => {
-    emit('update:modelValue', image);
+const selectImage = (image) => {
+    emit("update:modelValue", image);
     isOpen.value = false;
 };
 </script>

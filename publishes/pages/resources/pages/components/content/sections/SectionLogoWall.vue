@@ -1,30 +1,119 @@
 <template>
-    <Card>
-        Logo Wall
-        <!-- <Textarea v-model="model.text" class="w-full" label="foo" /> -->
-    </Card>
+    <BaseSection>
+        <template v-slot:title>
+            <DrawerLogoWall preview />
+        </template>
+        <div class="space-y-3 pb-6">
+            <Draggable
+                tag="div"
+                :list="model.items"
+                handle=".drag-logo"
+                item-key="id"
+                v-if="model"
+            >
+                <template #item="{ element, index }">
+                    <Card class="mb-3" :key="index">
+                        <Header class="mb-6">
+                            <div class="flex space-x-4 items-center">
+                                <InteractionButton
+                                    class="drag-logo cursor-move"
+                                    gray
+                                >
+                                    <IconDraggable class="w-2.5 h-2.5" />
+                                </InteractionButton>
+                                <div class="text-lg font-semibold">
+                                    {{ element.name || "Logo" }}
+                                </div>
+                            </div>
+                            <ContextMenu placement="left">
+                                <template #button>
+                                    <InteractionButton class="cursor-pointer">
+                                        <IconMoreHorizontal class="w-4 h-4" />
+                                    </InteractionButton>
+                                </template>
+                                <ContextMenuItem
+                                    class="hover:bg-red-signal text-red-signal"
+                                    @click="removeItem(index)"
+                                >
+                                    <template #icon>
+                                        <IconTrash
+                                            class="origin-left scale-75"
+                                        />
+                                    </template>
+                                    <span>Löschen</span>
+                                </ContextMenuItem>
+                            </ContextMenu>
+                        </Header>
+                        <div class="grid grid-cols-12 gap-5">
+                            <div class="col-span-6 space-y-4">
+                                <Input v-model="element.name" label="Name" />
+                                <Input v-model="element.link" label="Link" />
+                            </div>
+                            <div class="col-span-6">
+                                <SelectImage v-model="element.image" />
+                            </div>
+                        </div>
+                    </Card>
+                </template>
+            </Draggable>
+        </div>
+        <div class="flex justify-center">
+            <AddItem @click="addItem"> Neues Logo hinzufügen </AddItem>
+        </div>
+    </BaseSection>
 </template>
 <script setup lang="ts">
-import { Card, Textarea, Input } from '@macramejs/admin-vue3';
-import { defineProps, watch, defineEmits, reactive } from 'vue';
+import {
+    Card,
+    Section as BaseSection,
+    InteractionButton,
+    IconDraggable,
+    IconTrash,
+    IconMoreHorizontal,
+    Input,
+    Header,
+    ContextMenu,
+    ContextMenuItem,
+} from "@macramejs/admin-vue3";
+import { defineProps, watch, defineEmits, reactive } from "vue";
+import DrawerLogoWall from "../drawers/DrawerLogoWall.vue";
+import AddItem from "./AddItem.vue";
+import Draggable from "vuedraggable";
+import SelectImage from "./SelectImage.vue";
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
     modelValue: {
         type: Object,
         required: true,
         default: () => ({
-            text: '',
+            items: [],
         }),
     },
 });
 
 const model = reactive(props.modelValue);
 
+function addItem() {
+    model.items.push({
+        name: "",
+        link: "",
+        image: {
+            id: null,
+            title: "",
+            alt: "",
+        },
+    });
+}
+
+function removeItem(index) {
+    model.items.splice(index, 1);
+}
+
 watch(
     () => model,
-    () => emit('update:modelValue', model),
+    () => emit("update:modelValue", model),
     { deep: true }
 );
 </script>

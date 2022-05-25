@@ -4,6 +4,9 @@ use {{ namespace }}\Http\Controllers\Auth\AuthenticatedSessionController;
 use {{ namespace }}\Http\Controllers\Auth\NewPasswordController;
 use {{ namespace }}\Http\Controllers\Auth\PasswordResetLinkController;
 use {{ namespace }}\Http\Controllers\HomeController;
+use {{ namespace }}\Http\Controllers\UserProfileController;
+use {{ namespace }}\Http\Controllers\UserController;
+use {{ namespace }}\Http\Controllers\SettingController;
 use {{ namespace }}\Http\Middleware\Authenticate{{ namespace }};
 use Illuminate\Support\Facades\Route;
 

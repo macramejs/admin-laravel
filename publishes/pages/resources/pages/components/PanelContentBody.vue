@@ -1,15 +1,15 @@
 <template>
-    <div class="flex py-4">
+    <ContentBody>
         <div class="container">
             <component :is="getComponent()" :form="form">
                 <Sections v-model="form.content" :sections="sections" />
             </component>
         </div>
-    </div>
+    </ContentBody>
 </template>
 
 <script lang="ts" setup>
-import { Sections } from '@macramejs/admin-vue3';
+import { Sections, ContentBody } from '@macramejs/admin-vue3';
 import { defineProps, PropType } from 'vue';
 import { templates } from './content/templates';
 import { sections } from './content/sections';

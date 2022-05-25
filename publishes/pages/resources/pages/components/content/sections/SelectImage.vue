@@ -24,18 +24,18 @@
 </template>
 
 <script lang="ts" setup>
-import { getMediaById } from "@admin/modules/media";
-import { onBeforeMount, PropType, ref, watch } from "vue";
-import SelectImageModal from "./SelectImageModal.vue";
+import { getMediaById } from '@admin/modules/media';
+import { onBeforeMount, PropType, ref, watch } from 'vue';
+import SelectImageModal from './SelectImageModal.vue';
 import {
     InteractionButton,
     IconTrash,
     IconMoreHorizontal,
     ContextMenu,
     ContextMenuItem,
-} from "@macramejs/admin-vue3";
+} from '@macramejs/admin-vue3';
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue']);
 
 interface ParseableImage {
     id: number;
@@ -60,8 +60,8 @@ onBeforeMount(async () => {
 
 watch(
     () => selectedImage.value,
-    (val) => {
-        emit("update:modelValue", {
+    val => {
+        emit('update:modelValue', {
             ...model.value,
             id: val?.id,
         });

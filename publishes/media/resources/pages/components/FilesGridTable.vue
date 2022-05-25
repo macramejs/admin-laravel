@@ -2,9 +2,9 @@
     <div
         v-for="file in mediaIndex.items"
         :key="file.id"
-        class="flex items-center justify-center cursor-pointer col-span-full md:col-span-6 xl:col-span-3"
+        class="relative flex items-center justify-center cursor-pointer col-span-full md:col-span-6 xl:col-span-3 aspect-square"
     >
-        <label class="relative img-container h-fit">
+        <label class="w-full h-full img-container">
             <input
                 type="checkbox"
                 :id="file.id"
@@ -50,7 +50,7 @@
             </div>
             <img
                 v-if="file.url"
-                class="z-0 object-contain w-full h-full"
+                class="object-contain w-full h-full pointer-events-none"
                 :src="file.url"
             />
         </label>
@@ -58,8 +58,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRefs, watch, PropType } from 'vue';
-import { FileUpload, Index, ContextButton } from '@macramejs/admin-vue3';
+import { PropType } from 'vue';
+import { ContextButton } from '@macramejs/admin-vue3';
 import SelectionMenu from './SelectionMenu.vue';
 import { selection, useSelection } from '../modules';
 import { mediaIndex } from '@admin/modules/media';

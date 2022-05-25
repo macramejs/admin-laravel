@@ -1,7 +1,6 @@
 <template>
     <Header>
         <div class="flex items-center">
-            <IconBookStack />
             <span class="inline-block text-xl"> Collections </span>
         </div>
         <Button

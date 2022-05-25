@@ -9,31 +9,35 @@
             </div>
         </slot>
     </div>
-    <Modal v-model:open="isOpen" @close="isOpen = false">
+    <Modal v-model:open="isOpen" @close="isOpen = false" title="Bild auswählen">
         <div class="grid grid-cols-12 gap-4">
+            <div
+                class="w-full h-full col-span-6 cursor-pointer sm:col-span-4 md:col-span-4 lg:col-span-2"
+            >
+                <MediaUpload />
+            </div>
             <div
                 v-for="(image, key) in mediaIndex.items"
                 :key="key"
-                class="flex items-center col-span-6 cursor-pointer sm:col-span-4 md:col-span-4 lg:col-span-2"
+                class="flex items-center col-span-6 cursor-pointer sm:col-span-4 md:col-span-4 lg:col-span-2 aspect-square"
                 @click="selectImage(image)"
             >
-                <img :src="image.url" />
+                <img :src="image.url" class="object-contain w-full h-full" />
             </div>
-            <MediaUpload />
         </div>
     </Modal>
 </template>
 
 <script lang="ts" setup>
-import { IconAddImage } from "@macramejs/admin-vue3";
-import { Modal } from "@macramejs/admin-vue3";
-import { defineEmits, PropType, ref } from "vue";
-import { mediaIndex, MediaUpload } from "@admin/modules/media";
-import { Media } from "@admin/types/resources";
+import { IconAddImage } from '@macramejs/admin-vue3';
+import { Modal } from '@macramejs/admin-vue3';
+import { defineEmits, PropType, ref } from 'vue';
+import { mediaIndex, MediaUpload } from '@admin/modules/media';
+import { Media } from '@admin/types/resources';
 
 const isOpen = ref<boolean>(false);
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps({
     modelValue: {
@@ -47,8 +51,8 @@ const props = defineProps({
 
 mediaIndex.loadItems();
 
-const selectImage = (image) => {
-    emit("update:modelValue", image);
+const selectImage = image => {
+    emit('update:modelValue', image);
     isOpen.value = false;
 };
 </script>

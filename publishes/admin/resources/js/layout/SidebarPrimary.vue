@@ -37,7 +37,7 @@
                     class=""
                     href="/admin/settings"
                     :hideTitle="!expanded"
-                    :active="isActiveFor(['settings', 'user'])"
+                    :active="isActiveFor(['admin/settings', 'admin/user'])"
                 >
                     <template #icon>
                         <IconSettings class="w-4 h-4" />

@@ -28,6 +28,33 @@
                     </template>
                 </SidebarLink>
             </SidebarSection>
+            <SidebarSection
+                :expanded="expanded"
+                :expandable="true"
+                class="mt-auto"
+            >
+                <SidebarLink
+                    class=""
+                    href="/admin/settings"
+                    :hideTitle="!expanded"
+                    :active="isActiveFor(['settings', 'user'])"
+                >
+                    <template #icon>
+                        <IconSettings class="w-4 h-4" />
+                    </template>
+                    Settings
+                </SidebarLink>
+                <SidebarLink
+                    method="post"
+                    href="/admin/logout"
+                    :hideTitle="!expanded"
+                >
+                    <template #icon>
+                        <IconLogout class="w-4 h-4" />
+                    </template>
+                    Logout
+                </SidebarLink>
+            </SidebarSection>
         </template>
     </SidebarPrimary>
 </template>
@@ -37,6 +64,8 @@ import {
     SidebarSection,
     SidebarLink,
     SidebarPrimary,
+    IconSettings,
+    IconLogout,
 } from '@macramejs/admin-vue3';
 import { sidebarLinks } from '@admin/modules/sidebar-navigation';
 import Logo from './Logo.vue';
@@ -48,4 +77,10 @@ const locked = computed(() => {
     }
     return false;
 });
+
+const isActiveFor = (items: any[]) => {
+    return items.some(e => {
+        return window.location.pathname.includes(e);
+    });
+};
 </script>

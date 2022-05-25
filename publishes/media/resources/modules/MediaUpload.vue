@@ -1,5 +1,5 @@
 <template>
-    <FileUpload inline :url="url" @success="success" multiple maxFiles="10" />
+    <FileUpload inline :url="url" @success="success" multiple :maxFiles="10" />
 </template>
 
 <script lang="ts" setup>

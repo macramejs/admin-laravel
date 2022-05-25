@@ -1,6 +1,6 @@
 <template>
     <div>
-        <span>Media</span>
+        <span>Files</span>
 
         <Badge v-if="mediaIndex.filters.collection.value" class="ml-2">
             {{ mediaIndex.filters.collection.value }}

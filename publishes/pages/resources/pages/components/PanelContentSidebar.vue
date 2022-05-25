@@ -1,5 +1,5 @@
 <template>
-    <ContentSidebar>
+    <ContentSidebar v-model:open="isOpen">
         <DrawerSection title="Text Components">
             <Cabinet>
                 <DrawerTextFull :draws="SectionTextFull" />
@@ -78,4 +78,7 @@ import {
 } from './content/drawers';
 import { DrawerSection, ContentSidebar } from '@macramejs/admin-vue3';
 import { Cabinet } from '@macramejs/macrame-vue3';
+import { ref } from 'vue';
+
+const isOpen = ref(true);
 </script>

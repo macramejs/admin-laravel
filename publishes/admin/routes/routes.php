@@ -15,6 +15,11 @@ Route::group([
 
     // Settings
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+
+    // Users
+    Route::get('/user', [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/items', [UserController::class, 'items'])->name('user.items');
+    Route::delete('/user/{user}', [UserController::class, 'destroy'])->name('user.delete');
 });
 
 Route::group([

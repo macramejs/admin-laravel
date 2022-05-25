@@ -11,6 +11,10 @@ Route::group([
     'middleware' => Authenticate{{ namespace }}::class,
 ], function () {
     Route::get('/', [HomeController::class, 'show']);
+
+
+    // Settings
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 });
 
 Route::group([

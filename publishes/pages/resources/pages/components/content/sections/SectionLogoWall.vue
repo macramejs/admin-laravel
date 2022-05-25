@@ -8,7 +8,7 @@
                 tag="div"
                 :list="model.items"
                 handle=".drag-logo"
-                item-key="id"
+                item-key="_draggableKey"
                 v-if="model"
             >
                 <template #item="{ element, index }">
@@ -22,7 +22,7 @@
                                     <IconDraggable class="w-2.5 h-2.5" />
                                 </InteractionButton>
                                 <div class="text-lg font-semibold">
-                                    {{ element.name || "Logo" }}
+                                    {{ element.name || 'Logo' }}
                                 </div>
                             </div>
                             <ContextMenu placement="left">
@@ -74,14 +74,15 @@ import {
     Header,
     ContextMenu,
     ContextMenuItem,
-} from "@macramejs/admin-vue3";
-import { defineProps, watch, defineEmits, reactive } from "vue";
-import DrawerLogoWall from "../drawers/DrawerLogoWall.vue";
-import AddItem from "./AddItem.vue";
-import Draggable from "vuedraggable";
-import SelectImage from "./SelectImage.vue";
+} from '@macramejs/admin-vue3';
+import { defineProps, watch, defineEmits, reactive } from 'vue';
+import DrawerLogoWall from '../drawers/DrawerLogoWall.vue';
+import AddItem from './AddItem.vue';
+import Draggable from 'vuedraggable';
+import SelectImage from './SelectImage.vue';
+import { v4 as uuid } from 'uuid';
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps({
     modelValue: {
@@ -93,16 +94,24 @@ const props = defineProps({
     },
 });
 
-const model = reactive(props.modelValue);
+const model = reactive({
+    items: props.modelValue.items.map(item => {
+        item._draggableKey = uuid();
+
+        return item;
+    }),
+});
 
 function addItem() {
+    console.log('foo');
     model.items.push({
-        name: "",
-        link: "",
+        name: '',
+        link: '',
+        _draggableKey: uuid(),
         image: {
             id: null,
-            title: "",
-            alt: "",
+            title: '',
+            alt: '',
         },
     });
 }
@@ -113,7 +122,18 @@ function removeItem(index) {
 
 watch(
     () => model,
-    () => emit("update:modelValue", model),
+    () => {
+        let items = JSON.parse(JSON.stringify(model.items)).map(item => {
+            delete item._draggableKey;
+
+            return item;
+        });
+
+        emit('update:modelValue', {
+            ...model,
+            items,
+        });
+    },
     { deep: true }
 );
 </script>

@@ -20,6 +20,10 @@ Route::group([
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
     Route::get('/user/items', [UserController::class, 'items'])->name('user.items');
     Route::delete('/user/{user}', [UserController::class, 'destroy'])->name('user.delete');
+    // User Profile
+    Route::get('/user/profile', [UserProfileController::class, 'show'])->name('user.profile');
+    Route::post('/user/profile/password', [UserProfileController::class, 'updatePassword'])->name('user.profile.password');
+
 });
 
 Route::group([

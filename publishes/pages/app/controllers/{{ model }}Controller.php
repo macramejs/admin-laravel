@@ -2,17 +2,15 @@
 
 namespace Admin\Http\Controllers;
 
-use App\Models\Page;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Admin\Ui\Page as AdminPage;
 use Admin\Http\Indexes\PageIndex;
-use Illuminate\Http\RedirectResponse;
 use Admin\Http\Resources\PageResource;
-use Illuminate\Support\Facades\Redirect;
-use Macrame\Admin\Pages\Ui\PagesShowPage;
 use Admin\Http\Resources\PageTreeResource;
-use Macrame\Admin\Pages\Ui\PagesIndexPage;
+use Admin\Ui\Page as AdminPage;
+use App\Models\Page;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 
 class PageController
 {
@@ -48,12 +46,12 @@ class PageController
      * Show the page.
      *
      * @param {{ Model }} $page
-     * @param AdminPage $adminPage
+     * @param  AdminPage $adminPage
      * @return AdminPage
      */
     public function show(Page $page, AdminPage $adminPage, $tab = 'content')
     {
-        if (! in_array($tab, ['content', 'meta'])) {
+        if (! in_array($tab, ['content', 'meta', 'settings'])) {
             abort(404);
         }
 
@@ -69,16 +67,17 @@ class PageController
     /**
      * Update the page.
      *
-     * @param Request $request
-     * @param Page $page
+     * @param  Request $request
+     * @param  Page    $page
      * @return void
      */
     public function update(Request $request, Page $page)
     {
         $validated = $request->validate([
-            'content' => 'array',
+            'content'    => 'array',
             'attributes' => 'array',
-            'slug' => 'sometimes|string'
+            'slug'       => 'sometimes|string',
+            'name'       => 'sometimes|string',
         ]);
 
         // Enforce sluggified slug
@@ -94,8 +93,8 @@ class PageController
     /**
      * Update the meta information of the page.
      *
-     * @param Request $request
-     * @param Page $page
+     * @param  Request $request
+     * @param  Page    $page
      * @return void
      */
     public function meta(Request $request, Page $page)
@@ -117,16 +116,16 @@ class PageController
     /**
      * Store a new page.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return void
      */
     public function store(Request $request)
     {
         $page = Page::make([
             'parent_id' => $request->parent,
-            'name'     => $request->name,
-            'slug'     => Str::slug($request->slug ?: $request->name),
-            'template' => $request->template,
+            'name'      => $request->name,
+            'slug'      => Str::slug($request->slug ?: $request->name),
+            'template'  => $request->template,
         ]);
 
         $page->creator_id = $request->user()->id;
@@ -141,8 +140,8 @@ class PageController
     /**
      * Destroy the given page.
      *
-     * @param Request $request
-     * @param Page $page
+     * @param  Request          $request
+     * @param  Page             $page
      * @return RedirectResponse
      */
     public function destroy(Request $request, Page $page)
@@ -155,7 +154,7 @@ class PageController
     /**
      * Update the order for of the page tree.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return void
      */
     public function order(Request $request)

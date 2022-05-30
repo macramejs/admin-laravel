@@ -50,10 +50,17 @@ class MakeNavBuilderCommand extends BaseMakeCommand
             to: $this->appPath('Http/Controllers')
         );
 
-        // Resources
+        // Admin Resources
         $this->publishDir(
-            from: $this->publishesPath('app/resources'),
+            from: $this->publishesPath('app/admin_resources'),
             to: $this->appPath('Http/Resources')
+        );
+
+        // App Resources
+        $this->files->ensureDirectoryExists(app_path('Http/Resources'));
+        $this->publishDir(
+            from: $this->publishesPath('app/app_resources'),
+            to: app_path('Http/Resources')
         );
 
         // Migrations

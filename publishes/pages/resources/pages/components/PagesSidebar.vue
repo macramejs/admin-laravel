@@ -36,23 +36,15 @@ type PageTree = Tree<Page>;
 
 const tree: PageTree = useTree<Page>(props.pages);
 
-tree.updateOnChange(() => props.pages);
-
-const queueKey = `pages.order`;
 let originalOrder = useOriginal(tree.getOrder());
 
 watch(
     tree,
     () => {
         const order = tree.getOrder();
-
-        if (originalOrder.matches(order)) {
-            saveQueue.remove(queueKey);
-        } else {
-            saveQueue.add(queueKey, async () => {
-                originalOrder.update(order);
-                Inertia.post('/admin/pages/order', { order });
-            });
+        if (!originalOrder.matches(order)) {
+            originalOrder.update(order);
+            Inertia.post('/admin/pages/order', { order });
         }
     },
     { immediate: true, deep: true }

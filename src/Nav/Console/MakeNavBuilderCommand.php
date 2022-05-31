@@ -123,7 +123,7 @@ class MakeNavBuilderCommand extends BaseMakeCommand
 export type NavItem = {
     id?: number,
     title: string,
-    route: string,
+    url: string,
     parent_id: number,
     children: NavItem[],
 }

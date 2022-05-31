@@ -11,9 +11,18 @@ use Macrame\Content\ContentCast;
 class PageContent extends ContentCast
 {
     /**
+     * List of parsers.
+     *
+     * @var array
+     */
+    protected $parsers = [
+        'image_full' => Parsers\ImageFullParser::class,
+        'carousel' => Parsers\CarouselParser::class,
+    ];
+
+    /**
      * Parse items.
      *
-     * @param array $items
      * @return $this
      */
     public function parse()
@@ -41,27 +50,31 @@ class PageContent extends ContentCast
             return $item;
         }
 
-        $item['value'] = match ($item['type']) {
-            'image' => $this->parseImageBlock($item['value']),
-            default => $item['value']
-        };
+        $item['value'] = $this->parseItemValue(
+            $item['value'],
+            $this->parsers[$item['type']] ?? null,
+        );
 
         return $item;
     }
 
     /**
-     * Parse an image block.
+     * Parse item value.
      *
      * @param array $value
-     * @return void
+     * @param string|null $parser
+     * @param boolean $toArray
+     * @return
      */
-    protected function parseImageBlock($value)
+    protected function parseItemValue(array $value, ?string $parser)
     {
-        if (array_key_exists('image', $value)) {
-            // dd(File::where('id', $value['image'] ?? null)->first());
-            $value['image'] = File::where('id', $value['image'] ?? null)->first();
+        if (is_null($parser)) {
+            return $value;
         }
 
-        return $value;
+        $p = new $parser($value);
+        $p->parse();
+
+        return $p;
     }
 }

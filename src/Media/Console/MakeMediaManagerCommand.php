@@ -61,6 +61,12 @@ class MakeMediaManagerCommand extends BaseMakeCommand
             to: $this->appPath('Http/Controllers')
         );
 
+        // App Controllers
+        $this->publishDir(
+            from: $this->publishesPath('app/app_controllers'),
+            to: app_path('Http/Controllers')
+        );
+
         // Indexes
         $this->publishDir(
             from: $this->publishesPath('app/indexes'),
@@ -112,6 +118,14 @@ use Admin\Http\Controllers\\{$page}Controller;";
         $before = "use Illuminate\Support\Facades\Route;";
 
         $this->insertBefore($routesPath, $insert, $before);
+
+        // Public routes
+        $insert = "Route::get('/storage/c/{id}/{file}', [MediaController::class, 'conversion']);";
+        $this->insertAtEnd(base_path('routes/web.php'), $insert);
+
+        $insert = "use App\Http\Controllers\MediaController;";
+        $before = "use Illuminate\Support\Facades\Route;";
+        $this->insertBefore(base_path('routes/web.php'), $insert, $before);
     }
 
     protected function makeResourcesFiles()

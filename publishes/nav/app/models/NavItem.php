@@ -2,7 +2,8 @@
 
 namespace App\Models;
 
-use {{ namespace }}\Http\Resources\Models\RouteItem;
+use Admin\Http\Resources\Models\RouteItem;
+use App\Casts\NavRoute;
 use App\Models\Types\NavType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -29,24 +30,10 @@ class NavItem extends Model implements Tree
      * @var array
      */
     protected $casts = [
+        'route'   => NavRoute::class,
         'type'    => NavType::class,
         'new_tab' => 'boolean',
     ];
-
-    /**
-     * Get a list of the selectable routes for the nav item.
-     *
-     * @param  NavType          $type
-     * @return array|Collection
-     */
-    public static function routeItems(NavType $type)
-    {
-        $items = Page::get()->map(function (Page $page) {
-            return new RouteItem($page->getRoute()->getName(), $page->name);
-        });
-
-        return $items;
-    }
 
     /**
      * Determines whether the route is an url.

@@ -1,14 +1,16 @@
 <?php
 
-namespace {{ namespace }}\Http\Controllers;
+namespace Admin\Http\Controllers;
 
-use {{ namespace }}\Http\Resources\NavItemTreeResource;
-use {{ namespace }}\Http\Resources\RouteItemResource;
-use {{ namespace }}\Ui\Page;
+use Admin\Ui\Page;
 use App\Models\NavItem;
-use App\Models\Types\NavType;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Models\Types\NavType;
+use App\Models\Page as PageModel;
+use Illuminate\Http\RedirectResponse;
+use Admin\Http\Resources\Models\RouteItem;
+use Admin\Http\Resources\RouteItemResource;
+use Admin\Http\Resources\NavItemTreeResource;
 
 class NavController
 {
@@ -17,7 +19,7 @@ class NavController
      *
      * @return Page
      */
-    public function index(Request $request, Page $page, )
+    public function index(Request $request, Page $page)
     {
         return $page->page('Nav/Index');
     }
@@ -31,7 +33,7 @@ class NavController
      */
     public function show(Page $page, NavType $type)
     {
-        $routes = NavItem::routeItems($type);
+        $routes = $this->routeItems($type);
 
         $items = NavItem::whereRoot()
             ->where('type', $type->value)
@@ -112,5 +114,23 @@ class NavController
         $item->delete();
 
         return redirect()->back();
+    }
+
+    /**
+     * Get a list of the selectable routes for the nav item.
+     *
+     * @param  NavType          $type
+     * @return array|Collection
+     */
+    protected static function routeItems(NavType $type)
+    {
+        $items = PageModel::get()->map(function (PageModel $page) {
+            return RouteItem::fromRoute(
+                title: $page->name,
+                name: $page->getRoute()->getName(),
+            );
+        });
+
+        return $items;
     }
 }

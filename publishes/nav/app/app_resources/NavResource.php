@@ -26,7 +26,7 @@ class NavResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'items' => new NavItemResource($this->all())
+            'items' => NavItemResource::collection($this->all())
         ];
     }
 }

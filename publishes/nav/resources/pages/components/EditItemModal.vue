@@ -15,7 +15,7 @@
                     v-model="form.route"
                     :options="routeItems"
                     label-key="title"
-                    value-key="name"
+                    value-key="url"
                 />
             </FormField>
         </div>

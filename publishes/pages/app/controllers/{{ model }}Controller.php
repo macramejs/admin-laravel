@@ -76,7 +76,7 @@ class PageController
         $validated = $request->validate([
             'content'    => 'array',
             'attributes' => 'array',
-            'slug'       => 'sometimes|string',
+            'slug'       => 'sometimes|nullable',
             'name'       => 'sometimes|string',
         ]);
 

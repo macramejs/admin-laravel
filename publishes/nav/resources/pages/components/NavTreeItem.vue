@@ -10,7 +10,7 @@
             </template>
             <EditItemModal
                 :nav-item="navItem"
-                :route-items="routeItems"
+                :link-options="linkOptions"
                 :type="type"
             >
                 <template #button="{ open }">
@@ -30,14 +30,18 @@
         </ContextMenu>
 
         <template v-slot:disclosure>
-            <NavTree :tree="children" :type="type" :route-items="routeItems" />
+            <NavTree
+                :tree="children"
+                :type="type"
+                :link-options="linkOptions"
+            />
         </template>
     </TreeItem>
 </template>
 
 <script lang="ts" setup>
 import { Tree } from '@macramejs/macrame-vue3';
-import { NavItem, RouteItem } from '@{{ app }}/types/resources';
+import { NavItem, LinkOption } from '@admin/types/resources';
 import {
     TreeItem,
     ContextMenu,
@@ -48,7 +52,7 @@ import {
 import NavTree from './NavTree.vue';
 import { PropType } from 'vue';
 import EditItemModal from './EditItemModal.vue';
-import { deleteNavItem } from '@{{ app }}/modules/nav';
+import { deleteNavItem } from '@admin/modules/nav';
 
 const props = defineProps({
     navItem: {
@@ -63,8 +67,9 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    routeItems: {
-        type: Object as PropType<RouteItem[]>,
+    linkOptions: {
+        required: true,
+        type: Array as PropType<LinkOption[]>,
     },
 });
 </script>

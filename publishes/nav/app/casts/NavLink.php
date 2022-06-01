@@ -6,10 +6,10 @@ use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Stringable;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
-class NavRoute implements CastsAttributes, Stringable
+class NavLink implements CastsAttributes, Stringable
 {
     /**
-     * Create new NavRoute instance.
+     * Create new NavLink instance.
      *
      * @param string $value
      * @return void
@@ -53,7 +53,7 @@ class NavRoute implements CastsAttributes, Stringable
     }
 
     /**
-     * Get the url representation of the object.
+     * Get the url representation of the link.
      *
      * @return string
      */

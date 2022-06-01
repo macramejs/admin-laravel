@@ -7,7 +7,7 @@ export const useNavItemForm = (type: string, options): NavItemForm => {
         route: `/admin/nav/${type}`,
         data: {
             title: '',
-            route: '',
+            link: '',
         },
         method: 'post',
         ...options,

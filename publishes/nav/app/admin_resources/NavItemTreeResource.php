@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Http\Resources;
+namespace Admin\Http\Resources;
 
 use App\Models\NavItem;
 use Macrame\Tree\TreeResource;
@@ -25,6 +25,10 @@ class NavItemTreeResource extends TreeResource
      */
     public function value($request)
     {
-        return parent::value($request);
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'link' => $this->link->value,
+        ];
     }
 }

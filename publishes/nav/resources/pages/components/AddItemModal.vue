@@ -10,11 +10,11 @@
             </FormField>
             <FormField>
                 <Select
-                    label="Route"
-                    v-model="form.route"
-                    :options="routeItems"
+                    label="Link"
+                    v-model="form.link"
+                    :options="linkOptions"
                     label-key="title"
-                    value-key="name"
+                    value-key="link"
                 />
             </FormField>
         </div>
@@ -33,8 +33,8 @@ import {
     IconPlus,
 } from '@macramejs/admin-vue3';
 import { useForm } from '@macramejs/macrame-vue3';
-import { RouteItem } from '@{{ app }}/types/resources';
-import { useNavItemForm } from '@{{ app }}/modules/nav';
+import { LinkOption } from '@admin/types/resources';
+import { useNavItemForm } from '@admin/modules/nav';
 
 const isOpen = ref<boolean>(false);
 
@@ -43,8 +43,9 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    routeItems: {
-        type: Object as PropType<RouteItem[]>,
+    linkOptions: {
+        required: true,
+        type: Array as PropType<LinkOption[]>,
     },
 });
 

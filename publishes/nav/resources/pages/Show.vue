@@ -9,20 +9,20 @@
         <NavBody
             :items="items.data"
             :type="type"
-            :route-items="routeItems.data"
+            :link-options="linkOptions.data"
         />
     </Admin>
 </template>
 
 <script setup lang="ts">
 import { PropType } from 'vue';
-import { {{ namespace }} } from '@{{ app }}/layout';
+import { Admin } from '@admin/layout';
 import NavSidebar from './components/NavSidebar.vue';
 import NavBody from './components/NavBody.vue';
 import {
     NavItemTreeCollectionResource,
-    RouteItemCollectionResource,
-} from '@{{ app }}/types';
+    LinkOptionCollectionResource,
+} from '@admin/types';
 
 const props = defineProps({
     type: {
@@ -33,8 +33,8 @@ const props = defineProps({
         type: Object as PropType<NavItemTreeCollectionResource>,
         required: true,
     },
-    routeItems: {
-        type: Object as PropType<RouteItemCollectionResource>,
+    linkOptions: {
+        type: Object as PropType<LinkOptionCollectionResource>,
         required: true,
     },
 });

@@ -1,21 +1,23 @@
 <?php
 
-namespace Admin\Http\Resources\Models;
+namespace Admin\Http\Resources\Options;
 
-class RouteItem
+class LinkOption
 {
     /**
-     * Create new RouteItem instance.
+     * Create new Link instance.
      *
-     * @param string $name
+     * @param string $link
      * @param string $title
      * @return void
      */
     public function __construct(
-        public string $url,
+        public string $link,
         public string $title
     ) {
         //
+        // http://example.com
+        // route://site.1?name=foo
     }
 
     /**
@@ -24,16 +26,16 @@ class RouteItem
      * @param string $title
      * @param string $name
      * @param array $parameters
-     * @return RouteItem
+     * @return static
      */
     public static function fromRoute($title, $name, $parameters = [])
     {
-        $url = "route://{$name}";
+        $link = "route://{$name}";
 
         if (!empty($parameters)) {
-            $url .= "?".http_build_query($parameters);
+            $link .= "?".http_build_query($parameters);
         }
 
-        return new RouteItem($url, $title);
+        return new static($link, $title);
     }
 }

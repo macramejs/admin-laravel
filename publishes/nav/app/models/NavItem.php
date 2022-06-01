@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-use Admin\Http\Resources\Models\RouteItem;
-use App\Casts\NavRoute;
+use App\Casts\NavLink;
 use App\Models\Types\NavType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use Macrame\Contracts\Tree\Tree;
 use Macrame\Tree\Traits\IsTree;
 
@@ -21,7 +19,7 @@ class NavItem extends Model implements Tree
      * @var array
      */
     protected $fillable = [
-        'parent_id', 'order_column', 'title', 'route', 'new_tab', 'type',
+        'parent_id', 'order_column', 'title', 'link', 'new_tab', 'type',
     ];
 
     /**
@@ -30,18 +28,8 @@ class NavItem extends Model implements Tree
      * @var array
      */
     protected $casts = [
-        'route'   => NavRoute::class,
+        'link'    => NavLink::class,
         'type'    => NavType::class,
         'new_tab' => 'boolean',
     ];
-
-    /**
-     * Determines whether the route is an url.
-     *
-     * @return bool
-     */
-    public function isRouteUrl()
-    {
-        return preg_match('#^https?://.+#', $this->route);
-    }
 }

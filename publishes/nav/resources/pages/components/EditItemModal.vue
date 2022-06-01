@@ -10,12 +10,12 @@
             </FormField>
             <FormField>
                 <Select
-                    v-if="routeItems"
-                    label="Route"
-                    v-model="form.route"
-                    :options="routeItems"
+                    v-if="linkOptions"
+                    label="Link"
+                    v-model="form.link"
+                    :options="linkOptions"
                     label-key="title"
-                    value-key="name"
+                    value-key="link"
                 />
             </FormField>
         </div>
@@ -34,8 +34,8 @@ import {
     ContextButton,
 } from '@macramejs/admin-vue3';
 import { useForm } from '@macramejs/macrame-vue3';
-import { useNavItemForm } from '@{{ app }}/modules/nav';
-import { NavItem, RouteItem } from '@{{ app }}/types/resources';
+import { useNavItemForm } from '@admin/modules/nav';
+import { NavItem, LinkOption } from '@admin/types/resources';
 
 const isOpen = ref<boolean>(false);
 
@@ -48,19 +48,20 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    routeItems: {
-        type: Object as PropType<RouteItem[]>,
+    linkOptions: {
+        required: true,
+        type: Object as PropType<LinkOption[]>,
     },
 });
 
 const emit = defineEmits(['itemAdded']);
 
 const form = useNavItemForm(props.type, {
-    route: `/{{ app }}/{{ route }}/${props.type}/${props.navItem.id}`,
+    route: `/admin/nav/${props.type}/${props.navItem.id}`,
     method: 'put',
     data: {
         title: props.navItem.title,
-        route: props.navItem.route,
+        link: props.navItem.link,
     },
     onSuccess() {
         emit('itemAdded', this);

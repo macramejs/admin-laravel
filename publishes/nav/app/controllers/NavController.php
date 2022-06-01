@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Types\NavType;
 use App\Models\Page as PageModel;
 use Illuminate\Http\RedirectResponse;
-use Admin\Http\Resources\Models\RouteItem;
-use Admin\Http\Resources\RouteItemResource;
+use Admin\Http\Resources\Options\LinkOption;
+use Admin\Http\Resources\LinkOptionResource;
 use Admin\Http\Resources\NavItemTreeResource;
 
 class NavController
@@ -33,7 +33,7 @@ class NavController
      */
     public function show(Page $page, NavType $type)
     {
-        $routes = $this->routeItems($type);
+        $linkOptions = $this->linkOptions($type);
 
         $items = NavItem::whereRoot()
             ->where('type', $type->value)
@@ -42,7 +42,7 @@ class NavController
 
         return $page->page('Nav/Show')
             ->with('items', NavItemTreeResource::collection($items))
-            ->with('route-items', RouteItemResource::collection($routes))
+            ->with('link-options', LinkOptionResource::collection($linkOptions))
             ->with('type', $type->value);
     }
 
@@ -58,7 +58,7 @@ class NavController
     {
         $validated = $request->validate([
             'title' => 'required|string',
-            'route' => 'required|string',
+            'link'  => 'required|string',
         ]);
 
         NavItem::where('type', $type->value)
@@ -78,12 +78,15 @@ class NavController
      */
     public function store(Request $request, NavType $type, NavItem $item = null)
     {
-        NavItem::create([
-            'title'     => $request->title,
-            'route'     => $request->route,
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'link'  => 'required|string',
+        ]);
+
+        NavItem::create(array_merge($validated, [
             'type'      => $type->value,
             'parent_id' => $item ? $item->id : null,
-        ]);
+        ]));
 
         return redirect()->back();
     }
@@ -117,19 +120,20 @@ class NavController
     }
 
     /**
-     * Get a list of the selectable routes for the nav item.
+     * Get a list of the selectable link options for the nav item.
      *
      * @param  NavType          $type
      * @return array|Collection
      */
-    protected static function routeItems(NavType $type)
+    protected function linkOptions(NavType $type)
     {
-        $items = PageModel::get()->map(function (PageModel $page) {
-            return RouteItem::fromRoute(
-                title: $page->name,
-                name: $page->getRoute()->getName(),
-            );
-        });
+        $items = PageModel::get()
+            ->map(function (PageModel $page) {
+                return LinkOption::fromRoute(
+                    title: $page->name,
+                    name: $page->getRoute()->getName(),
+                );
+            });
 
         return $items;
     }

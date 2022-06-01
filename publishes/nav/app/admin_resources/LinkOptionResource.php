@@ -1,19 +1,19 @@
 <?php
 
-namespace {{ namespace }}\Http\Resources;
+namespace Admin\Http\Resources;
 
-use {{ namespace }}\Http\Resources\Models\RouteItem;
+use Admin\Http\Resources\Options\LinkOption;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin RouteItem
+ * @mixin LinkOption
  */
-class RouteItemResource extends JsonResource
+class LinkOptionResource extends JsonResource
 {
     /**
      * The resource instance.
      *
-     * @var RouteItem
+     * @var LinkOption
      */
     public $resource;
 
@@ -26,7 +26,7 @@ class RouteItemResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'url'  => $this->url,
+            'link'  => $this->link,
             'title' => $this->title,
         ];
     }

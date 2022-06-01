@@ -2,22 +2,18 @@
     <div class="p-12">
         <h1 class="flex justify-between mb-4">
             <span>Items</span>
-            <AddItemModal :type="type" :route-items="routeItems" />
+            <AddItemModal :type="type" :link-options="linkOptions" />
         </h1>
-        <NavTree :tree="tree" :type="type" :route-items="routeItems" />
+        <NavTree :tree="tree" :type="type" :link-options="linkOptions" />
     </div>
 </template>
 
 <script lang="ts" setup>
 import { PropType, ref, watch } from 'vue';
-import {
-    NavItemTreeItem,
-    NavItem,
-    RouteItem,
-} from '@{{ app }}/types/resources';
+import { NavItemTreeItem, NavItem, LinkOption } from '@admin/types/resources';
 import { useTree, useOriginal } from '@macramejs/macrame-vue3';
 import { Button } from '@macramejs/admin-vue3';
-import { saveQueue } from '@{{ app }}/modules/save-queue';
+import { saveQueue } from '@admin/modules/save-queue';
 import NavTree from './NavTree.vue';
 import AddItemModal from './AddItemModal.vue';
 import { Inertia } from '@inertiajs/inertia';
@@ -31,8 +27,8 @@ const props = defineProps({
         type: Array as PropType<NavItemTreeItem[]>,
         required: true,
     },
-    routeItems: {
-        type: Object as PropType<RouteItem[]>,
+    linkOptions: {
+        type: Array as PropType<LinkOption[]>,
     },
 });
 
@@ -44,7 +40,7 @@ tree.updateOnChange(() => props.items);
 
 let originalOrder = useOriginal(tree.getOrder());
 
-const orderQueueKey = `{{ route }}.${props.type}.order`;
+const orderQueueKey = `nav.${props.type}.order`;
 
 function onOrderChange(order) {
     if (!originalOrder) return;
@@ -53,7 +49,7 @@ function onOrderChange(order) {
     } else {
         saveQueue.add(orderQueueKey, async () => {
             originalOrder.update(order);
-            Inertia.post(`/{{ app }}/{{ route }}/${props.type}/order`, {
+            Inertia.post(`/admin/nav/${props.type}/order`, {
                 order,
             });
         });

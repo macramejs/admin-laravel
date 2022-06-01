@@ -5,14 +5,14 @@
                 :nav-item="item"
                 :children="children"
                 :type="type"
-                :route-items="routeItems"
+                :link-options="linkOptions"
             />
         </template>
     </BaseTree>
 </template>
 
 <script lang="ts" setup>
-import { NavItem, RouteItem } from '@{{ app }}/types/resources';
+import { NavItem, LinkOption } from '@admin/types/resources';
 import { defineProps, PropType } from 'vue';
 import { Tree } from '@macramejs/macrame-vue3';
 import { Tree as BaseTree } from '@macramejs/admin-vue3';
@@ -27,8 +27,9 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    routeItems: {
-        type: Object as PropType<RouteItem[]>,
+    linkOptions: {
+        required: true,
+        type: Array as PropType<LinkOption[]>,
     },
 });
 </script>

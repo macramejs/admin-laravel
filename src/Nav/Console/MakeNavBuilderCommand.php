@@ -123,13 +123,19 @@ class MakeNavBuilderCommand extends BaseMakeCommand
 export type NavItem = {
     id?: number,
     title: string,
-    route: string,
-    parent_id: number,
+    link: string,
     children: NavItem[],
 }
 export type NavItemTreeItem = RawTreeItem<NavItem>;
 export type NavItemTreeResource = Resource<NavItemTreeItem>;
-export type NavItemTreeCollectionResource = CollectionResource<NavItemTreeItem>;';
+export type NavItemTreeCollectionResource = CollectionResource<NavItemTreeItem>;
+
+export type LinkOption = {
+    link: string,
+    title: string,
+}
+export type LinkOptionResource = Resource<LinkOption>;
+export type LinkOptionCollectionResource = CollectionResource<LinkOption>;';
         $this->insertAtEnd(
             resource_path($this->app().'/js/types/resources.ts'),
             $insert

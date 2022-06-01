@@ -26,8 +26,8 @@ class NavItemResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'route'     => $this->route->url(),
-            'new_tab'   => $this->new_tab,
+            'link' => $this->link->url(),
+            'name' => $this->title,
             'children'  => static::collection(
                 $this->children->sortBy('order_column')
             )

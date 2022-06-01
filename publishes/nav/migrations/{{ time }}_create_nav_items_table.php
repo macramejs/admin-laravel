@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('title')->nullable();
-            $table->string('route')->nullable();
+            $table->string('link')->nullable();
             $table->string('type');
             
             $table->boolean('new_tab')->nullable();

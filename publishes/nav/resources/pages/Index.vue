@@ -10,6 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import { {{ namespace }} } from '@{{ app }}/layout';
+import { Admin } from '@admin/layout';
 import NavSidebar from './components/NavSidebar.vue';
 </script>

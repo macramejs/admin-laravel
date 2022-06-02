@@ -2,6 +2,7 @@
 
 namespace Admin\Http\Controllers;
 
+use Admin\Http\Controllers\Traits\PageLinks;
 use Admin\Http\Indexes\PageIndex;
 use Admin\Http\Resources\PageResource;
 use Admin\Http\Resources\PageTreeResource;
@@ -14,8 +15,10 @@ use Illuminate\Support\Str;
 
 class PageController
 {
+    use PageLinks;
+
     /**
-     * Ship index page.
+     * Page index page.
      *
      * @param  Page $page
      * @return Page
@@ -29,7 +32,7 @@ class PageController
     }
 
     /**
-     * Show the ship index page for the admin application.
+     * Show the index page for the admin application.
      *
      * @return AdminPage
      */
@@ -57,10 +60,13 @@ class PageController
 
         $pages = Page::root();
 
+        $linkOptions = $this->linkOptions();
+
         return $adminPage
             ->page('Page/Show')
             ->with('tab', $tab)
             ->with('page', new PageResource($page))
+            ->with('link-options', LinkOptionResource::collection($linkOptions))
             ->with('pages', PageTreeResource::collection($pages));
     }
 

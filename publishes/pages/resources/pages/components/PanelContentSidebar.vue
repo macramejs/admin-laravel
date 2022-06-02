@@ -11,29 +11,18 @@
             <Cabinet>
                 <DrawerImageFull :draws="SectionImageFull" />
                 <DrawerGallery :draws="SectionGallery" />
-                <DrawerLogoWall :draws="SectionLogoWall" />
             </Cabinet>
         </DrawerSection>
         <DrawerSection title="Sections">
             <Cabinet>
                 <DrawerCards :draws="SectionCards" />
+                <DrawerLogoWall :draws="SectionLogoWall" />
                 <DrawerAccordion :draws="SectionAccordion" />
+            </Cabinet>
+        </DrawerSection>
+        <DrawerSection title="Carousels">
+            <Cabinet>
                 <DrawerCarousel :draws="SectionCarousel" />
-                <DrawerTabs :draws="SectionTabs" />
-                <DrawerMap :draws="SectionMap" />
-            </Cabinet>
-        </DrawerSection>
-        <DrawerSection title="Sliders">
-            <Cabinet>
-                <DrawerSlider :draws="SectionSlider" />
-                <DrawerGallerySlider :draws="SectionGallerySlider" />
-            </Cabinet>
-        </DrawerSection>
-        <DrawerSection title="Misc">
-            <Cabinet>
-                <DrawerFiles :draws="SectionFiles" />
-                <DrawerDivider :draws="SectionDivider" />
-                <DrawerVideo :draws="SectionVideo" />
             </Cabinet>
         </DrawerSection>
     </ContentSidebar>
@@ -49,14 +38,7 @@ import {
     SectionGallery,
     SectionCards,
     SectionAccordion,
-    SectionTabs,
     SectionLogoWall,
-    SectionMap,
-    SectionSlider,
-    SectionGallerySlider,
-    SectionFiles,
-    SectionDivider,
-    SectionVideo,
 } from './content/sections';
 import {
     DrawerTextFull,
@@ -67,14 +49,7 @@ import {
     DrawerGallery,
     DrawerCards,
     DrawerAccordion,
-    DrawerTabs,
     DrawerLogoWall,
-    DrawerMap,
-    DrawerSlider,
-    DrawerGallerySlider,
-    DrawerFiles,
-    DrawerDivider,
-    DrawerVideo,
 } from './content/drawers';
 import { DrawerSection, ContentSidebar } from '@macramejs/admin-vue3';
 import { Cabinet } from '@macramejs/macrame-vue3';

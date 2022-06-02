@@ -1,5 +1,5 @@
 <template>
-    <Drawer title="Logo Wall" hint="Logo Wall" color="green">
+    <Drawer title="Logo Wall" hint="Logo Wall" color="orange">
         <svg
             class="h-4 w-4"
             width="24"
@@ -33,5 +33,5 @@
     </Drawer>
 </template>
 <script lang="ts" setup>
-import { Drawer } from '@macramejs/admin-vue3';
+import { Drawer } from "@macramejs/admin-vue3";
 </script>

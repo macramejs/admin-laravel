@@ -31,7 +31,7 @@ class ImageFullParser implements Parser
     {
         // image
         $this->image = File::query()
-            ->where('id', $this->value['image'] ?? null)
+            ->where('id', $this->value['image']['id'] ?? null)
             ->first();
     }
 

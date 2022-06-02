@@ -10,6 +10,7 @@
             </div>
             <FormFieldLabel> Text </FormFieldLabel>
             <Textarea v-model="model.text" class="w-full" label="Text" />
+            <Link v-model="model.link" />
         </Card>
     </BaseSection>
 </template>
@@ -23,6 +24,7 @@ import {
 } from "@macramejs/admin-vue3";
 import DrawerInfoBox from "./../drawers/DrawerInfoBox.vue";
 import { defineProps, watch, defineEmits, reactive } from "vue";
+import Link from "./components/Link.vue";
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -33,6 +35,11 @@ const props = defineProps({
         default: () => ({
             title: "",
             text: "",
+            link: {
+                link: "",
+                text: "",
+                target: "",
+            },
         }),
     },
 });

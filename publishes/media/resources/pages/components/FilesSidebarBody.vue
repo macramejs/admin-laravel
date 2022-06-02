@@ -35,8 +35,6 @@
 
 <script lang="ts" setup>
 import { SidebarLink, SidebarSecondarySection } from '@macramejs/admin-vue3';
-import { Link } from '@inertiajs/inertia-vue3';
-import { RadioGroup, RadioGroupOption } from '@headlessui/vue';
 import { PropType } from 'vue';
 import { MediaCollection } from '@admin/types';
 

@@ -11,7 +11,7 @@
             >
                 <SidebarLink
                     v-for="link in sidebarLinks"
-                    :title="link.title"
+                    :title="link.title || ' '"
                     :hide-title="!expanded"
                     :href="link.href"
                 >

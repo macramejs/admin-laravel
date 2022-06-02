@@ -3,10 +3,11 @@
 namespace App\Casts;
 
 use App\Models\File;
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Jsonable;
 use Macrame\Content\ContentCast;
+use App\Casts\Parsers\LogoWallParser;
+use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
 class PageContent extends ContentCast
 {
@@ -17,7 +18,10 @@ class PageContent extends ContentCast
      */
     protected $parsers = [
         'image_full' => Parsers\ImageFullParser::class,
+        'text_image' => Parsers\ImageFullParser::class,
+        'logo_wall' => Parsers\LogoWallParser::class,
         'carousel' => Parsers\CarouselParser::class,
+        'info_box' => Parsers\InfoBoxParser::class,
     ];
 
     /**

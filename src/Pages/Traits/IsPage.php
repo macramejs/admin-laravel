@@ -21,7 +21,8 @@ trait IsPage
     public static function routes()
     {
         try {
-            return static::where('parent_id', null)
+            return static::query()
+                ->where('is_live', true)
                 ->get()
                 ->map(function (self $site) {
                     if (! $site->is_live) {

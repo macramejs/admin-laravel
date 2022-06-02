@@ -4,6 +4,7 @@ namespace Admin\Http\Controllers;
 
 use Admin\Http\Controllers\Traits\PageLinks;
 use Admin\Http\Indexes\PageIndex;
+use Admin\Http\Resources\LinkOptionResource;
 use Admin\Http\Resources\PageResource;
 use Admin\Http\Resources\PageTreeResource;
 use Admin\Ui\Page as AdminPage;

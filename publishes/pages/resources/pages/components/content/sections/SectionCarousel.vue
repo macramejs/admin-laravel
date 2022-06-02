@@ -15,15 +15,15 @@
                 <template #item="{ element, index }">
                     <Card :key="index">
                         <Header class="mb-6">
-                            <div class="flex space-x-4 items-center">
+                            <div class="flex items-center space-x-4">
                                 <InteractionButton
-                                    class="drag-logo cursor-move"
+                                    class="cursor-move drag-logo"
                                     gray
                                 >
                                     <IconDraggable class="w-2.5 h-2.5" />
                                 </InteractionButton>
                                 <div class="text-lg font-semibold">
-                                    {{ element.name || "Carousel-Element" }}
+                                    {{ element.name || 'Carousel-Element' }}
                                 </div>
                             </div>
                             <ContextMenu placement="left">
@@ -75,15 +75,15 @@ import {
     Header,
     ContextMenu,
     ContextMenuItem,
-} from "@macramejs/admin-vue3";
-import { defineProps, watch, defineEmits, reactive } from "vue";
-import AddItem from "./components/AddItem.vue";
-import Draggable from "vuedraggable";
-import SelectImage from "./components/SelectImage.vue";
-import { v4 as uuid } from "uuid";
-import DrawerCarousel from "../drawers/DrawerCarousel.vue";
+} from '@macramejs/admin-vue3';
+import { defineProps, watch, defineEmits, reactive } from 'vue';
+import AddItem from './components/AddItem.vue';
+import Draggable from 'vuedraggable';
+import SelectImage from './components/SelectImage.vue';
+import { v4 as uuid } from 'uuid';
+import DrawerCarousel from '../drawers/DrawerCarousel.vue';
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps({
     modelValue: {
@@ -96,23 +96,21 @@ const props = defineProps({
 });
 
 const model = reactive({
-    items: props.modelValue.items.map((item) => {
-        item._draggableKey = uuid();
-
-        return item;
+    items: props.modelValue.items.map(item => {
+        return { ...item, _draggableKey: uuid() };
     }),
 });
 
 function addItem() {
-    console.log("foo");
+    console.log('foo');
     model.items.push({
-        title: "",
-        text: "",
+        title: '',
+        text: '',
         _draggableKey: uuid(),
         image: {
             id: null,
-            title: "",
-            alt: "",
+            title: '',
+            alt: '',
         },
     });
 }
@@ -124,13 +122,13 @@ function removeItem(index) {
 watch(
     () => model,
     () => {
-        let items = JSON.parse(JSON.stringify(model.items)).map((item) => {
+        let items = JSON.parse(JSON.stringify(model.items)).map(item => {
             delete item._draggableKey;
 
             return item;
         });
 
-        emit("update:modelValue", {
+        emit('update:modelValue', {
             ...model,
             items,
         });

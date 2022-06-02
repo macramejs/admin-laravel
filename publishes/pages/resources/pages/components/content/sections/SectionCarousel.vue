@@ -102,7 +102,6 @@ const model = reactive({
 });
 
 function addItem() {
-    console.log('foo');
     model.items.push({
         title: '',
         text: '',

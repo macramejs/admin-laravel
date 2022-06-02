@@ -12,20 +12,7 @@
 
                 <div class="col-span-1">
                     <FormFieldLabel> Bild </FormFieldLabel>
-                    <div v-if="selectedImage" class="relative">
-                        <Image :id="selectedImage.id" />
-                        <button
-                            class="absolute flex items-center justify-center w-5 h-5 text-white bg-black hover:bg-red rounded-xs right-1 top-1"
-                            @click="deleteImage()"
-                        >
-                            <IconTrash class="w-3 h-3" />
-                        </button>
-                    </div>
-                    <SelectImageModal
-                        v-model="selectedImage"
-                        v-if="!busy"
-                        :hide-button="selectedImage != null"
-                    />
+                    <SelectImage v-model="model.image" />
                 </div>
             </div>
         </Card>
@@ -35,24 +22,13 @@
 import {
     Textarea,
     Section as BaseSection,
-    IconTrash,
     FormFieldLabel,
     Card,
 } from "@macramejs/admin-vue3";
-import {
-    defineProps,
-    watch,
-    defineEmits,
-    reactive,
-    ref,
-    onBeforeMount,
-} from "vue";
+import { defineProps, watch, defineEmits, reactive } from "vue";
 
-import { getMediaById } from "@admin/modules/media";
-import { Media } from "@admin/types";
-import SelectImageModal from "./SelectImageModal.vue";
 import DrawerTextImage from "./../drawers/DrawerTextImage.vue";
-import Image from "./Image.vue";
+import SelectImage from "./components/SelectImage.vue";
 const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
@@ -61,7 +37,11 @@ const props = defineProps({
         required: true,
         default: () => ({
             text: "",
-            image: null,
+            image: {
+                id: null,
+                title: "",
+                alt: "",
+            },
         }),
     },
 });
@@ -71,28 +51,6 @@ const model = reactive(props.modelValue);
 watch(
     () => model,
     () => emit("update:modelValue", model),
-    { deep: true }
-);
-
-const busy = ref<boolean>(true);
-const selectedImage = ref<Media | null>(null);
-
-onBeforeMount(async () => {
-    selectedImage.value = props.modelValue.image
-        ? await getMediaById(props.modelValue.image)
-        : null;
-
-    busy.value = false;
-});
-
-const deleteImage = () => {
-    selectedImage.value = null;
-    model.image = null;
-};
-
-watch(
-    () => selectedImage,
-    () => (model.image = selectedImage.value?.id),
     { deep: true }
 );
 </script>

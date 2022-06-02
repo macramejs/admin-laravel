@@ -5,87 +5,82 @@
         </template>
         <Card>
             <Draggable
-                :list="model.images"
-                v-if="model.images && !busy"
                 tag="div"
-                class="grid grid-cols-12 gap-5 mb-5"
-                @dragend="reload()"
+                class="grid grid-cols-4 gap-5"
+                :list="model.items"
+                item-key="_draggableKey"
+                v-if="model"
             >
                 <template #item="{ element, index }">
-                    <div class="relative col-span-3">
-                        <Image :id="element" />
-                        <button
-                            class="absolute flex items-center justify-center w-5 h-5 text-white bg-black hover:bg-red rounded-xs right-1 top-1"
-                            @click="deleteImage(element.id)"
-                        >
-                            <IconTrash class="w-3 h-3" />
-                        </button>
-                    </div>
+                    <SelectImage v-model="element.image" />
                 </template>
             </Draggable>
-            <SelectImageModal v-model="selectedImage" />
         </Card>
+        <div class="flex justify-center mt-6">
+            <AddItem @click="addItem"> Bild hinzufügen </AddItem>
+        </div>
     </BaseSection>
 </template>
 <script setup lang="ts">
 import Draggable from "vuedraggable";
-import {
-    Card,
-    Button,
-    Section as BaseSection,
-    IconTrash,
-} from "@macramejs/admin-vue3";
-import { defineProps, watch, defineEmits, ref, nextTick } from "vue";
-import SelectImageModal from "./SelectImageModal.vue";
+import { Card, Section as BaseSection } from "@macramejs/admin-vue3";
+import { defineProps, watch, defineEmits, reactive } from "vue";
 import DrawerGallery from "./../drawers/DrawerGallery.vue";
-import Image from "./Image.vue";
+import SelectImage from "./components/SelectImage.vue";
+import AddItem from "./components/AddItem.vue";
+import { v4 as uuid } from "uuid";
 
 const emit = defineEmits(["update:modelValue"]);
-
 const props = defineProps({
     modelValue: {
         type: Object,
         required: true,
         default: () => ({
-            images: [],
+            items: [],
         }),
     },
 });
 
-const model = ref(props.modelValue);
-const selectedImage = ref(null);
+const model = reactive({
+    items: props.modelValue.items.map((item) => {
+        item._draggableKey = uuid();
 
-watch(
-    () => selectedImage.value,
-    (val) => {
-        if (val?.id) {
-            model.value.images.push(val.id);
-        }
-    },
-    { deep: true }
-);
+        return item;
+    }),
+});
+
+function addItem() {
+    console.log("foo");
+    model.items.push({
+        name: "",
+        link: "",
+        _draggableKey: uuid(),
+        image: {
+            id: null,
+            title: "",
+            alt: "",
+        },
+    });
+}
+
+function removeItem(index) {
+    model.items.splice(index, 1);
+}
 
 watch(
     () => model,
     () => {
-        emit("update:modelValue", model);
+        let items = JSON.parse(JSON.stringify(model.items)).map((item) => {
+            delete item._draggableKey;
+
+            return item;
+        });
+
+        emit("update:modelValue", {
+            ...model,
+            items,
+        });
     },
     { deep: true }
 );
-
-const busy = ref(false);
-
-const deleteImage = (index) => {
-    busy.value = true;
-    model.value.images.splice(index, 1);
-    nextTick(() => {
-        busy.value = false;
-    });
-};
-const reload = () => {
-    busy.value = true;
-    nextTick(() => {
-        busy.value = false;
-    });
-};
 </script>

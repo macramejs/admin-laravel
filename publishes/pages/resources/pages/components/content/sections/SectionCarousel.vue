@@ -1,39 +1,89 @@
 <template>
     <BaseSection>
-        Carousel
-
-        <template v-if="!busy">
-            <div v-for="(item, key) in model.items" :key="key">
-                <img
-                    :src="model.items[key].selectedImage?.url"
-                    v-if="model.items[key].selectedImage"
-                />
-                <SelectImageModal
-                    v-model="model.items[key].selectedImage"
-                    v-if="model.items[key]"
-                />
-                <Button sm square @click="removeItem(key)">-</Button>
-            </div>
+        <template v-slot:title>
+            <DrawerCarousel preview />
         </template>
-
-        <Button sm square @click="addItem">+</Button>
+        <div class="pb-6">
+            <Draggable
+                tag="div"
+                class="grid grid-cols-2 gap-5"
+                :list="model.items"
+                handle=".drag-logo"
+                item-key="_draggableKey"
+                v-if="model"
+            >
+                <template #item="{ element, index }">
+                    <Card :key="index">
+                        <Header class="mb-6">
+                            <div class="flex space-x-4 items-center">
+                                <InteractionButton
+                                    class="drag-logo cursor-move"
+                                    gray
+                                >
+                                    <IconDraggable class="w-2.5 h-2.5" />
+                                </InteractionButton>
+                                <div class="text-lg font-semibold">
+                                    {{ element.name || "Carousel-Element" }}
+                                </div>
+                            </div>
+                            <ContextMenu placement="left">
+                                <template #button>
+                                    <InteractionButton class="cursor-pointer">
+                                        <IconMoreHorizontal class="w-4 h-4" />
+                                    </InteractionButton>
+                                </template>
+                                <ContextMenuItem
+                                    class="hover:bg-red-signal text-red-signal"
+                                    @click="removeItem(index)"
+                                >
+                                    <template #icon>
+                                        <IconTrash
+                                            class="origin-left scale-75"
+                                        />
+                                    </template>
+                                    <span>Löschen</span>
+                                </ContextMenuItem>
+                            </ContextMenu>
+                        </Header>
+                        <div class="grid grid-cols-12 gap-5">
+                            <div class="col-span-6">
+                                <SelectImage v-model="element.image" />
+                            </div>
+                            <div class="col-span-6 space-y-4">
+                                <Input v-model="element.title" label="Titel" />
+                                <Input v-model="element.text" label="Text" />
+                            </div>
+                        </div>
+                    </Card>
+                </template>
+            </Draggable>
+        </div>
+        <div class="flex justify-center">
+            <AddItem @click="addItem"> Neues Logo hinzufügen </AddItem>
+        </div>
     </BaseSection>
 </template>
 <script setup lang="ts">
-import { Button, Section as BaseSection } from '@macramejs/admin-vue3';
 import {
-    defineProps,
-    watch,
-    defineEmits,
-    reactive,
-    ref,
-    onBeforeMount,
-} from 'vue';
-import { getMediaById } from '@admin/modules/media';
-import SelectImageModal from './SelectImageModal.vue';
-import { v4 as uuid } from 'uuid';
+    Card,
+    Section as BaseSection,
+    InteractionButton,
+    IconDraggable,
+    IconTrash,
+    IconMoreHorizontal,
+    Input,
+    Header,
+    ContextMenu,
+    ContextMenuItem,
+} from "@macramejs/admin-vue3";
+import { defineProps, watch, defineEmits, reactive } from "vue";
+import AddItem from "./components/AddItem.vue";
+import Draggable from "vuedraggable";
+import SelectImage from "./components/SelectImage.vue";
+import { v4 as uuid } from "uuid";
+import DrawerCarousel from "../drawers/DrawerCarousel.vue";
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
     modelValue: {
@@ -45,15 +95,25 @@ const props = defineProps({
     },
 });
 
-const model = reactive(props.modelValue);
-const busy = ref<boolean>(true);
+const model = reactive({
+    items: props.modelValue.items.map((item) => {
+        item._draggableKey = uuid();
+
+        return item;
+    }),
+});
 
 function addItem() {
+    console.log("foo");
     model.items.push({
-        selectedImage: {},
-        image: '',
-        title: '',
-        text: '',
+        title: "",
+        text: "",
+        _draggableKey: uuid(),
+        image: {
+            id: null,
+            title: "",
+            alt: "",
+        },
     });
 }
 
@@ -61,29 +121,19 @@ function removeItem(index) {
     model.items.splice(index, 1);
 }
 
-onBeforeMount(async () => {
-    for (let i = 0; i < model.items.length; i++) {
-        model.items[i].selectedImage = model.items[i].image
-            ? await getMediaById(model.items[i].image)
-            : null;
-    }
-
-    busy.value = false;
-});
-
-emit('update:modelValue', model);
-
 watch(
     () => model,
     () => {
-        let m = JSON.parse(JSON.stringify(model));
+        let items = JSON.parse(JSON.stringify(model.items)).map((item) => {
+            delete item._draggableKey;
 
-        for (let i = 0; i < model.items.length; i++) {
-            m.items[i].image = m.items[i].selectedImage?.id;
-            delete m.items[i].selectedImage;
-        }
+            return item;
+        });
 
-        emit('update:modelValue', m);
+        emit("update:modelValue", {
+            ...model,
+            items,
+        });
     },
     { deep: true }
 );

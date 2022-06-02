@@ -3,10 +3,8 @@
 namespace App\Casts;
 
 use App\Models\File;
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Jsonable;
 use Macrame\Content\ContentCast;
+use App\Http\Resources\MediaResource;
 
 class PageAttributes extends ContentCast
 {
@@ -22,11 +20,23 @@ class PageAttributes extends ContentCast
             return $this;
         }
 
-        $this->items = $this->items = match ($this->model->template) {
-            // ...
+        $this->items = match ($this->model->template) {
+            'default' => $this->defaultTemplate($this->items),
             default => $this->items
         };
         
         return $this;
+    }
+
+    public function defaultTemplate(array $items)
+    {
+        $header = File::query()
+            ->where('id', $items['header']['id'] ?? null)
+            ->first();
+
+        return [
+            ...$items,
+            'header' => $header ? (new MediaResource($header))->toArray(request()) : null
+        ];
     }
 }

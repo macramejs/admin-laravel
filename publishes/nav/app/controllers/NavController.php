@@ -2,18 +2,19 @@
 
 namespace Admin\Http\Controllers;
 
-use Admin\Ui\Page;
-use App\Models\NavItem;
-use Illuminate\Http\Request;
-use App\Models\Types\NavType;
-use App\Models\Page as PageModel;
-use Illuminate\Http\RedirectResponse;
-use Admin\Http\Resources\Options\LinkOption;
+use Admin\Http\Controllers\Traits\PageLinks;
 use Admin\Http\Resources\LinkOptionResource;
 use Admin\Http\Resources\NavItemTreeResource;
+use Admin\Ui\Page;
+use App\Models\NavItem;
+use App\Models\Types\NavType;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class NavController
 {
+    use PageLinks;
+
     /**
      * Show a index page for all available navigations.
      *
@@ -117,24 +118,5 @@ class NavController
         $item->delete();
 
         return redirect()->back();
-    }
-
-    /**
-     * Get a list of the selectable link options for the nav item.
-     *
-     * @param  NavType          $type
-     * @return array|Collection
-     */
-    protected function linkOptions(NavType $type)
-    {
-        $items = PageModel::get()
-            ->map(function (PageModel $page) {
-                return LinkOption::fromRoute(
-                    title: $page->name,
-                    name: $page->getRoute()->getName(),
-                );
-            });
-
-        return $items;
     }
 }

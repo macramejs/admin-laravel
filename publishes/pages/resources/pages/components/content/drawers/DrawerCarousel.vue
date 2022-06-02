@@ -1,5 +1,5 @@
 <template>
-    <Drawer title="Carousel" hint="Carousel" color="orange">
+    <Drawer title="Carousel" hint="Carousel" color="red">
         <svg
             class="w-4 h-4"
             width="24"
@@ -18,5 +18,5 @@
     </Drawer>
 </template>
 <script lang="ts" setup>
-import { Drawer } from '@macramejs/admin-vue3';
+import { Drawer } from "@macramejs/admin-vue3";
 </script>

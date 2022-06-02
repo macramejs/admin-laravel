@@ -3,28 +3,81 @@
         <template v-slot:title>
             <DrawerAccordion preview />
         </template>
-
-        <div v-for="(item, key) in model.items" :key="key">
-            <Input v-model="item.title" />
-            <Textarea v-model="item.text" />
-            <Button sm square @click="removeItem(key)">-</Button>
+        <div class="space-y-3 pb-6">
+            <Draggable
+                tag="div"
+                :list="model.items"
+                handle=".drag-logo"
+                item-key="_draggableKey"
+                v-if="model"
+            >
+                <template #item="{ element, index }">
+                    <Card class="mb-3" :key="index">
+                        <Header class="mb-6">
+                            <div class="flex space-x-4 items-center">
+                                <InteractionButton
+                                    class="drag-logo cursor-move"
+                                    gray
+                                >
+                                    <IconDraggable class="w-2.5 h-2.5" />
+                                </InteractionButton>
+                                <div class="text-lg font-semibold">
+                                    {{ element.title || "Accordion-Element" }}
+                                </div>
+                            </div>
+                            <ContextMenu placement="left">
+                                <template #button>
+                                    <InteractionButton class="cursor-pointer">
+                                        <IconMoreHorizontal class="w-4 h-4" />
+                                    </InteractionButton>
+                                </template>
+                                <ContextMenuItem
+                                    class="hover:bg-red-signal text-red-signal"
+                                    @click="removeItem(index)"
+                                >
+                                    <template #icon>
+                                        <IconTrash
+                                            class="origin-left scale-75"
+                                        />
+                                    </template>
+                                    <span>Löschen</span>
+                                </ContextMenuItem>
+                            </ContextMenu>
+                        </Header>
+                        <div class="col-span-6 space-y-4">
+                            <Input v-model="element.title" label="Title" />
+                            <Textarea v-model="element.text" label="Text" />
+                        </div>
+                    </Card>
+                </template>
+            </Draggable>
         </div>
-
-        <Button sm square @click="addItem">+</Button>
+        <div class="flex justify-center">
+            <AddItem @click="addItem"> Neues Logo hinzufügen </AddItem>
+        </div>
     </BaseSection>
 </template>
 <script setup lang="ts">
 import {
-    Button,
+    Card,
+    Section as BaseSection,
+    InteractionButton,
+    IconDraggable,
+    IconTrash,
+    IconMoreHorizontal,
     Input,
     Textarea,
-    Section as BaseSection,
-} from '@macramejs/admin-vue3';
-import DrawerAccordion from './../drawers/DrawerAccordion.vue';
-import { defineProps, watch, defineEmits, reactive } from 'vue';
-import { v4 as uuid } from 'uuid';
+    Header,
+    ContextMenu,
+    ContextMenuItem,
+} from "@macramejs/admin-vue3";
+import { defineProps, watch, defineEmits, reactive } from "vue";
+import AddItem from "./components/AddItem.vue";
+import Draggable from "vuedraggable";
+import { v4 as uuid } from "uuid";
+import DrawerAccordion from "../drawers/DrawerAccordion.vue";
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
     modelValue: {
@@ -36,14 +89,19 @@ const props = defineProps({
     },
 });
 
-const model = reactive(props.modelValue);
+const model = reactive({
+    items: props.modelValue.items.map((item) => {
+        // item._draggableKey = uuid();
 
-const id = uuid();
+        return item;
+    }),
+});
 
 function addItem() {
     model.items.push({
-        title: '',
-        text: '',
+        title: "",
+        text: "",
+        // _draggableKey: uuid(),
     });
 }
 
@@ -51,11 +109,20 @@ function removeItem(index) {
     model.items.splice(index, 1);
 }
 
-emit('update:modelValue', model);
-
 watch(
     () => model,
-    () => emit('update:modelValue', model),
+    () => {
+        let items = JSON.parse(JSON.stringify(model.items)).map((item) => {
+            delete item._draggableKey;
+
+            return item;
+        });
+
+        emit("update:modelValue", {
+            ...model,
+            items,
+        });
+    },
     { deep: true }
 );
 </script>

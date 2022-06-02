@@ -43,26 +43,26 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, PropType, computed, onBeforeUnmount } from 'vue';
-import { useForm } from '@macramejs/macrame-vue3';
 import {
-    TabGroup,
-    TabList,
-    Tab,
-    Content,
-    ContentSidebar,
-    ContentBody,
-} from '@macramejs/admin-vue3';
+    defineProps,
+    PropType,
+    computed,
+    onBeforeUnmount,
+    onBeforeMount,
+} from 'vue';
+import { useForm } from '@macramejs/macrame-vue3';
+import { TabGroup, TabList, Tab, Content } from '@macramejs/admin-vue3';
 import { TabPanels, TabPanel } from '@headlessui/vue';
 import BaseLayout from './Index.vue';
 import { saveQueue } from '@admin/modules/save-queue';
-import { PageResource } from '@admin/types/resources';
+import { PageResource, LinkOption } from '@admin/types/resources';
 import { PageContent, PageMeta } from '@admin/types/forms';
 import PanelMetaBody from './components/PanelMetaBody.vue';
 import PanelContentBody from './components/PanelContentBody.vue';
 import PanelContentSidebar from './components/PanelContentSidebar.vue';
 import EditSlugModal from './components/EditSlugModal.vue';
 import PanelSettingsBody from './components/PanelSettingsBody.vue';
+import { linkOptions as GlobalLinkOptions } from '@admin/modules/links';
 
 const tabs = ['content', 'meta', 'settings'];
 
@@ -76,6 +76,14 @@ const props = defineProps({
         required: false,
         default: 'content',
     },
+    linkOptions: {
+        required: true,
+        type: Array as PropType<LinkOption[]>,
+    },
+});
+
+onBeforeMount(() => {
+    GlobalLinkOptions.value = props.linkOptions;
 });
 
 const contentFormQueueKey = `page.${props.page.data.id}.content`;
@@ -90,7 +98,7 @@ const contentForm = useForm<PageContent>({
             ? {}
             : props.page.data.attributes,
     },
-    onDirty: (form) =>
+    onDirty: form =>
         saveQueue.add(contentFormQueueKey, async () => form.submit()),
     onClean: () => saveQueue.remove(contentFormQueueKey),
 });
@@ -100,7 +108,7 @@ const metaForm = useForm<PageMeta>({
     route: `/admin/pages/${props.page.data.id}/meta`,
     method: 'post',
     data: props.page.data.meta || {},
-    onDirty: (form) => {
+    onDirty: form => {
         saveQueue.add(metaFormQueueKey, async () => form.submit());
     },
     onClean: () => saveQueue.remove(metaFormQueueKey),

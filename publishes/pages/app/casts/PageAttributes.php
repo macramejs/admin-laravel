@@ -4,7 +4,8 @@ namespace App\Casts;
 
 use App\Models\File;
 use Macrame\Content\ContentCast;
-use App\Http\Resources\MediaResource;
+use App\Http\Resources\ImageResource;
+use App\Http\Resources\Wrapper\Image;
 
 class PageAttributes extends ContentCast
 {

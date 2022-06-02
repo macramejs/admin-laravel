@@ -7,7 +7,7 @@ use App\Models\File;
 class Image
 {
     public function __construct(
-        public File $file,
+        public File $image,
         public $alt,
         public $title,
     ) {

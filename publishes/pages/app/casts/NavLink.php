@@ -2,7 +2,7 @@
 
 namespace App\Casts;
 
-use App\Casts\Resolver\LinkResolver;
+use App\Casts\Resolvers\LinkResolver;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Stringable;
 

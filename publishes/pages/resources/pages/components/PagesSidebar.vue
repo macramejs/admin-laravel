@@ -22,8 +22,7 @@ import {
 import PagesSidebarHeader from './PagesSidebarHeader.vue';
 import PagesSidebarBody from './PagesSidebarBody.vue';
 import { PageTreeItem, Page } from '@admin/types';
-import { saveQueue } from '@admin/modules/save-queue';
-import { Inertia } from '@inertiajs/inertia';
+import { post } from '@admin/modules/request';
 
 const props = defineProps({
     pages: {
@@ -38,7 +37,6 @@ const tree: PageTree = useTree<Page>(props.pages);
 
 tree.updateOnChange(() => props.pages);
 
-const queueKey = `pages.order`;
 let originalOrder = useOriginal(tree.getOrder());
 
 watch(
@@ -46,13 +44,9 @@ watch(
     () => {
         const order = tree.getOrder();
 
-        if (originalOrder.matches(order)) {
-            saveQueue.remove(queueKey);
-        } else {
-            saveQueue.add(queueKey, async () => {
-                originalOrder.update(order);
-                Inertia.post('/admin/pages/order', { order });
-            });
+        if (!originalOrder.matches(order)) {
+            originalOrder.update(order);
+            post('/admin/pages/order', { body: { order: order } });
         }
     },
     { immediate: true, deep: true }

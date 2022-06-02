@@ -2,6 +2,7 @@
 
 namespace App\Casts\Parsers;
 
+use App\Casts\Resolver\LinkResolver;
 use Macrame\Content\Contracts\Parser;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
@@ -15,9 +16,9 @@ class InfoBoxParser implements Parser
     public array $link;
 
     /**
-     * Create new Repeatable instance.
+     * Create new Parser instance.
      *
-     * @param array $value
+     * @param  array $value
      * @return void
      */
     public function __construct(
@@ -28,9 +29,8 @@ class InfoBoxParser implements Parser
 
     public function parse()
     {
-        $link = $this->value['link'];
-
-        $link['url'] = $this->url($link['link']);
+        $link = $this->value['link'] ?? ['link' => ''];
+        $link['link'] = LinkResolver::urlFromLink($link['link'] ?? '');
 
         $this->link = $link;
     }
@@ -43,7 +43,7 @@ class InfoBoxParser implements Parser
     public function toArray()
     {
         return array_merge($this->value, [
-            'link' => $this->link
+            'link' => $this->link,
         ]);
     }
 
@@ -56,7 +56,7 @@ class InfoBoxParser implements Parser
     {
         $parsed = parse_url($link);
 
-        if (!$parsed || ($parsed['scheme'] ?? '') != 'route') {
+        if (! $parsed || ($parsed['scheme'] ?? '') != 'route') {
             return $link;
         }
 

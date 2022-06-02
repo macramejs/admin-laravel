@@ -2,9 +2,10 @@
 
 namespace App\Casts\Parsers;
 
+use App\Http\Resources\ImageResource;
+use App\Http\Resources\Wrapper\Image;
 use App\Models\File;
 use Illuminate\Support\Collection;
-use App\Http\Resources\MediaResource;
 use Macrame\Content\Contracts\Parser;
 
 class CarouselParser implements Parser
@@ -17,9 +18,9 @@ class CarouselParser implements Parser
     public Collection $items;
 
     /**
-     * Create new Repeatable instance.
+     * Create new Parser instance.
      *
-     * @param array $value
+     * @param  array $value
      * @return void
      */
     public function __construct(
@@ -32,13 +33,19 @@ class CarouselParser implements Parser
     {
         // items
         $this->items = collect($this->value['items'] ?? [])->map(function ($item) {
-            if (!is_array($item)) {
+            if (! is_array($item)) {
                 return;
             }
 
-            $item['image'] = File::query()
-                ->where('id', $item['image'] ?? null)
+            $file = File::query()
+                ->where('id', $item['image']['id'] ?? null)
                 ->first();
+
+            $item['image'] = new Image(
+                $file,
+                $item['image']['alt'],
+                $item['image']['title']
+            );
 
             return $item;
         })->filter();
@@ -52,7 +59,7 @@ class CarouselParser implements Parser
     public function toArray()
     {
         return $this->items->map(function ($item) {
-            $item['image'] = (new MediaResource($item))->toArray(request());
+            $item['image'] = (new ImageResource($item))->toArray(request());
 
             return $item;
         })->toArray();

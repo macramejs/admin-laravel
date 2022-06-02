@@ -2,16 +2,16 @@
 
 namespace App\Casts;
 
+use App\Casts\Resolver\LinkResolver;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Stringable;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 class NavLink implements CastsAttributes, Stringable
 {
     /**
      * Create new NavLink instance.
      *
-     * @param string $value
+     * @param  string $value
      * @return void
      */
     public function __construct(
@@ -23,10 +23,10 @@ class NavLink implements CastsAttributes, Stringable
     /**
      * Cast the given value.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @param  string  $key
-     * @param  mixed  $value
-     * @param  array  $attributes
+     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @param  string                              $key
+     * @param  mixed                               $value
+     * @param  array                               $attributes
      * @return mixed
      */
     public function get($model, string $key, $value, array $attributes)
@@ -37,10 +37,10 @@ class NavLink implements CastsAttributes, Stringable
     /**
      * Prepare the given value for storage.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @param  string  $key
-     * @param  mixed  $value
-     * @param  array  $attributes
+     * @param  \Illuminate\Database\Eloquent\Model $model
+     * @param  string                              $key
+     * @param  mixed                               $value
+     * @param  array                               $attributes
      * @return mixed
      */
     public function set($model, string $key, $value, array $attributes)
@@ -59,22 +59,7 @@ class NavLink implements CastsAttributes, Stringable
      */
     public function url()
     {
-        $parsed = parse_url($this->value);
-
-        if (!$parsed || ($parsed['scheme'] ?? '') != 'route') {
-            return $this->value;
-        }
-
-        $name = $parsed['host'] ?? '';
-        parse_str($parsed['query'] ?? '', $parameters);
-
-        try {
-            return route($name, $parameters);
-        } catch (RouteNotFoundException $e) {
-            //
-        }
-
-        return $this->value;
+        return LinkResolver::urlFromLink($this->value);
     }
 
     /**

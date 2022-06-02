@@ -2,10 +2,21 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\Wrapper\Image;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MediaResource extends JsonResource
+/**
+ * @mixin Image
+ */
+class ImageResource extends JsonResource
 {
+    /**
+     * The resource instance.
+     *
+     * @var Image
+     */
+    public $resource;
+
     /**
      * Transform the resource into an array.
      *
@@ -15,7 +26,9 @@ class MediaResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'url' => $this->getUrl(),
+            'url'   => $this->file->getUrl(),
+            'alt'   => $this->alt,
+            'title' => $this->title,
         ];
     }
-}
+`

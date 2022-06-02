@@ -2,7 +2,8 @@
 
 namespace App\Casts\Parsers;
 
-use App\Http\Resources\MediaResource;
+use App\Http\Resources\ImageResource;
+use App\Http\Resources\Wrapper\Image;
 use App\Models\File;
 use Macrame\Content\Contracts\Parser;
 
@@ -11,14 +12,14 @@ class ImageFullParser implements Parser
     /**
      * Image.
      *
-     * @var File
+     * @var Image
      */
-    public File $image;
+    public Image $image;
 
     /**
-     * Create new Repeatable instance.
+     * Create new Parser instance.
      *
-     * @param array $value
+     * @param  array $value
      * @return void
      */
     public function __construct(
@@ -29,10 +30,15 @@ class ImageFullParser implements Parser
 
     public function parse()
     {
-        // image
-        $this->image = File::query()
+        $file = File::query()
             ->where('id', $this->value['image']['id'] ?? null)
             ->first();
+
+        $this->image = new Image(
+            $file,
+            $this->value['image']['alt'],
+            $this->value['image']['title']
+        );
     }
 
     /**
@@ -43,7 +49,7 @@ class ImageFullParser implements Parser
     public function toArray()
     {
         return array_merge($this->value, [
-            'image' => (new MediaResource($this->image))->toArray(request())
+            'image' => (new ImageResource($this->image))->toArray(request()),
         ]);
     }
 }

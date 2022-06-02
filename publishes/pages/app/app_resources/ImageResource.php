@@ -31,4 +31,4 @@ class ImageResource extends JsonResource
             'title' => $this->title,
         ];
     }
-`
+}

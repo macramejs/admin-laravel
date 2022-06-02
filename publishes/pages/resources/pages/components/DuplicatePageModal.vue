@@ -3,14 +3,14 @@
         <IconDuplicatePage class="w-4 h-4"></IconDuplicatePage>
     </slot>
     <Modal lg v-model:open="isOpen" title="Duplicate Page">
-        <form @submit.prevent="form.submit">
+        <form @submit.prevent="form.submit()">
             <div class="space-y-3">
                 <Input label="New Page Name" v-model="form.name" />
             </div>
             <input type="submit" class="hidden" />
         </form>
         <template v-slot:footer>
-            <Button @click="form.submit"> Duplizieren </Button>
+            <Button @click="form.submit()"> Duplizieren </Button>
         </template>
     </Modal>
 </template>

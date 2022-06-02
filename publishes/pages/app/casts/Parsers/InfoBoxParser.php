@@ -2,7 +2,7 @@
 
 namespace App\Casts\Parsers;
 
-use App\Casts\Resolver\LinkResolver;
+use App\Casts\Resolvers\LinkResolver;
 use Macrame\Content\Contracts\Parser;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 

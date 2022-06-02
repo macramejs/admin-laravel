@@ -31,18 +31,18 @@ class PageAttributes extends ContentCast
 
     public function defaultTemplate(array $items)
     {
-        $header = $items['header'];
-
-        $image = File::query()
-            ->where('id', $items['header']['id'] ?? null)
-            ->first();
-
-        $image = new Image(
-            $image,
-            array_key_exists('alt', $header) ? $header['alt'] : '',
-            array_key_exists('title', $header) ? $header['title'] : '',
-        );
-
+        $header = array_key_exists('header', $items) ? $items['header'] : null;
+        if ($header) {
+            $image = File::query()
+                ->where('id', $items['header']['id'] ?? null)
+                ->first();
+    
+            $image = new Image(
+                $image,
+                array_key_exists('alt', $header) ? $header['alt'] : '',
+                array_key_exists('title', $header) ? $header['title'] : '',
+            );
+        }
 
         return [
             ...$items,

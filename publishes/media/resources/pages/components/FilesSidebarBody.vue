@@ -1,6 +1,6 @@
 <template>
-    <SidebarSecondarySection>
-        <AddCollectionForm class="mb-4" v-if="showForm" />
+    <SidebarSecondarySection v-if="showForm">
+        <AddCollectionForm class="mb-4" />
     </SidebarSecondarySection>
     <SidebarSecondarySection>
         <SidebarLink

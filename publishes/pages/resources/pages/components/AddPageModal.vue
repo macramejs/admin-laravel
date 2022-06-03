@@ -38,7 +38,7 @@ import {
     IconPlus,
 } from '@macramejs/admin-vue3';
 import { useForm } from '@macramejs/macrame-vue3';
-import { templateOptions } from './content/templates';
+import { templateOptions } from './templates';
 import { Page } from '@admin/types/resources';
 import { slugify } from '@admin/modules/helpers';
 import { Inertia } from '@inertiajs/inertia';

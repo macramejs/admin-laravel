@@ -2,9 +2,9 @@
 
 namespace App\Casts;
 
-use Macrame\Content\ContentCast;
+use Macrame\Content\ContentCast as BaseContentCast;
 
-class PageContent extends ContentCast
+class ContentCast extends BaseContentCast
 {
     /**
      * List of parsers.

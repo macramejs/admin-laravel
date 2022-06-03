@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Casts\NavLink;
+use App\Casts\NavLinkCast;
 use App\Models\Types\NavType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,7 +28,7 @@ class NavItem extends Model implements Tree
      * @var array
      */
     protected $casts = [
-        'link'    => NavLink::class,
+        'link'    => NavLinkCast::class,
         'type'    => NavType::class,
         'new_tab' => 'boolean',
     ];

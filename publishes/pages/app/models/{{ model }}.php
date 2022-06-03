@@ -3,10 +3,8 @@
 namespace App\Models;
 
 use App\Http\Controllers\PageController;
-use App\Casts\PageAttributes;
-use App\Casts\PageContent;
-use App\Contracts\Restrictable;
-use App\Models\Concerns\IsRestricted;
+use App\Casts\PageAttributesCast;
+use App\Casts\ContentCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -50,8 +48,8 @@ class Page extends Model implements PageContract
      * @var array
      */
     protected $casts = [
-        'content'    => PageContent::class,
-        'attributes' => PageAttributes::class,
+        'content'    => ContentCast::class,
+        'attributes' => PageAttributesCast::class,
         'is_live'    => 'boolean',
     ];
 

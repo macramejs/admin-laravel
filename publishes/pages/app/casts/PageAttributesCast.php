@@ -7,7 +7,7 @@ use Macrame\Content\ContentCast;
 use App\Http\Resources\ImageResource;
 use App\Http\Resources\Wrapper\Image;
 
-class PageAttributes extends ContentCast
+class PageAttributesCast extends ContentCast
 {
     /**
      * Parse items.

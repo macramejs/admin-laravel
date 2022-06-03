@@ -6,7 +6,7 @@
         <SidebarLink
             secondary
             :active="!collection"
-            class="pr-4"
+            class="flex-1 py-1 cursor-pointer pr-4"
             href="/admin/media"
             key="all"
         >
@@ -20,7 +20,7 @@
             :key="c.id"
             secondary
             :active="c.id == collection?.id"
-            class="pr-4"
+            class="flex-1 py-1 cursor-pointer pr-4"
             :href="
                 c.id == collection?.id ? `/admin/media` : `/admin/media/${c.id}`
             "

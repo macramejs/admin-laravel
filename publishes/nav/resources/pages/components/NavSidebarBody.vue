@@ -1,14 +1,15 @@
 <template>
-    <SidebarSection :expandable="false">
+    <SidebarSecondarySection>
         <SidebarLink title="Main Navigation" href="/admin/nav/main" secondary />
         <SidebarLink
+            class="flex-1 py-1 cursor-pointer"
             title="Footer Navigation"
             href="/admin/nav/footer"
             secondary
         />
-    </SidebarSection>
+    </SidebarSecondarySection>
 </template>
 
 <script lang="ts" setup>
-import { SidebarLink, SidebarSection } from '@macramejs/admin-vue3';
+import { SidebarLink, SidebarSecondarySection } from '@macramejs/admin-vue3';
 </script>

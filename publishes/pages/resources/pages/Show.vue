@@ -36,7 +36,8 @@
         <template v-slot:topbar-left>
             <span>{{ contentForm.name }}</span>
             <div class="ml-4 text-sm text-gray">
-                <span v-html="fullSlug" /> <EditSlugModal :form="contentForm" />
+                <a :href="pageUrl" v-html="fullSlug" target="_blank" />
+                <EditSlugModal :form="contentForm" />
             </div>
         </template>
     </BaseLayout>
@@ -123,8 +124,14 @@ onBeforeUnmount(() => {
 });
 
 const fullSlug = computed(() => {
-    let parts = props.page.data.full_slug.split('/');
+    let parts = props.page.data.full_slug.split('/').filter(p => p);
     parts.pop();
     return `${parts.join(' > ')} > <strong>${contentForm.slug}</strong>`;
+});
+
+const pageUrl = computed(() => {
+    let parts = props.page.data.full_slug.split('/').filter(p => p);
+
+    return `${window.location.origin}/${parts.join('/')}`;
 });
 </script>

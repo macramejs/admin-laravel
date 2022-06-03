@@ -54,6 +54,7 @@
                             <div class="col-span-8 space-y-4">
                                 <Input v-model="element.title" label="Titel" />
                                 <Textarea v-model="element.text" label="Text" />
+                                <Link v-model="element.link" />
                             </div>
                         </div>
                     </Card>
@@ -81,6 +82,7 @@ import {
 } from '@macramejs/admin-vue3';
 import { defineProps, watch, defineEmits, reactive } from 'vue';
 import AddItem from './components/AddItem.vue';
+import Link from './components/Link.vue';
 import Draggable from 'vuedraggable';
 import SelectImage from './components/SelectImage.vue';
 import { v4 as uuid } from 'uuid';
@@ -109,13 +111,17 @@ const model = reactive({
 function addItem() {
     model.items.push({
         name: '',
-        link: '',
-        _draggableKey: uuid(),
+        link: {
+            link: '',
+            text: '',
+            new_tab: false,
+        },
         image: {
             id: null,
             title: '',
             alt: '',
         },
+        _draggableKey: uuid(),
     });
 }
 

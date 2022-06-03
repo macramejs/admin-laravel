@@ -2,7 +2,7 @@
     <div>
         <Button @click="init()">Link</Button>
         <Modal v-model:open="isOpen" sm>
-            <div class="space-y-5">
+            <div class="space-y-5 mb-4">
                 <Input v-model="model.text" class="w-full" label="Linktext" />
                 <Select
                     label="Link"
@@ -18,11 +18,11 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref, watch } from "vue";
-import { Input, Button, Modal, Select } from "@macramejs/admin-vue3";
-import { linkOptions } from "@admin/modules/links";
+import { PropType, ref } from 'vue';
+import { Input, Button, Modal, Select } from '@macramejs/admin-vue3';
+import { linkOptions } from '@admin/modules/links';
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue']);
 
 interface Link {
     link: string;
@@ -45,7 +45,7 @@ const init = () => {
 };
 
 const submit = () => {
-    emit("update:modelValue", model.value);
+    emit('update:modelValue', model.value);
     isOpen.value = false;
 };
 </script>

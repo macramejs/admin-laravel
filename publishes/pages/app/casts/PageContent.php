@@ -2,12 +2,7 @@
 
 namespace App\Casts;
 
-use App\Models\File;
 use Macrame\Content\ContentCast;
-use App\Casts\Parsers\LogoWallParser;
-use Illuminate\Contracts\Support\Jsonable;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
 class PageContent extends ContentCast
 {
@@ -19,9 +14,10 @@ class PageContent extends ContentCast
     protected $parsers = [
         'image_full' => Parsers\ImageFullParser::class,
         'text_image' => Parsers\ImageFullParser::class,
-        'logo_wall' => Parsers\LogoWallParser::class,
-        'carousel' => Parsers\CarouselParser::class,
-        'info_box' => Parsers\InfoBoxParser::class,
+        'logo_wall'  => Parsers\LogoWallParser::class,
+        'carousel'   => Parsers\CarouselParser::class,
+        'info_box'   => Parsers\InfoBoxParser::class,
+        'cards'      => Parsers\CardsParser::class,
     ];
 
     /**
@@ -34,23 +30,23 @@ class PageContent extends ContentCast
         foreach ($this->items as $key => $item) {
             $this->items[$key] = $this->parseItem($item);
         }
-        
+
         return $this;
     }
 
     /**
      * Parse a single item.
      *
-     * @param array $item
+     * @param  array $item
      * @return array $item
      */
     protected function parseItem($item)
     {
-        if (!array_key_exists('type', $item) || !array_key_exists('value', $item)) {
+        if (! array_key_exists('type', $item) || ! array_key_exists('value', $item)) {
             return $item;
         }
 
-        if (!is_array($item['value'])) {
+        if (! is_array($item['value'])) {
             return $item;
         }
 
@@ -65,9 +61,9 @@ class PageContent extends ContentCast
     /**
      * Parse item value.
      *
-     * @param array $value
+     * @param array       $value
      * @param string|null $parser
-     * @param boolean $toArray
+     * @param bool        $toArray
      * @return
      */
     protected function parseItemValue(array $value, ?string $parser)

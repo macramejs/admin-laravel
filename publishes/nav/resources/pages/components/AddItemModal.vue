@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, defineProps, PropType, ref } from 'vue';
+import { PropType, ref } from 'vue';
 import {
     Modal,
     Input,

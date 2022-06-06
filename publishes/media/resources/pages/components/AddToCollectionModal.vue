@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, ref, PropType, watch, computed } from 'vue';
+import { ref, PropType, watch, computed } from 'vue';
 import {
     Modal,
     Input,
@@ -51,7 +51,7 @@ const props = defineProps({
 
 const collectionOptions = computed(() => {
     console.log({ col: props.collections });
-    return props.collections.map((collection) => ({
+    return props.collections.map(collection => ({
         value: collection,
         label: collection.title,
     }));

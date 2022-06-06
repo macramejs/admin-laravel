@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { Sections, ContentBody } from '@macramejs/admin-vue3';
-import { defineProps, PropType } from 'vue';
+import { PropType } from 'vue';
 import { templates } from './templates';
 import { sections } from '@admin/modules/content';
 import { Page } from '@admin/types/resources';

@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import Draggable from 'vuedraggable';
 import { Card, Section as BaseSection } from '@macramejs/admin-vue3';
-import { defineProps, watch, defineEmits, reactive } from 'vue';
+import { watch, reactive } from 'vue';
 import DrawerGallery from './../drawers/DrawerGallery.vue';
 import SelectImage from './components/SelectImage.vue';
 import AddItem from './components/AddItem.vue';

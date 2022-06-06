@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { Page } from '@admin/types';
-import { defineProps, PropType } from 'vue';
+import { PropType } from 'vue';
 import { Tree } from '@macramejs/macrame-vue3';
 import { Tree as BaseTree } from '@macramejs/admin-vue3';
 import { Link } from '@inertiajs/inertia-vue3';

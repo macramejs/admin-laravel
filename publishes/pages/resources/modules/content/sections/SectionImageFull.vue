@@ -8,12 +8,12 @@
     </BaseSection>
 </template>
 <script setup lang="ts">
-import { FormFieldLabel, Section as BaseSection } from "@macramejs/admin-vue3";
-import { defineProps, watch, defineEmits, ref } from "vue";
-import DrawerImageFull from "./../drawers/DrawerImageFull.vue";
-import SelectImage from "./components/SelectImage.vue";
+import { FormFieldLabel, Section as BaseSection } from '@macramejs/admin-vue3';
+import { watch, ref } from 'vue';
+import DrawerImageFull from './../drawers/DrawerImageFull.vue';
+import SelectImage from './components/SelectImage.vue';
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps({
     modelValue: {
@@ -22,8 +22,8 @@ const props = defineProps({
         default: () => ({
             image: {
                 id: null,
-                title: "",
-                alt: "",
+                title: '',
+                alt: '',
             },
         }),
     },
@@ -34,7 +34,7 @@ const model = ref(props.modelValue);
 watch(
     () => model,
     () => {
-        emit("update:modelValue", model);
+        emit('update:modelValue', model);
     },
     { deep: true }
 );

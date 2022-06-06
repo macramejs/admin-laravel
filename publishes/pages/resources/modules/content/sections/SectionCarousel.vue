@@ -76,7 +76,7 @@ import {
     ContextMenu,
     ContextMenuItem,
 } from '@macramejs/admin-vue3';
-import { defineProps, watch, defineEmits, reactive } from 'vue';
+import { watch, reactive } from 'vue';
 import AddItem from './components/AddItem.vue';
 import Draggable from 'vuedraggable';
 import SelectImage from './components/SelectImage.vue';

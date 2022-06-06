@@ -6,7 +6,8 @@
 
 <script lang="ts" setup>
 import { Drawers, sections } from "@admin/modules/content";
-import { ContentSidebar } from "@macramejs/admin-vue3";
+import { Cabinet } from "@macramejs/macrame-vue3";
+import { ContentSidebar, DrawerSection } from "@macramejs/admin-vue3";
 
 import { ref } from "vue";
 

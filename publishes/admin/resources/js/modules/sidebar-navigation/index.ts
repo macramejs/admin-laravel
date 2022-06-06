@@ -1,5 +1,4 @@
 import { Component } from 'vue';
-// import { IconDashboard } from '@macramejs/admin-vue3';
 
 type SidebarNavigationLink = {
     title: string;

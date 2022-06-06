@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineEmits, ref, PropType, watch } from 'vue';
+import { ref, PropType, watch } from 'vue';
 import {
     Modal,
     Input,

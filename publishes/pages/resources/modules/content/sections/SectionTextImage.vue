@@ -24,23 +24,23 @@ import {
     Section as BaseSection,
     FormFieldLabel,
     Card,
-} from "@macramejs/admin-vue3";
-import { defineProps, watch, defineEmits, reactive } from "vue";
+} from '@macramejs/admin-vue3';
+import { watch, reactive } from 'vue';
 
-import DrawerTextImage from "./../drawers/DrawerTextImage.vue";
-import SelectImage from "./components/SelectImage.vue";
-const emit = defineEmits(["update:modelValue"]);
+import DrawerTextImage from './../drawers/DrawerTextImage.vue';
+import SelectImage from './components/SelectImage.vue';
+const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps({
     modelValue: {
         type: Object,
         required: true,
         default: () => ({
-            text: "",
+            text: '',
             image: {
                 id: null,
-                title: "",
-                alt: "",
+                title: '',
+                alt: '',
             },
         }),
     },
@@ -50,7 +50,7 @@ const model = reactive(props.modelValue);
 
 watch(
     () => model,
-    () => emit("update:modelValue", model),
+    () => emit('update:modelValue', model),
     { deep: true }
 );
 </script>

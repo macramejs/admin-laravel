@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, PropType } from 'vue';
+import { PropType } from 'vue';
 import { PageResource } from '@admin/types/resources';
 import { PageContentForm } from '@admin/types/forms';
 import { deletePage } from '@admin/modules/page';

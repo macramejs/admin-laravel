@@ -13,7 +13,7 @@
 
 <script lang="ts" setup>
 import { NavItem, LinkOption } from '@admin/types/resources';
-import { defineProps, PropType } from 'vue';
+import { PropType } from 'vue';
 import { Tree } from '@macramejs/macrame-vue3';
 import { Tree as BaseTree } from '@macramejs/admin-vue3';
 import NavTreeItem from './NavTreeItem.vue';

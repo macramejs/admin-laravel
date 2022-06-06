@@ -23,7 +23,7 @@ import {
     FormFieldLabel,
 } from '@macramejs/admin-vue3';
 import DrawerInfoBox from './../drawers/DrawerInfoBox.vue';
-import { defineProps, watch, defineEmits, reactive } from 'vue';
+import { watch, reactive } from 'vue';
 import Link from './components/Link.vue';
 
 const emit = defineEmits(['update:modelValue']);

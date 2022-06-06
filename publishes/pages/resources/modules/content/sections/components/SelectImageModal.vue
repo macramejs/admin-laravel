@@ -31,7 +31,7 @@
 <script lang="ts" setup>
 import { IconAddImage } from '@macramejs/admin-vue3';
 import { Modal } from '@macramejs/admin-vue3';
-import { defineEmits, PropType, ref } from 'vue';
+import { PropType, ref } from 'vue';
 import { mediaIndex, MediaUpload } from '@admin/modules/media';
 import { Media } from '@admin/types/resources';
 

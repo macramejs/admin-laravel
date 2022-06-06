@@ -48,7 +48,7 @@
 
 <script lang="ts" setup>
 import { Form } from '@macramejs/macrame-vue3';
-import { defineProps, PropType, computed } from 'vue';
+import { PropType, computed } from 'vue';
 import { PageResource } from '@admin/types/resources';
 import { PageMetaForm } from '@admin/types/forms';
 import {

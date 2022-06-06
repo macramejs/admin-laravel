@@ -10,7 +10,7 @@
 import { Input } from '@macramejs/admin-vue3';
 import { PageContentForm } from '@admin/types/forms';
 import { PropType } from 'vue';
-import SelectImage from '../sections/components/SelectImage.vue';
+import SelectImage from "@admin/modules/content/sections/components/SelectImage.vue";
 
 const props = defineProps({
     form: {

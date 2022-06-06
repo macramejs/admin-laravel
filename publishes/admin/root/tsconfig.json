@@ -21,5 +21,6 @@
   ],
   "files": [
     "shims-vue.d.ts",
-  ]
+  ],
+  "types": ["googlemaps"] 
 }

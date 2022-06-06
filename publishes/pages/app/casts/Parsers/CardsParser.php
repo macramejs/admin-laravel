@@ -38,11 +38,15 @@ class CardsParser implements Parser
                     ->where('id', $item['image']['id'] ?? null)
                     ->first();
 
-                $item['image'] = new Image(
-                    $file,
-                    $item['image']['alt'],
-                    $item['image']['title']
-                );
+                if ($file) {
+                    $item['image'] = new Image(
+                        $file,
+                        $item['image']['alt'],
+                        $item['image']['title']
+                    );
+                } else {
+                    $item['image'] = null;
+                }
             }
 
             $link = $item['link'] ?? ['link' => ''];
@@ -63,7 +67,7 @@ class CardsParser implements Parser
     {
         return array_merge($this->value, [
             'items' => $this->items->map(function ($item) {
-                $item['image'] = (new ImageResource($item['image']))->toArray(request());
+                $item['image'] = $item['image'] ? (new ImageResource($item['image']))->toArray(request()) : null;
 
                 return $item;
             }),

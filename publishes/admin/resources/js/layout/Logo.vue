@@ -1,5 +1,5 @@
 <template>
-    <div class="logo-container ml-2.5">
+    <div class="transition-all duration-200 logo-container">
         <svg
             class="h-5"
             viewBox="0 0 502 82"
@@ -106,5 +106,13 @@
 }
 .show-sidebar .hide-logo-letters {
     opacity: 1;
+}
+
+.logo-container {
+    margin-left: 9px;
+}
+.show-sidebar .logo-container {
+    transform: scale(1.25);
+    margin-left: 45px !important;
 }
 </style>

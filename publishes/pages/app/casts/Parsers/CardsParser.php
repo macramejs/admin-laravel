@@ -32,7 +32,7 @@ class CardsParser implements Parser
     public function parse()
     {
         // items
-        $items = collect($this->value['items'])->map(function ($item) {
+        $this->items = collect($this->value['items'] ?? [])->map(function ($item) {
             if (array_key_exists('image', $item)) {
                 $file = File::query()
                     ->where('id', $item['image']['id'] ?? null)
@@ -51,9 +51,7 @@ class CardsParser implements Parser
             $item['link'] = $link;
 
             return $item;
-        });
-
-        $this->items = $items;
+        })->filter();
     }
 
     /**

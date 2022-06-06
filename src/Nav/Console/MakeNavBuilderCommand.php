@@ -147,6 +147,19 @@ export type LinkOptionCollectionResource = CollectionResource<LinkOption>;';
         );
 
         $this->insertAtStart(
+            resource_path($this->app().'/js/types/forms.ts'),
+            'import { Form } from \'@macramejs/macrame-vue3\';'
+        );
+
+        $insert = '// NavItem
+        export type NavItemForm = Form<NavItem>;';
+
+        $this->insertAtEnd(
+            resource_path($this->app().'/js/types/forms.ts'),
+            $insert
+        );
+
+        $this->insertAtStart(
             resource_path($this->app().'/js/modules/sidebar-navigation/index.ts'),
             'import { IconList } from \'@macramejs/admin-vue3\';'
         );

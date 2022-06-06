@@ -7,7 +7,7 @@
         <label class="w-full h-full img-container">
             <input
                 type="checkbox"
-                :id="file.id"
+                :id="`${file.id}`"
                 class="absolute opacity-0"
                 :value="file"
                 v-model="selection.files"
@@ -34,11 +34,7 @@
                         />
                     </svg>
                 </div>
-                <span
-                    class="absolute hidden text-base text-white top-2 right-4"
-                >
-                    {{ file.author }}
-                </span>
+
                 <div class="absolute btn-wrapper hidden right-4 bottom-2.5">
                     <SelectionMenu
                         :selection="useSelection([file])"

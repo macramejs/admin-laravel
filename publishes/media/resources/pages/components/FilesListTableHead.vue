@@ -2,8 +2,7 @@
     <Tr>
         <Th :table="table">Preview</Th>
         <Th :table="table">Name</Th>
-        <Th :table="table">Size</Th>
-        <Th :table="table">Uploaded</Th>
+        <Th :table="table"></Th>
     </Tr>
 </template>
 

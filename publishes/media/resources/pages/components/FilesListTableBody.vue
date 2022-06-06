@@ -37,10 +37,8 @@
             </div>
         </Td>
         <Td class="whitespace-nowrap">{{ file.filename }}</Td>
-        <Td class="whitespace-nowrap">{{ file.readable_size }}</Td>
-        <Td slim>{{ file.created_at.label }}</Td>
         <Td class="flex justify-end">
-            <FileMenu />
+            <FileMenu :file="file" />
         </Td>
     </Tr>
 </template>

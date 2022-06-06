@@ -9,7 +9,7 @@ export interface Selection {
     delete: () => void;
 }
 
-const useSelection = function (files: []) {
+const useSelection = function (files: Media[]) {
     const sel = reactive<Selection>({
         files,
         addToCollection() {},

@@ -7,9 +7,5 @@ type SidebarNavigationLink = {
 };
 
 export const sidebarLinks = <SidebarNavigationLink[]>[
-//     {
-//         title: 'Dashboard',
-//         href: '/admin',
-//         icon: IconDashboard,
-//     },
+
 ];

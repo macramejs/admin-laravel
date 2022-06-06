@@ -1,5 +1,6 @@
 import { useForm } from '@macramejs/macrame-vue3';
-import { NavItem, NavItemForm } from '@admin/types/forms';
+import { NavItem } from '@admin/types/resources';
+import { NavItemForm } from '@admin/types/forms';
 import { Inertia } from '@inertiajs/inertia';
 
 export const useNavItemForm = (type: string, options): NavItemForm => {

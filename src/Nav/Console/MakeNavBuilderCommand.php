@@ -148,7 +148,7 @@ export type LinkOptionCollectionResource = CollectionResource<LinkOption>;';
 
         $this->insertAtStart(
             resource_path($this->app().'/js/types/forms.ts'),
-            'import { Form } from \'@macramejs/macrame-vue3\';'
+            'import { NavItem } from \'./resources\';'
         );
 
         $insert = '// NavItem

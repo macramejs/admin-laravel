@@ -58,10 +58,12 @@ class CarouselParser implements Parser
      */
     public function toArray()
     {
-        return $this->items->map(function ($item) {
-            $item['image'] = (new ImageResource($item))->toArray(request());
+        return array_merge($this->value, [
+            'items' => $this->items->map(function ($item) {
+                $item['image'] = (new ImageResource($item['image']))->toArray(request());
 
-            return $item;
-        })->toArray();
+                return $item;
+            }),
+        ]);
     }
 }

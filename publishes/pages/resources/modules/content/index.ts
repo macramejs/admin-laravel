@@ -1,3 +1,5 @@
+export { default as Drawers } from './Drawers.vue';
+
 // Components
 
 export { default as SelectImage } from './sections/components/SelectImage.vue';

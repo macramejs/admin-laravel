@@ -17,4 +17,16 @@ export type State = {
 export type StateResource = Resource<State>;
 export type StatesCollectionResource = CollectionResource<State>;
 
+// User
+export interface User {
+    id: number;
+    name: string;
+    email: string;
+    is_admin: boolean;
+    created_at: DateTime;
+    update_at: DateTime;
+}
+export type UserResource = Resource<User>;
+export type UserCollectionResource = CollectionResource<User>
+
 // ..

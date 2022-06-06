@@ -155,6 +155,7 @@ export type {$page} = {
     filename: string,
     mimetype: string,
     size: number,
+    url?: string,
 }
 export type {$page}Resource = Resource<File>;
 

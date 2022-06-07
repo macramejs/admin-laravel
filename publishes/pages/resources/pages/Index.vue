@@ -6,6 +6,9 @@
         <template v-slot:topbar-left>
             <slot name="topbar-left" />
         </template>
+        <template v-slot:topbar-right>
+            <slot name="topbar-right" />
+        </template>
         <slot />
     </Admin>
 </template>

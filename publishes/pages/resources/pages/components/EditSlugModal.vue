@@ -1,9 +1,9 @@
 <template>
     <button
         @click="isOpen = true"
-        class="p-1 text-gray hover:bg-black rounded-xs group-hover:opacity-100"
+        class="p-1 bg-white text-gray hover:bg-black rounded-xs group-hover:opacity-100 hover:text-white"
     >
-        <IconEditPencil class="text-gray" />
+        <IconEditPencil />
     </button>
     <Modal lg v-model:open="isOpen" title="Edit Slug">
         <div class="space-y-3">

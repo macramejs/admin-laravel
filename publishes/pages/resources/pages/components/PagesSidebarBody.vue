@@ -1,5 +1,7 @@
 <template>
-    <PagesTree :tree="tree" />
+    <div class="py-2">
+        <PagesTree :tree="tree" />
+    </div>
 </template>
 
 <script lang="ts" setup>

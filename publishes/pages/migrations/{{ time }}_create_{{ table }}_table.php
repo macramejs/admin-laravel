@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('order_column')->default(0);
             $table->foreignId('parent_id')->nullable();
             $table->foreignId('creator_id')->nullable();
+            $table->dateTime('publish_at')->nullable();
             $table->timestamps();
         });
     }

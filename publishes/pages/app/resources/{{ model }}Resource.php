@@ -40,6 +40,9 @@ class PageResource extends JsonResource
 
             'full_slug' => $this->getFullSlug(),
 
+            'publish_at' => $this->publish_at,
+            'is_live'    => $this->is_live,
+
             'meta' => [
                 'title'       => $this->meta_title,
                 'description' => $this->meta_description,

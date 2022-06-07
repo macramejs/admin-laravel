@@ -47,7 +47,7 @@
                         <div class="grid grid-cols-12 gap-5">
                             <div class="col-span-6 space-y-4">
                                 <Input v-model="element.name" label="Name" />
-                                <Input v-model="element.link" label="Link" />
+                                <Link v-model="element.link" label="Link" />
                             </div>
                             <div class="col-span-6">
                                 <SelectImage v-model="element.image" />
@@ -79,6 +79,7 @@ import { watch, reactive } from 'vue';
 import DrawerLogoWall from '../drawers/DrawerLogoWall.vue';
 import AddItem from './components/AddItem.vue';
 import Draggable from 'vuedraggable';
+import Link from './components/Link.vue';
 import SelectImage from './components/SelectImage.vue';
 import { v4 as uuid } from 'uuid';
 
@@ -103,8 +104,12 @@ const model = reactive({
 function addItem() {
     model.items.push({
         name: '',
-        link: '',
         _draggableKey: uuid(),
+        link: {
+            link: '',
+            text: '',
+            new_tab: false,
+        },
         image: {
             id: null,
             title: '',

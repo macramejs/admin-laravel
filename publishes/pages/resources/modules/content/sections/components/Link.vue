@@ -53,7 +53,7 @@ const props = defineProps({
     },
 });
 
-const external = ref<boolean>(props.modelValue.link.startsWith('http'));
+const external = ref<boolean>(props.modelValue.link?.startsWith('http'));
 watch(
     () => external.value,
     val => {

@@ -187,6 +187,8 @@ export type {$model} = {
     slug: string;
     template: string;
     full_slug: string;
+    is_live: boolean;
+    publish_at: string;
     meta: {
         title: string;
         description: string;
@@ -213,7 +215,9 @@ export type {$model}TreeCollectionResource = CollectionResource<{$model}TreeItem
 export type {$model}Content = {
     name: string,
     content: {[k:string]: any}[],
-    attributes: {[k:string]: any}
+    attributes: {[k:string]: any},
+    is_live: boolean,
+    publish_at: string
 }
 export type {$model}ContentForm = Form<{$model}Content>;
 

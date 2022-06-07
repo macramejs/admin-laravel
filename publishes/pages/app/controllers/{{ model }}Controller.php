@@ -85,11 +85,17 @@ class PageController
             'attributes' => 'array',
             'slug'       => 'sometimes|nullable',
             'name'       => 'sometimes|string',
+            'is_live'    => 'sometimes|boolean',
+            'publish_at' => 'sometimes|date|after:now|nullable',
         ]);
 
         // Enforce sluggified slug
         if (array_key_exists('slug', $validated)) {
             $validated['slug'] = Str::slug($validated['slug']);
+        }
+
+        if (! is_null($validated['publish_at'])) {
+            $validated['is_live'] = false;
         }
 
         $page->update($validated);

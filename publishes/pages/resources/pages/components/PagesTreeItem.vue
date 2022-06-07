@@ -9,9 +9,22 @@
             class="flex-1 py-1 cursor-pointer"
             :href="`/admin/pages/${page.id}`"
         >
-            {{ page.name }}
+            <span
+                :class="{
+                    'opacity-50': !page.is_live,
+                }"
+            >
+                {{ page.name }}
+            </span>
         </Link>
-
+        <div
+            class="w-2 h-2 mr-2 rounded-full"
+            :class="{
+                ' bg-green': page.is_live,
+                ' bg-red': !page.is_live,
+            }"
+            :title="page.is_live ? 'online' : 'offline'"
+        ></div>
         <PageContextMenu :page="page" />
 
         <template v-slot:disclosure>

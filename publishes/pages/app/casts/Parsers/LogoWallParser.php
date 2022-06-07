@@ -2,6 +2,7 @@
 
 namespace App\Casts\Parsers;
 
+use App\Casts\Resolvers\LinkResolver;
 use App\Http\Resources\ImageResource;
 use App\Http\Resources\Wrapper\Image;
 use App\Models\File;
@@ -29,21 +30,30 @@ class LogoWallParser implements Parser
     public function parse()
     {
         // items
-        $items = collect($this->value['items'])->map(function ($item) {
-            $file = File::query()
-                ->where('id', $item['image']['id'] ?? null)
-                ->first();
+        $this->items = collect($this->value['items'] ?? [])->map(function ($item) {
+            if (array_key_exists('image', $item)) {
+                $file = File::query()
+                    ->where('id', $item['image']['id'] ?? null)
+                    ->first();
 
-            $item['image'] = new Image(
-                $file,
-                $item['image']['alt'],
-                $item['image']['title']
-            );
+                if ($file) {
+                    $item['image'] = new Image(
+                        $file,
+                        $item['image']['alt'],
+                        $item['image']['title']
+                    );
+                } else {
+                    $item['image'] = null;
+                }
+            }
+
+            $link = $item['link'] ?? ['link' => ''];
+            $link['url'] = LinkResolver::urlFromLink($link['link'] ?? '');
+
+            $item['link'] = $link;
 
             return $item;
-        });
-
-        $this->items = $items;
+        })->filter();
     }
 
     /**
@@ -55,7 +65,7 @@ class LogoWallParser implements Parser
     {
         return array_merge($this->value, [
             'items' => $this->items->map(function ($item) {
-                $item['image'] = (new ImageResource($item['image']))->toArray(request());
+                $item['image'] = $item['image'] ? (new ImageResource($item['image']))->toArray(request()) : null;
 
                 return $item;
             }),

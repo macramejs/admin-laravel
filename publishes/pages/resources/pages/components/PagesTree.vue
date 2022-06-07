@@ -11,7 +11,6 @@ import { Page } from '@admin/types';
 import { PropType } from 'vue';
 import { Tree } from '@macramejs/macrame-vue3';
 import { Tree as BaseTree } from '@macramejs/admin-vue3';
-import { Link } from '@inertiajs/inertia-vue3';
 import PagesTreeItem from './PagesTreeItem.vue';
 
 defineProps({

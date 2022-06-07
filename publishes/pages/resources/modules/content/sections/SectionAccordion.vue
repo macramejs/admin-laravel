@@ -22,7 +22,7 @@
                                     <IconDraggable class="w-2.5 h-2.5" />
                                 </InteractionButton>
                                 <div class="text-lg font-semibold">
-                                    {{ element.title || 'Accordion-Element' }}
+                                    {{ element.title }}
                                 </div>
                             </div>
                             <ContextMenu placement="left">
@@ -53,7 +53,7 @@
             </Draggable>
         </div>
         <div class="flex justify-center">
-            <AddItem @click="addItem"> Neues Logo hinzufügen </AddItem>
+            <AddItem @click="addItem"> Element hinzufügen </AddItem>
         </div>
     </BaseSection>
 </template>

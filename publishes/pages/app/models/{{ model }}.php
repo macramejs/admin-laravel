@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\PageController;
-use App\Casts\PageAttributesCast;
 use App\Casts\ContentCast;
+use App\Casts\PageAttributesCast;
+use App\Http\Controllers\PageController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -38,6 +38,7 @@ class Page extends Model implements PageContract
         'order_column',
         'is_live',
         'parent_id',
+        'publish_at',
         'meta_title',
         'meta_description',
     ];
@@ -51,6 +52,7 @@ class Page extends Model implements PageContract
         'content'    => ContentCast::class,
         'attributes' => PageAttributesCast::class,
         'is_live'    => 'boolean',
+        'publish_at' => 'datetime',
     ];
 
     /**
@@ -61,7 +63,7 @@ class Page extends Model implements PageContract
     protected $attributes = [
         'content'    => '[]',
         'attributes' => '[]',
-        'is_live'    => true
+        'is_live'    => true,
     ];
 
     /**

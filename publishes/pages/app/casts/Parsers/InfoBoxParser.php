@@ -29,7 +29,7 @@ class InfoBoxParser implements Parser
     public function parse()
     {
         $link = $this->value['link'] ?? ['link' => ''];
-        $link['link'] = LinkResolver::urlFromLink($link['link'] ?? '');
+        $link['url'] = LinkResolver::urlFromLink($link['link'] ?? '');
 
         $this->link = $link;
     }

@@ -1,9 +1,9 @@
 <template>
-    <div class="flex justify-between w-full">
-        <span class="inline-block text-xl"> Navigations </span>
-    </div>
+    <SidebarSecondaryHeader title="Navigationen">
+        <!-- // -->
+    </SidebarSecondaryHeader>
 </template>
 
 <script lang="ts" setup>
-//
+import { SidebarSecondaryHeader } from '@macramejs/admin-vue3';
 </script>

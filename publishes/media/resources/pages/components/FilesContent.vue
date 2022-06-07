@@ -1,7 +1,7 @@
 <template>
     <Content>
         <ContentBody topPosition="80">
-            <FilesTabs :collection="collection" :collections="collections" />
+            <FilesGrid :collection="collection" :collections="collections" />
         </ContentBody>
         <ContentSidebar v-model:open="isSidebarOpen" topPosition="80">
             <FilesFilters />
@@ -13,7 +13,7 @@
 import { PropType, ref } from 'vue';
 import { MediaCollection } from '@admin/types';
 import { Content, ContentBody, ContentSidebar } from '@macramejs/admin-vue3';
-import FilesTabs from './FilesTabs.vue';
+import FilesGrid from './FilesGrid.vue';
 import FilesFilters from './FilesFilters.vue';
 
 const props = defineProps({

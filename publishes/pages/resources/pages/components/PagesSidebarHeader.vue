@@ -1,10 +1,10 @@
 <template>
-    <div class="flex items-center justify-between w-full">
-        <span class="inline-block text-xl font-medium"> Seiten </span>
+    <SidebarSecondaryHeader title="Seiten">
         <AddPageModal />
-    </div>
+    </SidebarSecondaryHeader>
 </template>
 
 <script lang="ts" setup>
+import { SidebarSecondaryHeader } from '@macramejs/admin-vue3';
 import AddPageModal from './AddPageModal.vue';
 </script>

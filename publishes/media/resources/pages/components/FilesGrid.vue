@@ -2,7 +2,7 @@
     <div class="w-full mt-10">
         <div class="grid grid-cols-12 gap-5">
             <div
-                class="flex justify-center col-span-full md:col-span-6 xl:col-span-3"
+                class="flex justify-center col-span-full lg:col-span-6 xl:col-span-3"
             >
                 <MediaUpload :collection="collection" />
             </div>
@@ -12,9 +12,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, toRefs, watch } from 'vue';
-import { Index } from '@macramejs/admin-vue3';
-import FileMenu from './FileMenu.vue';
 import { PropType } from 'vue';
 import { MediaCollection } from '@admin/types';
 import FilesGridTable from './FilesGridTable.vue';

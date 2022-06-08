@@ -14,7 +14,7 @@ class ImageFullParser implements Parser
      *
      * @var Image
      */
-    public Image $image;
+    public ?Image $image;
 
     /**
      * Create new Parser instance.
@@ -34,11 +34,15 @@ class ImageFullParser implements Parser
             ->where('id', $this->value['image']['id'] ?? null)
             ->first();
 
-        $this->image = new Image(
-            $file,
-            $this->value['image']['alt'],
-            $this->value['image']['title']
-        );
+        if ($file) {
+            $this->image = new Image(
+                $file,
+                $this->value['image']['alt'],
+                $this->value['image']['title']
+            );
+        } else {
+            $this->image = null;
+        }
     }
 
     /**
@@ -49,7 +53,9 @@ class ImageFullParser implements Parser
     public function toArray()
     {
         return array_merge($this->value, [
-            'image' => (new ImageResource($this->image))->toArray(request()),
+            'image' => $this->image
+                ? (new ImageResource($this->image))->toArray(request())
+                : null,
         ]);
     }
 }

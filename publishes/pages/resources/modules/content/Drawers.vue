@@ -1,27 +1,44 @@
 <template>
-    <DrawerSection title="Text Components">
+    <DrawerSection title="Inhalt">
         <Cabinet>
-            <DrawerTextFull :draws="SectionTextFull" v-if="sections.text_full" />
-            <DrawerTextImage :draws="SectionTextImage" v-if="sections.text_image" />
+            <DrawerTextFull
+                :draws="SectionTextFull"
+                v-if="sections.text_full"
+            />
+            <DrawerTextImage
+                :draws="SectionTextImage"
+                v-if="sections.text_image"
+            />
             <DrawerInfoBox :draws="SectionInfoBox" v-if="sections.info_box" />
+            <DrawerImageFull
+                :draws="SectionImageFull"
+                v-if="sections.image_full"
+            />
         </Cabinet>
     </DrawerSection>
-    <DrawerSection title="Image Components">
+    <DrawerSection title="Bildgalerien">
         <Cabinet>
-            <DrawerImageFull :draws="SectionImageFull" v-if="sections.image_full" />
-            <DrawerGallery :draws="SectionGallery" v-if="sections.gallery" />
+            <DrawerGridGallery
+                :draws="SectionGridGallery"
+                v-if="sections.grid_gallery"
+            />
+            <DrawerImageCarousel
+                :draws="SectionImageCarousel"
+                v-if="sections.image_carousel"
+            />
         </Cabinet>
     </DrawerSection>
-    <DrawerSection title="Sections">
+    <DrawerSection title="Abschnitte">
         <Cabinet>
             <DrawerCards :draws="SectionCards" v-if="sections.cards" />
-            <DrawerLogoWall :draws="SectionLogoWall" v-if="sections.logo_wall" />
-            <DrawerAccordion :draws="SectionAccordion" v-if="sections.accordion" />
-        </Cabinet>
-    </DrawerSection>
-    <DrawerSection title="Carousels">
-        <Cabinet>
-            <DrawerCarousel :draws="SectionCarousel" v-if="sections.carousel" />
+            <DrawerLogoWall
+                :draws="SectionLogoWall"
+                v-if="sections.logo_wall"
+            />
+            <DrawerAccordion
+                :draws="SectionAccordion"
+                v-if="sections.accordion"
+            />
         </Cabinet>
     </DrawerSection>
 </template>
@@ -32,22 +49,22 @@ import { Cabinet } from '@macramejs/macrame-vue3';
 
 import {
     SectionTextFull,
-    SectionCarousel,
+    SectionImageCarousel,
     SectionTextImage,
     SectionInfoBox,
     SectionImageFull,
-    SectionGallery,
+    SectionGridGallery,
     SectionCards,
     SectionAccordion,
     SectionLogoWall,
 } from './index';
 import {
     DrawerTextFull,
-    DrawerCarousel,
+    DrawerImageCarousel,
     DrawerTextImage,
     DrawerInfoBox,
     DrawerImageFull,
-    DrawerGallery,
+    DrawerGridGallery,
     DrawerCards,
     DrawerAccordion,
     DrawerLogoWall,
@@ -56,7 +73,7 @@ import {
 defineProps({
     sections: {
         type: Object,
-        required: true
-    }
+        required: true,
+    },
 });
 </script>

@@ -1,7 +1,7 @@
 <template>
     <BaseSection>
         <template v-slot:title>
-            <DrawerGallery preview />
+            <DrawerGridGallery preview />
         </template>
         <Card>
             <Draggable
@@ -22,15 +22,15 @@
     </BaseSection>
 </template>
 <script setup lang="ts">
-import Draggable from 'vuedraggable';
-import { Card, Section as BaseSection } from '@macramejs/admin-vue3';
-import { watch, reactive } from 'vue';
-import DrawerGallery from './../drawers/DrawerGallery.vue';
-import SelectImage from './components/SelectImage.vue';
-import AddItem from './components/AddItem.vue';
-import { v4 as uuid } from 'uuid';
+import Draggable from "vuedraggable";
+import { Card, Section as BaseSection } from "@macramejs/admin-vue3";
+import { watch, reactive } from "vue";
+import DrawerGridGallery from "../drawers/DrawerGridGallery.vue";
+import SelectImage from "./components/SelectImage.vue";
+import AddItem from "./components/AddItem.vue";
+import { v4 as uuid } from "uuid";
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 const props = defineProps({
     modelValue: {
         type: Object,
@@ -42,20 +42,20 @@ const props = defineProps({
 });
 
 const model = reactive({
-    items: props.modelValue.items.map(item => {
+    items: props.modelValue.items.map((item) => {
         return { ...item, _draggableKey: uuid() };
     }),
 });
 
 function addItem() {
     model.items.push({
-        name: '',
-        link: '',
+        name: "",
+        link: "",
         _draggableKey: uuid(),
         image: {
             id: null,
-            title: '',
-            alt: '',
+            title: "",
+            alt: "",
         },
     });
 }
@@ -67,13 +67,13 @@ function removeItem(index) {
 watch(
     () => model,
     () => {
-        let items = JSON.parse(JSON.stringify(model.items)).map(item => {
+        let items = JSON.parse(JSON.stringify(model.items)).map((item) => {
             delete item._draggableKey;
 
             return item;
         });
 
-        emit('update:modelValue', {
+        emit("update:modelValue", {
             ...model,
             items,
         });

@@ -1,7 +1,7 @@
 <template>
     <BaseSection>
         <template v-slot:title>
-            <DrawerCarousel preview />
+            <DrawerImageCarousel preview />
         </template>
         <div class="pb-6">
             <Draggable
@@ -59,7 +59,7 @@
             </Draggable>
         </div>
         <div class="flex justify-center">
-            <AddItem @click="addItem"> Neues Logo hinzufügen </AddItem>
+            <AddItem @click="addItem"> Bild hinzufügen </AddItem>
         </div>
     </BaseSection>
 </template>
@@ -81,7 +81,7 @@ import AddItem from './components/AddItem.vue';
 import Draggable from 'vuedraggable';
 import SelectImage from './components/SelectImage.vue';
 import { v4 as uuid } from 'uuid';
-import DrawerCarousel from '../drawers/DrawerCarousel.vue';
+import DrawerImageCarousel from '../drawers/DrawerImageCarousel.vue';
 
 const emit = defineEmits(['update:modelValue']);
 

@@ -17,11 +17,8 @@ class {{ model }}Controller extends Controller
     {
         $page = {{ model }}::fromRequestOrFail($request);
 
-        $page->content->parse();
-        $page->attributes->parse();
-
         return Inertia::render('Pages/Show', [
-            'page' => $page
+            'page' => (new {{ model }}Resource($page))->toArray($request),
         ]);
     }
 }

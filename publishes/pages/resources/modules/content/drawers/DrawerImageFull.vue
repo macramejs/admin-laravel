@@ -1,5 +1,5 @@
 <template>
-    <Drawer title="Image Full" hint="image ..." color="green">
+    <Drawer title="Image Full" hint="image ..." color="purple">
         <svg
             class="w-4 h-4"
             width="24"
@@ -31,5 +31,5 @@
     </Drawer>
 </template>
 <script lang="ts" setup>
-import { Drawer } from '@macramejs/admin-vue3';
+import { Drawer } from "@macramejs/admin-vue3";
 </script>

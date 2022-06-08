@@ -3,6 +3,9 @@
         <template v-slot:title>
             <DrawerAccordion preview />
         </template>
+        <Card class="mb-3">
+            <Input v-model="model.headline" label="Überschrift" />
+        </Card>
         <div class="pb-6 space-y-3">
             <Draggable
                 tag="div"
@@ -70,35 +73,37 @@ import {
     Header,
     ContextMenu,
     ContextMenuItem,
-} from '@macramejs/admin-vue3';
-import { watch, reactive } from 'vue';
-import AddItem from './components/AddItem.vue';
-import Draggable from 'vuedraggable';
-import { v4 as uuid } from 'uuid';
-import DrawerAccordion from '../drawers/DrawerAccordion.vue';
+} from "@macramejs/admin-vue3";
+import { watch, reactive } from "vue";
+import AddItem from "./components/AddItem.vue";
+import Draggable from "vuedraggable";
+import { v4 as uuid } from "uuid";
+import DrawerAccordion from "../drawers/DrawerAccordion.vue";
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 const props = defineProps({
     modelValue: {
         type: Object,
         required: true,
         default: () => ({
+            headline: "",
             items: [],
         }),
     },
 });
 
 const model = reactive({
-    items: props.modelValue.items.map(item => {
+    headline: props.modelValue.headline,
+    items: props.modelValue.items.map((item) => {
         return { ...item, _draggableKey: uuid() };
     }),
 });
 
 function addItem() {
     model.items.push({
-        title: '',
-        text: '',
+        title: "",
+        text: "",
         // _draggableKey: uuid(),
     });
 }
@@ -110,13 +115,13 @@ function removeItem(index) {
 watch(
     () => model,
     () => {
-        let items = JSON.parse(JSON.stringify(model.items)).map(item => {
+        let items = JSON.parse(JSON.stringify(model.items)).map((item) => {
             delete item._draggableKey;
 
             return item;
         });
 
-        emit('update:modelValue', {
+        emit("update:modelValue", {
             ...model,
             items,
         });

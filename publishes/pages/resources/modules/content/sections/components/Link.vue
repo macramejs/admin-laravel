@@ -2,7 +2,7 @@
     <div>
         <Button @click="init()">Link</Button>
         <Modal v-model:open="isOpen" sm>
-            <div class="mb-4 space-y-5">
+            <div class="space-y-5 mb-4">
                 <Input v-model="model.text" class="w-full" label="Linktext" />
 
                 <div class="flex items-center space-x-2">
@@ -35,11 +35,11 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, ref, watch } from 'vue';
-import { Input, Button, Modal, Select, Toggle } from '@macramejs/admin-vue3';
-import { linkOptions } from '@admin/modules/links';
+import { PropType, ref, watch } from "vue";
+import { Input, Button, Modal, Select, Toggle } from "@macramejs/admin-vue3";
+import { linkOptions } from "@admin/modules/links";
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
 interface Link {
     link: string;
@@ -53,10 +53,10 @@ const props = defineProps({
     },
 });
 
-const external = ref<boolean>(props.modelValue.link?.startsWith('http'));
+const external = ref<boolean>(props.modelValue.link?.startsWith("http"));
 watch(
     () => external.value,
-    val => {
+    (val) => {
         model.value.link = null;
     }
 );
@@ -70,7 +70,7 @@ const init = () => {
 };
 
 const submit = () => {
-    emit('update:modelValue', model.value);
+    emit("update:modelValue", model.value);
     isOpen.value = false;
 };
 </script>

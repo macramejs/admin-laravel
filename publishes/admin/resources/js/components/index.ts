@@ -1,1 +1,1 @@
-//
+export { default as ResponsiveImage } from './ResponsiveImage.vue'

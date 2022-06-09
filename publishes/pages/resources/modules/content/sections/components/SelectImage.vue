@@ -1,13 +1,27 @@
 <template>
     <div class="relative">
-        <div v-if="selectedImage" class="rounded-sm overflow-hidden">
-            <img :src="selectedImage?.url" class="w-full image-preview" />
+        <div v-if="selectedImage" class="relative overflow-hidden rounded-sm">
+            <div class="absolute w-full h-full transform scale-110">
+                <img
+                    :src="selectedImage?.url.replaceAll(' ', '%20') + '?w=20'"
+                    class="object-cover w-full h-full"
+                />
+            </div>
+            <div
+                class="absolute top-0 left-0 w-full h-full bg-white bg-opacity-50 backdrop-filter backdrop-blur-md"
+            ></div>
+
+            <div class="flex justify-center w-full image-preview">
+                <ResponsiveImage
+                    :src="selectedImage?.url.replaceAll(' ', '%20')"
+                />
+            </div>
         </div>
         <SelectImageModal v-model="selectedImage" v-else />
         <div class="absolute top-1 right-1" v-if="selectedImage">
             <ContextMenu placement="left">
                 <template #button>
-                    <InteractionButton class="cursor-pointer mr-2 mt-2" dark>
+                    <InteractionButton class="mt-2 mr-2 cursor-pointer" dark>
                         <IconMoreHorizontal class="w-4 h-4" />
                     </InteractionButton>
                 </template>
@@ -26,6 +40,8 @@
 </template>
 
 <script lang="ts" setup>
+import 'lazysizes';
+import { ResponsiveImage } from '@admin/components';
 import { getMediaById } from '@admin/modules/media';
 import { onBeforeMount, PropType, ref, watch } from 'vue';
 import SelectImageModal from './SelectImageModal.vue';
@@ -77,8 +93,12 @@ const deleteImage = () => {
 
 <style>
 .image-preview {
-    max-height: 25vh;
-    object-fit: contain;
     background: rgba(0, 0, 0, 0.025);
+}
+.image-preview img {
+    max-height: 25vh;
+    width: auto;
+    object-fit: contain;
+    object-fit: contain !important;
 }
 </style>

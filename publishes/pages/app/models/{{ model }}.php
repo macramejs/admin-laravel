@@ -11,10 +11,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Macrame\Admin\Media\Traits\HasFiles;
 use Macrame\Admin\Pages\Contracts\Page as PageContract;
 use Macrame\Admin\Pages\Traits\IsPage;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Page extends Model implements PageContract
+class Page extends Model implements PageContract, AuditableContract
 {
-    use HasFactory, HasFiles, IsPage;
+    use Auditable, HasFactory, HasFiles, IsPage;
 
     /**
      * The route controller.
@@ -41,7 +43,6 @@ class Page extends Model implements PageContract
         'publish_at',
         'meta_title',
         'meta_description',
-        'preview_key'
     ];
 
     /**

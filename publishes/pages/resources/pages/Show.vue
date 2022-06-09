@@ -7,6 +7,9 @@
                 <Tab :href="`/admin/pages/${page.data.id}/settings`">
                     Settings
                 </Tab>
+                <Tab :href="`/admin/pages/${page.data.id}/audits`">
+                    Versions
+                </Tab>
             </TabList>
             <TabPanels>
                 <TabPanel>
@@ -28,6 +31,9 @@
                 <TabPanel>
                     <PanelSettingsBody :page="page" :form="contentForm" />
                 </TabPanel>
+                <TabPanel>
+                    <PanelAuditsBody :page="page" :audits="audits.data" />
+                </TabPanel>
             </TabPanels>
         </TabGroup>
         <template v-slot:topbar-left>
@@ -38,7 +44,7 @@
             </div>
         </template>
         <template v-slot:topbar-right>
-            <PagesTopbarRight :form="contentForm" :page="page.data"/>
+            <PagesTopbarRight :form="contentForm" :page="page.data" />
         </template>
     </BaseLayout>
 </template>
@@ -50,15 +56,17 @@ import {
     computed,
     onBeforeUnmount,
     onBeforeMount,
-    watch,
-    ref,
 } from 'vue';
 import { useForm } from '@macramejs/macrame-vue3';
 import { TabGroup, TabList, Tab, Content } from '@macramejs/admin-vue3';
 import { TabPanels, TabPanel } from '@headlessui/vue';
 import BaseLayout from './Index.vue';
 import { saveQueue } from '@admin/modules/save-queue';
-import { PageResource, LinkOption } from '@admin/types/resources';
+import {
+    PageResource,
+    LinkOption,
+    PageAuditCollectionResource,
+} from '@admin/types/resources';
 import { PageContent, PageMeta } from '@admin/types/forms';
 import PagesTopbarRight from './components/PagesTopbarRight.vue';
 import PanelMetaBody from './components/PanelMetaBody.vue';
@@ -66,9 +74,10 @@ import PanelContentBody from './components/PanelContentBody.vue';
 import PanelContentSidebar from './components/PanelContentSidebar.vue';
 import EditSlugModal from './components/EditSlugModal.vue';
 import PanelSettingsBody from './components/PanelSettingsBody.vue';
+import PanelAuditsBody from './components/PanelAuditsBody.vue';
 import { linkOptions as GlobalLinkOptions } from '@admin/modules/links';
 
-const tabs = ['content', 'meta', 'settings'];
+const tabs = ['content', 'meta', 'settings', 'audits'];
 
 const props = defineProps({
     page: {
@@ -83,6 +92,10 @@ const props = defineProps({
     linkOptions: {
         required: true,
         type: Array as PropType<LinkOption[]>,
+    },
+    audits: {
+        type: Object as PropType<PageAuditCollectionResource>,
+        required: true,
     },
 });
 
@@ -135,6 +148,8 @@ const fullSlug = computed(() => {
 });
 const pageUrl = computed(() => {
     let parts = props.page.data.full_slug.split('/').filter(p => p);
-    return `${window.location.origin}/${parts.join('/')}?preview=${props.page.data.preview_key}`;
+    return `${window.location.origin}/${parts.join('/')}?preview=${
+        props.page.data.preview_key
+    }`;
 });
 </script>

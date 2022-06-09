@@ -220,6 +220,7 @@ class PageController
      *
      * @param  Request          $request
      * @param  Page             $page
+     * @param  Audit            $audit
      * @return RedirectResponse
      */
     public function rollback(Request $request, Page $page, Audit $audit)

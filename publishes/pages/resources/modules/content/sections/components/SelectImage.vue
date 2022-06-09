@@ -1,6 +1,9 @@
 <template>
     <div class="relative">
-        <div v-if="selectedImage" class="relative overflow-hidden rounded-sm">
+        <div
+            v-if="selectedImage"
+            class="relative overflow-hidden rounded-sm mg-gray-100 min-h-[50px]"
+        >
             <div class="absolute w-full h-full transform scale-110">
                 <img
                     :src="selectedImage?.url.replaceAll(' ', '%20') + '?w=20'"

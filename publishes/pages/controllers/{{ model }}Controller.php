@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\{{ model }};
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Http\Resources\{{ model }}Resource;
 
 class {{ model }}Controller extends Controller
 {

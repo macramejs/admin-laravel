@@ -21,16 +21,8 @@ trait IsPage
     public static function routes()
     {
         try {
-            return static::query()
-                ->where('is_live', true)
-                ->get()
-                ->map(function (self $site) {
-                    if (! $site->is_live) {
-                        return;
-                    }
-
-                    return $site->getRoute();
-                });
+            return static::get()
+                ->map(fn (self $p) => $p->getRoute());
         } catch (QueryException $e) {
         }
     }

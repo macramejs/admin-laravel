@@ -41,6 +41,7 @@ class Page extends Model implements PageContract
         'publish_at',
         'meta_title',
         'meta_description',
+        'preview_key'
     ];
 
     /**
@@ -63,7 +64,7 @@ class Page extends Model implements PageContract
     protected $attributes = [
         'content'    => '[]',
         'attributes' => '[]',
-        'is_live'    => true,
+        'is_live'    => false,
     ];
 
     /**

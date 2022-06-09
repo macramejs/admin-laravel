@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->string('preview_key')->nullable();
             $table->string('template')->nullable();
             $table->text('content');
             $table->text('attributes');

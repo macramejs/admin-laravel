@@ -94,10 +94,6 @@ class PageController
             $validated['slug'] = Str::slug($validated['slug']);
         }
 
-        if (! is_null($validated['publish_at'])) {
-            $validated['is_live'] = false;
-        }
-
         $page->update($validated);
 
         return redirect()->back();
@@ -142,6 +138,7 @@ class PageController
         ]);
 
         $page->creator_id = $request->user()->id;
+        $page->preview_key = Str::uuid();
 
         $page->save();
 

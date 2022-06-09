@@ -43,6 +43,7 @@ class Page extends Model implements PageContract, AuditableContract
         'publish_at',
         'meta_title',
         'meta_description',
+        'preview_key',
     ];
 
     /**

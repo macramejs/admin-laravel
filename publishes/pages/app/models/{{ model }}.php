@@ -70,6 +70,15 @@ class Page extends Model implements PageContract, AuditableContract
     ];
 
     /**
+     * Attributes that should be appended.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'has_been_published',
+    ];
+
+    /**
      * The creator of the page.
      *
      * @return BelongsTo
@@ -77,5 +86,15 @@ class Page extends Model implements PageContract, AuditableContract
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'creator_id');
+    }
+
+    /**
+     * Has been published attribute.
+     *
+     * @return bool
+     */
+    public function getHasBeenPublishedAttribute()
+    {
+        return $this->publish_at < now();
     }
 }

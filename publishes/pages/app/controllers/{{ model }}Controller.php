@@ -134,10 +134,11 @@ class PageController
     public function store(Request $request)
     {
         $page = Page::make([
-            'parent_id' => $request->parent,
-            'name'      => $request->name,
-            'slug'      => Str::slug($request->slug ?: $request->name),
-            'template'  => $request->template,
+            'parent_id'   => $request->parent,
+            'name'        => $request->name,
+            'slug'        => Str::slug($request->slug ?: $request->name),
+            'template'    => $request->template,
+            'preview_key' => Str::uuid(),
         ]);
 
         $page->creator_id = $request->user()->id;

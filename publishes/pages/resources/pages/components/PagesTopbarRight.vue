@@ -113,7 +113,7 @@
 </template>
 <script lang="ts" setup>
 // imports
-import { PropType, ref, watch } from 'vue';
+import { PropType, ref, watch, computed } from 'vue';
 import TopbarRight from '@admin/layout/TopbarRight.vue';
 import { Toggle } from '@macramejs/admin-vue3';
 import { DatePicker } from 'v-calendar';
@@ -122,7 +122,6 @@ import 'v-calendar/dist/style.css';
 // types
 import { Page } from '@admin/types/resources';
 import { PageContentForm } from '@admin/types/forms';
-import { computed } from '@vue/reactivity';
 
 const props = defineProps({
     page: {

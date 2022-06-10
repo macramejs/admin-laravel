@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PageResource;
 use App\Models\Page;
-use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class PageController extends Controller
 {
@@ -19,33 +20,30 @@ class PageController extends Controller
 
         $this->abortIfPageCannotBeViewed($request, $page);
 
-        $page->content->parse();
-        $page->attributes->parse();
-
         return Inertia::render('Pages/Show', [
-            'page' => $page
+            'page' => (new PageResource($page))->toArray($request),
         ]);
     }
 
     /**
      * Determines whether a page can be viewed, aborts 404 otherwise.
-     * 
+     *
      * @param  Request $request
-     * @param  Page $page
+     * @param  Page    $page
      * @return void
      */
     protected function abortIfPageCannotBeViewed(Request $request, Page $page)
     {
-        if($page->is_live) {
-            if(is_null($page->publish_at) || $page->publish_at < now()) {
+        if ($page->is_live) {
+            if (is_null($page->publish_at) || $page->publish_at < now()) {
                 return;
             }
         }
 
-        // If the page is not live and not published, it can only be viewed when 
+        // If the page is not live and not published, it can only be viewed when
         // the correct preview_key is used.
-        if($request->preview == $page->preview_key 
-            && !is_null($page->preview_key)) {
+        if ($request->preview == $page->preview_key
+            && ! is_null($page->preview_key)) {
             return;
         }
 

@@ -101,13 +101,6 @@ class MakePageBuilderCommand extends BaseMakeCommand
             to: $this->appPath('Http/Resources')
         );
 
-        // App Resources
-        $this->files->ensureDirectoryExists(app_path('Http/Resouroces'));
-        $this->publishDir(
-            from: $this->publishesPath('app/app_resources'),
-            to: app_path('Http/Resources')
-        );
-
         // Migrations
         $this->publishDir(
             from: $this->publishesPath('migrations'),
@@ -190,6 +183,8 @@ export type {$model} = {
     full_slug: string;
     is_live: boolean;
     publish_at: string;
+    has_been_published: boolean;
+    preview_key: string;
     meta: {
         title: string;
         description: string;

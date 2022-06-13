@@ -189,6 +189,7 @@ export type {$model} = {
     full_slug: string;
     is_live: boolean;
     publish_at: string;
+    has_been_published: boolean;
     meta: {
         title: string;
         description: string;

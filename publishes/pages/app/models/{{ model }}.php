@@ -11,10 +11,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Macrame\Admin\Media\Traits\HasFiles;
 use Macrame\Admin\Pages\Contracts\Page as PageContract;
 use Macrame\Admin\Pages\Traits\IsPage;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Page extends Model implements PageContract
+class Page extends Model implements PageContract, AuditableContract
 {
-    use HasFactory, HasFiles, IsPage;
+    use Auditable, HasFactory, HasFiles, IsPage;
 
     /**
      * The route controller.
@@ -41,7 +43,7 @@ class Page extends Model implements PageContract
         'publish_at',
         'meta_title',
         'meta_description',
-        'preview_key'
+        'preview_key',
     ];
 
     /**
@@ -68,6 +70,15 @@ class Page extends Model implements PageContract
     ];
 
     /**
+     * Attributes that should be appended.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'has_been_published',
+    ];
+
+    /**
      * The creator of the page.
      *
      * @return BelongsTo
@@ -75,5 +86,15 @@ class Page extends Model implements PageContract
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'creator_id');
+    }
+
+    /**
+     * Has been published attribute.
+     *
+     * @return bool
+     */
+    public function getHasBeenPublishedAttribute()
+    {
+        return $this->publish_at < now();
     }
 }

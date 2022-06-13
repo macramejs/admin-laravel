@@ -3,15 +3,24 @@
         <div class="flex items-center space-x-2">
             <span class="text-xs uppercase">
                 <template v-if="!form.is_live">offline</template>
-                <template v-else-if="!form.publish_at || hasBeenPublished">online</template>
+                <template v-else-if="!form.publish_at || hasBeenPublished"
+                    >online</template
+                >
                 <template v-else>geplant</template>
             </span>
-            <Toggle :modelValue="form.is_live && (!form.publish_at || hasBeenPublished)" @update:modelValue="() => {
-                if(form.publish_at) {
-                    publishAt = null;
-                } 
-                form.is_live = !form.is_live;
-            }"/>
+            <Toggle
+                :modelValue="
+                    form.is_live && (!form.publish_at || hasBeenPublished)
+                "
+                @update:modelValue="
+                    () => {
+                        if (form.publish_at) {
+                            publishAt = null;
+                        }
+                        form.is_live = !form.is_live;
+                    }
+                "
+            />
         </div>
         <DatePicker
             v-model="publishAt"
@@ -25,7 +34,7 @@
             :min-date="new Date()"
         >
             <div
-                class="relative flex items-center justify-center w-8 h-8 bg-gray-200 rounded cursor-pointer hover:bg-gray-300"
+                class="relative flex items-center justify-center w-8 h-8 -ml-2 bg-gray-200 rounded cursor-pointer hover:bg-gray-300"
                 @click="togglePopover"
             >
                 <div
@@ -69,12 +78,42 @@
             </div>
         </DatePicker>
 
+        <a
+            class="relative flex items-center justify-center h-8 px-4 space-x-2 text-xs uppercase bg-gray-200 rounded cursor-pointer hover:bg-gray-300"
+            :href="pageUrl"
+            target="_blank"
+        >
+            <svg
+                class="w-5 h-5"
+                width="24"
+                height="24"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M12 14C13.1046 14 14 13.1046 14 12C14 10.8954 13.1046 10 12 10C10.8954 10 10 10.8954 10 12C10 13.1046 10.8954 14 12 14Z"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+                <path
+                    d="M21 12C19.1114 14.991 15.7183 18 12 18C8.2817 18 4.88856 14.991 3 12C5.29855 9.15825 7.99163 6 12 6C16.0084 6 18.7015 9.1582 21 12Z"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
+            </svg>
+            <span>preview</span>
+        </a>
+
         <TopbarRight />
     </div>
 </template>
 <script lang="ts" setup>
 // imports
-import { PropType, ref, watch } from 'vue';
+import { PropType, ref, watch, computed } from 'vue';
 import TopbarRight from '@admin/layout/TopbarRight.vue';
 import { Toggle } from '@macramejs/admin-vue3';
 import { DatePicker } from 'v-calendar';
@@ -98,17 +137,22 @@ const props = defineProps({
 const hasBeenPublished = ref(props.page.has_been_published);
 
 const publishAt = ref(
-    props.page.publish_at
-        ? new Date(props.page.publish_at)
-        : new Date()
+    props.page.publish_at ? new Date(props.page.publish_at) : new Date()
 );
 
 watch(
     () => publishAt.value,
     date => {
         props.form.publish_at = date;
-        if(date != null) props.form.is_live = true;
+        if (date != null) props.form.is_live = true;
         hasBeenPublished.value = false;
     }
 );
+
+const pageUrl = computed(() => {
+    let parts = props.page.full_slug.split('/').filter(p => p);
+    return `${window.location.origin}/${parts.join('/')}?preview=${
+        props.page.preview_key
+    }`;
+});
 </script>

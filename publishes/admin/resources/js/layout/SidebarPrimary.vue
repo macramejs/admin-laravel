@@ -69,7 +69,7 @@ import {
 } from '@macramejs/admin-vue3';
 import { sidebarLinks } from '@admin/modules/sidebar-navigation';
 import Logo from './Logo.vue';
-import { computed } from '@vue/reactivity';
+import { computed } from 'vue';
 
 const locked = computed(() => {
     if (localStorage.hasOwnProperty('sideBarLocked')) {

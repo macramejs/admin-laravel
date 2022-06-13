@@ -29,20 +29,20 @@ class PageResource extends JsonResource
             'id' => $this->id,
 
             // static
-            'name'          => $this->name,
-            'slug'          => $this->slug,
-            'preview_key'   => $this->preview_key,
-            'template'      => $this->template,
+            'name'        => $this->name,
+            'slug'        => $this->slug,
+            'preview_key' => $this->preview_key,
+            'template'    => $this->template,
 
             // dynamic
             'content'    => $this->content->toArray(),
             'attributes' => $this->attributes->toArray(),
-            'full_slug' => $this->getFullSlug(),
+            'full_slug'  => $this->getFullSlug(),
 
             // livetime
             'publish_at'         => $this->publish_at,
             'is_live'            => $this->is_live,
-            'has_been_published' => $this->pubish_at < now(),
+            'has_been_published' => $this->publish_at < now(),
 
             'meta' => [
                 'title'       => $this->meta_title,

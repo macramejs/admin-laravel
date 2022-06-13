@@ -101,13 +101,6 @@ class MakePageBuilderCommand extends BaseMakeCommand
             to: $this->appPath('Http/Resources')
         );
 
-        // App Resources
-        $this->files->ensureDirectoryExists(app_path('Http/Resouroces'));
-        $this->publishDir(
-            from: $this->publishesPath('app/app_resources'),
-            to: app_path('Http/Resources')
-        );
-
         // Migrations
         $this->publishDir(
             from: $this->publishesPath('migrations'),
@@ -150,7 +143,8 @@ class MakePageBuilderCommand extends BaseMakeCommand
     Route::put('/pages/{page}', [PageController::class, 'update'])->name('pages.update');
     Route::post('/pages/{page}/meta', [PageController::class, 'meta'])->name('pages.meta');
     Route::post('/pages/{page}/upload', [PageController::class, 'upload'])->name('pages.upload');
-    Route::post('/pages/{page}/duplicate', [PageController::class, 'duplicate'])->name('pages.duplicate');";
+    Route::post('/pages/{page}/duplicate', [PageController::class, 'duplicate'])->name('pages.duplicate');
+    Route::post('/pages/{page}/rollback/{audit}', [PageController::class, 'rollback'])->name('pages.rollback');";
 
         $before = '});';
 
@@ -190,6 +184,7 @@ export type {$model} = {
     is_live: boolean;
     publish_at: string;
     has_been_published: boolean;
+    preview_key: string;
     meta: {
         title: string;
         description: string;
@@ -200,7 +195,21 @@ export type {$model}TreeItem = RawTreeItem<{$model}>;
 export type {$model}Resource = Resource<{$model}>;
 export type {$model}CollectionResource = CollectionResource<{$model}>;
 export type {$model}TreeResource = Resource<{$model}TreeItem>;
-export type {$model}TreeCollectionResource = CollectionResource<{$model}TreeItem>;";
+export type {$model}TreeCollectionResource = CollectionResource<{$model}TreeItem>;
+
+// {$model}Audit
+export interface {$model}Audit {
+    id: number;
+    user: User;
+    event: string;
+    old_values: string;
+    new_values: string;
+    created_at: DateTime;
+    updated_at: DateTime;
+}
+export type {$model}AuditResource = Resource<{$model}Audit>;
+export type {$model}AuditCollectionResource = CollectionResource<{$model}Audit>";
+
         $this->insertAtEnd(
             resource_path($this->app().'/js/types/resources.ts'),
             $insert

@@ -2,46 +2,37 @@
 
 namespace Admin\Http\Controllers;
 
-use Admin\Http\Indexes\MediaIndex;
-use Admin\Http\Resources\MediaCollectionResource;
-use Admin\Ui\Page;
 use App\Models\File;
-use App\Models\MediaCollection;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\MediaCollection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
+use Admin\Http\Resources\MediaCollectionResource;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MediaCollectionController
 {
     /**
-     * Ship index page.
+     * Get MediaCollection items.
      *
-     * @param  Page $page
-     * @return Page
+     * @param  Request $request
+     * @return AnonymousResourceCollection
      */
-    public function items(
-        Request $request,
-        MediaCollection $collection,
-        MediaIndex $index
-    ) {
-        return $index->items($request, $collection->files());
+    public function items(Request $request) {
+        return MediaCollectionResource::collection(MediaCollection::all());
     }
 
     /**
-     * Show the file.
+     * Get MediaCollection item.
      *
-     * @param  Page $page
-     * @return Page
+     * @param Request $request
+     * @param MediaCollection $collection
+     * @return MediaCollectionResource
      */
-    public function show(Page $page, MediaCollection $collection)
-    {
-        $collections = MediaCollection::withCount('files')->get();
-
-        return $page
-            ->page('Media/Index')
-            ->with('collection', new MediaCollectionResource($collection))
-            ->with('collections', MediaCollectionResource::collection($collections));
+    public function item(Request $request, MediaCollection $collection) {
+        return new MediaCollectionResource($collection);
     }
 
     /**
@@ -56,8 +47,18 @@ class MediaCollectionController
             'title' => $request->title,
             'key'   => Str::slug($request->title),
         ]);
+    }
 
-        return redirect()->back();
+    /**
+     * Destroy a MediaCollection.
+     *
+     * @param Request $request
+     * @param MediaCollection $collection
+     * @return RedirectResponse
+     */
+    public function destroy(Request $request, MediaCollection $collection)
+    {
+        $collection->delete();
     }
 
     /**
@@ -81,8 +82,6 @@ class MediaCollectionController
 
                 $file->attach($collection);
             });
-
-        return redirect()->back();
     }
 
     /**
@@ -106,8 +105,6 @@ class MediaCollectionController
 
                 $file->detach($collection);
             });
-
-        return redirect()->back();
     }
 
     /**
@@ -121,13 +118,13 @@ class MediaCollectionController
     {
         collect($request->files->get('files'))
             ->each(function (UploadedFile $file) use ($collection) {
-                $file = File::createFromUploadedFile($file);
+                DB::transaction(function() use ($collection, $file) {
+                    $file = File::createFromUploadedFile($file);
 
-                $file->save();
+                    $file->save();
 
-                $file->attach($collection);
+                    $file->attach($collection);
+                });
             });
-
-        return response()->json();
     }
 }

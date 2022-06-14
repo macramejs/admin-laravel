@@ -2,18 +2,27 @@
 
 namespace Admin\Http\Controllers;
 
-use Admin\Http\Controllers\Traits\PageLinks;
-use Admin\Http\Resources\LinkOptionResource;
-use Admin\Http\Resources\NavItemTreeResource;
 use Admin\Ui\Page;
 use App\Models\NavItem;
+use Illuminate\Http\Request;
 use App\Models\Types\NavType;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Admin\Http\Resources\NavTypeResource;
+use Admin\Http\Resources\NavItemTreeResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class NavController
 {
-    use PageLinks;
+    /**
+     * Gets a list of navigation types.
+     *
+     * @param Request $request
+     * @return AnonymousResourceCollection
+     */
+    public function types(Request $request)
+    {
+        return NavTypeResource::collection(NavType::cases());
+    }
 
     /**
      * Show a index page for all available navigations.
@@ -26,25 +35,19 @@ class NavController
     }
 
     /**
-     * Show the nav page for the admin application.
+     * Get navigation tree.
      *
-     * @param  Page    $page
      * @param  NavType $type
-     * @return Page
+     * @return AnonymousResourceCollection
      */
-    public function show(Page $page, NavType $type)
+    public function tree(NavType $type)
     {
-        $linkOptions = $this->linkOptions($type);
-
         $items = NavItem::whereRoot()
             ->where('type', $type->value)
             ->orderBy('order_column')
             ->get();
 
-        return $page->page('Nav/Show')
-            ->with('items', NavItemTreeResource::collection($items))
-            ->with('link-options', LinkOptionResource::collection($linkOptions))
-            ->with('type', $type->value);
+        return NavItemTreeResource::collection($items);
     }
 
     /**

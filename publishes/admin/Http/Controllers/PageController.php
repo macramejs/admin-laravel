@@ -2,26 +2,24 @@
 
 namespace Admin\Http\Controllers;
 
-use Admin\Http\Controllers\Traits\PageLinks;
-use Admin\Http\Indexes\PageIndex;
-use Admin\Http\Resources\LinkOptionResource;
-use Admin\Http\Resources\PageAuditResource;
-use Admin\Http\Resources\PageResource;
-use Admin\Http\Resources\PageTreeResource;
-use Admin\Ui\Page as AdminPage;
 use App\Models\Page;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
-use OwenIt\Auditing\Models\Audit;
+use Illuminate\Http\Request;
+use Admin\Ui\Page as AdminPage;
+use Admin\Http\Indexes\PageIndex;
+use Illuminate\Http\RedirectResponse;
+use Admin\Http\Resources\PageResource;
+use Illuminate\Support\Facades\Redirect;
+use Admin\Http\Resources\PageTreeResource;
+use Admin\Http\Controllers\Traits\PageLinks;
+use Admin\Http\Resources\LinkOptionResource;
+use Admin\Http\Resources\Options\LinkOption;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PageController
 {
-    use PageLinks;
-
     /**
-     * Page index page.
+     * Get Page items.
      *
      * @param  Page $page
      * @return Page
@@ -35,43 +33,44 @@ class PageController
     }
 
     /**
-     * Show the index page for the admin application.
+     * Get Page item.
      *
-     * @return AdminPage
+     * @param Request $request
+     * @param Page $page
+     * @return PageResource
      */
-    public function index(Request $request, AdminPage $adminPage): AdminPage
+    public function item(Request $request, Page $page)
     {
-        $pages = Page::root();
-
-        return $adminPage
-            ->page('Page/Index')
-            ->with('pages', PageTreeResource::collection($pages));
+        return new PageResource($page);
     }
 
     /**
-     * Show the page.
+     * Get the pages tree.
      *
-     * @param {{ Model }} $page
-     * @param  AdminPage $adminPage
-     * @return AdminPage
+     * @return AnonymousResourceCollection
      */
-    public function show(Page $page, AdminPage $adminPage, $tab = 'content')
+    public function tree()
     {
-        if (! in_array($tab, ['content', 'meta', 'settings', 'audits'])) {
-            abort(404);
-        }
+        return PageTreeResource::collection(Page::root());
+    }
 
-        $pages = Page::root();
+    /**
+     * Get link items.
+     *
+     * @param Request $request
+     * @return AnonymousResourceCollection
+     */
+    public function links(Request $request)
+    {
+        $items = Page::get()
+            ->map(function (Page $page) {
+                return LinkOption::fromRoute(
+                    title: $page->name,
+                    name: $page->getRoute()->getName(),
+                );
+            });
 
-        $linkOptions = $this->linkOptions();
-
-        return $adminPage
-            ->page('Page/Show')
-            ->with('tab', $tab)
-            ->with('page', new PageResource($page))
-            ->with('link-options', LinkOptionResource::collection($linkOptions))
-            ->with('audits', PageAuditResource::collection($page->audits()->orderBy('id', 'desc')->take(10)->get()))
-            ->with('pages', PageTreeResource::collection($pages));
+        return LinkOptionResource::collection($items);
     }
 
     /**
@@ -134,14 +133,14 @@ class PageController
     public function store(Request $request)
     {
         $page = Page::make([
-            'parent_id'   => $request->parent,
-            'name'        => $request->name,
-            'slug'        => Str::slug($request->slug ?: $request->name),
-            'template'    => $request->template,
-            'preview_key' => Str::uuid(),
+            'parent_id' => $request->parent,
+            'name'      => $request->name,
+            'slug'      => Str::slug($request->slug ?: $request->name),
+            'template'  => $request->template,
         ]);
 
         $page->creator_id = $request->user()->id;
+        $page->preview_key = Str::uuid();
 
         $page->save();
 
@@ -209,50 +208,6 @@ class PageController
         $page = $page->replicate();
         $page->name = $request->name;
         $page->slug = Str::slug($request->name);
-        $page->save();
-
-        return redirect()->route('admin.pages.show', [
-            'page' => $page,
-        ]);
-    }
-
-    /**
-     * Rollback a page to an older version.
-     *
-     * @param  Request          $request
-     * @param  Page             $page
-     * @param  Audit            $audit
-     * @return RedirectResponse
-     */
-    public function rollback(Request $request, Page $page, Audit $audit)
-    {
-        $attrs = [
-            'content',
-            'attributes',
-            'name',
-            'slug',
-            'template',
-            'is_live',
-            'publish_at',
-            'meta_title',
-            'meta_description',
-        ];
-        $audits = collect([$audit]);
-        foreach ($attrs as $attr) {
-            if (array_key_exists($attr, $audit->new_values)) {
-                continue;
-            }
-            $audits = $audits->push(
-                $page->audits()
-                    ->where('created_at', '<=', $audit->created_at)
-                    ->whereRaw("JSON_EXTRACT(new_values, '$.$attr') IS NOT NULL")
-                    ->orderBy('id', 'DESC')
-                    ->first()
-            )->filter()->unique('id')->sortBy('id');
-        }
-        $audits->each(function ($audit) use ($page) {
-            $page->transitionTo($audit);
-        });
         $page->save();
 
         return redirect()->route('admin.pages.show', [

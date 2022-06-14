@@ -11,9 +11,6 @@ use App\Models\MediaCollection;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-/**
- * @module media
- */
 class MediaController
 {
     /**

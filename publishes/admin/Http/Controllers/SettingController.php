@@ -2,7 +2,7 @@
 
 namespace Admin\Http\Controllers;
 
-use {{ namespace }}\Ui\Page;
+use Admin\Ui\Page;
 use Illuminate\Http\Request;
 
 class SettingController

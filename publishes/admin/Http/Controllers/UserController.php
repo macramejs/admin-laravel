@@ -1,9 +1,9 @@
 <?php
 
-namespace {{ namespace }}\Http\Controllers;
+namespace Admin\Http\Controllers;
 
-use {{ namespace }}\Http\Indexes\UserIndex;
-use {{ namespace }}\Ui\Page;
+use Admin\Http\Indexes\UserIndex;
+use Admin\Ui\Page;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,17 +23,6 @@ class UserController
             request: $request,
             query: User::query(),
         );
-    }
-
-    /**
-     * Show the home page for the admin application.
-     *
-     * @param  Page $page
-     * @return Page
-     */
-    public function index(Page $page)
-    {
-        return $page->page('User/Index');
     }
 
     /**

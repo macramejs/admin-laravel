@@ -1,6 +1,6 @@
 <?php
 
-namespace Macrame\Admin\Pages\Contracts;
+namespace Macrame\Admin\Contracts\Pages;
 
 use Closure;
 use Illuminate\Http\Request;

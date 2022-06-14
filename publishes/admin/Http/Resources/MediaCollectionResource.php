@@ -8,7 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @mixin FileCollection
  */
-class FileCollectionResource extends JsonResource
+class MediaCollectionResource extends JsonResource
 {
     /**
      * The resource instance.

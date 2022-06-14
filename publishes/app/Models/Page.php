@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Macrame\Admin\Media\Traits\HasFiles;
-use Macrame\Admin\Pages\Contracts\Page as PageContract;
+use Macrame\Admin\Contracts\Pages\Page as PageContract;
 use Macrame\Admin\Pages\Traits\IsPage;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;

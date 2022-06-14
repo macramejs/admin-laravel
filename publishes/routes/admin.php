@@ -1,22 +1,23 @@
 <?php
 
-use Admin\Http\Controllers\Auth\AuthenticatedSessionController;
+use Illuminate\Support\Facades\Route;
+use Admin\Http\Controllers\NavController;
+use Admin\Http\Controllers\HomeController;
+use Admin\Http\Controllers\MenuController;
+use Admin\Http\Controllers\PageController;
+use Admin\Http\Controllers\UserController;
+use Admin\Http\Controllers\MediaController;
+use Admin\Http\Middleware\AuthenticateAdmin;
+use Admin\Http\Controllers\SettingController;
+use Admin\Http\Controllers\MenuItemController;
+use Admin\Http\Controllers\UserProfileController;
+use Admin\Http\Controllers\MediaCollectionController;
 use Admin\Http\Controllers\Auth\NewPasswordController;
 use Admin\Http\Controllers\Auth\PasswordResetLinkController;
-use Admin\Http\Controllers\HomeController;
-use Admin\Http\Controllers\UserProfileController;
-use Admin\Http\Controllers\UserController;
-use Admin\Http\Controllers\SettingController;
-use Admin\Http\Middleware\AuthenticateAdmin;
-use Admin\Http\Controllers\MediaCollectionController;
-use Admin\Http\Controllers\MediaController;
-use Admin\Http\Controllers\PageController;
-use Admin\Http\Controllers\NavController;
-use Illuminate\Support\Facades\Route;
+use Admin\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::group([
     'middleware' => AuthenticateAdmin::class,
-    'prefix' => 'api',
 ], function () {
 
     // settings
@@ -59,13 +60,15 @@ Route::group([
     Route::put('/pages/{page}', [PageController::class, 'update'])->name('pages.update');
     Route::delete('/pages/{page}', [PageController::class, 'destroy'])->name('pages.destroy');
 
-    // nav
-    Route::get('/nav', [NavController::class, 'types'])->name('nav.types');
-    Route::get('/nav/{type}/tree', [NavController::class, 'show'])->name('nav.tree');
-    Route::post('/nav/{type}', [NavController::class, 'store'])->name('nav.store');
-    Route::post('/nav/{type}/order', [NavController::class, 'order'])->name('nav.order');
-    Route::put('/nav/{type}/{item}', [NavController::class, 'update'])->name('nav.update');
-    Route::delete('/nav/{type}/{item}', [NavController::class, 'destroy'])->name('nav.item.delete');
+    // menus
+    Route::get('/menus', [MenuController::class, 'items'])->name('menus.items');
+
+    // menu items
+    Route::get('/menus/{menu}/items/tree', [MenuItemController::class, 'show'])->name('menus.items.tree');
+    Route::post('/menus/{menu}/items/order', [MenuItemController::class, 'order'])->name('menus.items.order');
+    Route::post('/menus/{menu}/items', [MenuItemController::class, 'store'])->name('menus.items.store');
+    Route::put('/menus/{menu}/items/{item}', [MenuItemController::class, 'update'])->name('menus.items.update');
+    Route::delete('/menus/{menu}/items/{item}', [MenuItemController::class, 'destroy'])->name('menus.items.delete');
 });
 
 Route::group([

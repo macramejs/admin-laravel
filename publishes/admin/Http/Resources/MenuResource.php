@@ -2,22 +2,22 @@
 
 namespace Admin\Http\Resources;
 
-use App\Models\File;
+use App\Models\Menu;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin File
+ * @mixin Menu
  */
-class FileResource extends JsonResource
+class MenuResource extends JsonResource
 {
     /**
      * The resource instance.
      *
-     * @var File
+     * @var Menu
      */
     public $resource;
 
-    /**
+   /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request                                        $request
@@ -25,11 +25,11 @@ class FileResource extends JsonResource
      */
     public function toArray($request)
     {
-        return array_merge(parent::toArray($request), [
-            'url' => $this->getUrl(),
-            'readable_size' => $this->getReadableSize(),
-            'created_at' => new DateTimeResource($this->created_at),
-            'updated_at' => new DateTimeResource($this->updated_at),
-        ]);
+        $this->setLocale(app()->getLocale());
+
+        return [
+            'label' => $this->title[app()->getLocale()] ?? '',
+            'value' => $this->type,
+        ];
     }
 }

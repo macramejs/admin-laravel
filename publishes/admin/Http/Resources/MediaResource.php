@@ -2,18 +2,18 @@
 
 namespace Admin\Http\Resources;
 
+use App\Models\File;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
 
 /**
- * @mixin Carbon
+ * @mixin File
  */
-class DateTimeResource extends JsonResource
+class MediaResource extends JsonResource
 {
     /**
      * The resource instance.
      *
-     * @var Carbon
+     * @var File
      */
     public $resource;
 
@@ -25,11 +25,11 @@ class DateTimeResource extends JsonResource
      */
     public function toArray($request)
     {
-        $this->setLocale(app()->getLocale());
-
-        return [
-            'label' => $this->toRfc7231String(),
-            'readable_diff' => $this->diffForHumans(),
-        ];
+        return array_merge(parent::toArray($request), [
+            'url' => $this->getUrl(),
+            'readable_size' => $this->getReadableSize(),
+            'created_at' => new DateTimeResource($this->created_at),
+            'updated_at' => new DateTimeResource($this->updated_at),
+        ]);
     }
 }

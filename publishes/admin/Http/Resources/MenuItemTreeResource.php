@@ -2,18 +2,18 @@
 
 namespace Admin\Http\Resources;
 
-use App\Models\NavItem;
+use App\Models\MenuItem;
 use Macrame\Tree\TreeResource;
 
 /**
- * @mixin NavItem
+ * @mixin MenuItem
  */
-class NavItemTreeResource extends TreeResource
+class MenuItemTreeResource extends TreeResource
 {
     /**
      * The resource instance.
      *
-     * @var NavItem
+     * @var MenuItem
      */
     public $resource;
 

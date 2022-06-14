@@ -20,8 +20,6 @@ abstract class BaseMakeCommand extends Command
      */
     protected $files;
 
-    abstract protected function replaces(): array;
-
     /**
      * Create a new controller creator command instance.
      *

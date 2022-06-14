@@ -1,11 +1,11 @@
 <?php
 
-namespace {{ namespace }}\Http\Middleware;
+namespace Admin\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class Authenticate{{ namespace }}
+class AuthenticateAdmin
 {
     /**
      * Handle an incoming request.
@@ -20,10 +20,10 @@ class Authenticate{{ namespace }}
     public function handle($request, Closure $next)
     {
         if (! $user = Auth::user()) {
-            return redirect(route('{{ name }}.login'));
+            return abort(405, 'Unauthenticated');
         }
 
-        if ($user->is_{{ name }}) {
+        if ($user->is_admin) {
             return $next($request);
         }
 

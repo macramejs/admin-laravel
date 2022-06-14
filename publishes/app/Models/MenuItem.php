@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Casts\NavLinkCast;
-use App\Models\Types\NavType;
+use App\Casts\MenuLinkCast;
+use App\Models\Menu;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Macrame\Contracts\Tree\Tree;
 use Macrame\Tree\Traits\IsTree;
 
-class NavItem extends Model implements Tree
+class MenuItem extends Model implements Tree
 {
     use HasFactory, IsTree;
 
@@ -28,8 +28,8 @@ class NavItem extends Model implements Tree
      * @var array
      */
     protected $casts = [
-        'link'    => NavLinkCast::class,
-        'type'    => NavType::class,
+        'link'    => MenuLinkCast::class,
+        'type'    => MenuType::class,
         'new_tab' => 'boolean',
     ];
 }

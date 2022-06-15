@@ -55,25 +55,6 @@ class PageController
     }
 
     /**
-     * Get link items.
-     *
-     * @param Request $request
-     * @return AnonymousResourceCollection
-     */
-    public function links(Request $request)
-    {
-        $items = Page::get()
-            ->map(function (Page $page) {
-                return LinkOption::fromRoute(
-                    title: $page->name,
-                    name: $page->getRoute()->getName(),
-                );
-            });
-
-        return LinkOptionResource::collection($items);
-    }
-
-    /**
      * Update the page.
      *
      * @param  Request $request

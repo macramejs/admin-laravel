@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Macrame\Index\Index;
 
-class {{ model }}Index extends Index
+class PageIndex extends Index
 {
     /**
      * Handle search.

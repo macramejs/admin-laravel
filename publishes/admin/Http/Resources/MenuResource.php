@@ -25,10 +25,8 @@ class MenuResource extends JsonResource
      */
     public function toArray($request)
     {
-        $this->setLocale(app()->getLocale());
-
         return [
-            'label' => $this->title[app()->getLocale()] ?? '',
+            'label' => $this->title,
             'value' => $this->type,
         ];
     }

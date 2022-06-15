@@ -32,6 +32,9 @@ Route::group([
     Route::get('/users', [UserController::class, 'items'])->name('user.items');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('user.delete');
 
+    // links
+    Route::get('/links', LinkController::class)->name('links');
+
     // media
     Route::get('/media/items', [MediaController::class, 'items'])->name('media.items');
     Route::get('/media/{file}', [MediaController::class, 'item'])->name('media.item');
@@ -50,7 +53,6 @@ Route::group([
     // pages
     Route::get('/pages', [PageController::class, 'items'])->name('pages.items');
     Route::get('/pages/tree', [PageController::class, 'tree'])->name('pages.tree');
-    Route::get('/pages/links', [PageController::class, 'links'])->name('pages.links');
     Route::get('/pages/{page}', [PageController::class, 'item'])->name('pages.item');
     Route::post('/pages', [PageController::class, 'store'])->name('pages.store');
     Route::post('/pages/order', [PageController::class, 'order'])->name('pages.order');
@@ -68,7 +70,7 @@ Route::group([
     Route::post('/menus/{menu}/items/order', [MenuItemController::class, 'order'])->name('menus.items.order');
     Route::post('/menus/{menu}/items', [MenuItemController::class, 'store'])->name('menus.items.store');
     Route::put('/menus/{menu}/items/{item}', [MenuItemController::class, 'update'])->name('menus.items.update');
-    Route::delete('/menus/{menu}/items/{item}', [MenuItemController::class, 'destroy'])->name('menus.items.delete');
+    Route::delete('/menus/{menu}/items/{item}', [MenuItemController::class, 'destroy'])->name('menus.items.destroy');
 });
 
 Route::group([

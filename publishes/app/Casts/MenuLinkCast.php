@@ -6,7 +6,7 @@ use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Stringable;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
-class NavLinkCast implements CastsAttributes, Stringable
+class MenuLinkCast implements CastsAttributes, Stringable
 {
     /**
      * Create new NavLink instance.

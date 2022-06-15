@@ -18,24 +18,18 @@ return new class extends Migration
             $table->id();
 
             $table->string('type');
-            $table->string('title')->nullable();
+            $table->string('title');
 
             $table->timestamps();
         });
 
         Menu::create([
             'type' => 'main',
-            'title' => [
-                'de' => 'Hauptmenü',
-                'en' => 'Main menu',
-            ],
+            'title' => 'Main menu',
         ]);
         Menu::create([
             'type' => 'footer',
-            'title' => [
-                'de' => 'Fußzeilen Menü',
-                'en' => 'Footer menu',
-            ],
+            'title' => 'Footer menu',
         ]);
     }
 

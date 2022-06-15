@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use App\Casts\MenuLinkCast;
-use App\Models\Menu;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Macrame\Contracts\Tree\Tree;
 use Macrame\Tree\Traits\IsTree;
+use Macrame\Contracts\Tree\Tree;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class MenuItem extends Model implements Tree
 {
@@ -19,7 +19,7 @@ class MenuItem extends Model implements Tree
      * @var array
      */
     protected $fillable = [
-        'parent_id', 'order_column', 'title', 'link', 'new_tab', 'type',
+        'parent_id', 'order_column', 'title', 'link', 'new_tab', 'menu_id',
     ];
 
     /**
@@ -29,7 +29,16 @@ class MenuItem extends Model implements Tree
      */
     protected $casts = [
         'link'    => MenuLinkCast::class,
-        'type'    => MenuType::class,
         'new_tab' => 'boolean',
     ];
+
+    /**
+     * The corresponding menu.
+     *
+     * @return HasOne
+     */
+    public function menu(): HasOne
+    {
+        return $this->hasOne(Menu::class);
+    }
 }

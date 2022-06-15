@@ -25,7 +25,7 @@ class Menu extends Model
      * @var array
      */
     protected $attributes = [
-        'title' => '[]'
+        //
     ];
 
     /**
@@ -34,9 +34,14 @@ class Menu extends Model
      * @var array
      */
     protected $casts = [
-        'title' => 'json'
+        //
     ];
 
+    /**
+     * The associated menu items.
+     *
+     * @return HasMany
+     */
     public function items(): HasMany
     {
         return $this->hasMany(MenuItem::class, 'menu_id', 'id');

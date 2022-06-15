@@ -18,11 +18,11 @@ return new class extends Migration
 
             $table->string('title')->nullable();
             $table->string('link')->nullable();
-            $table->string('type');
-            
             $table->boolean('new_tab')->nullable();
-            $table->integer('order_column')->default(0);
+            
+            $table->foreignId('menu_id');
             $table->foreignId('parent_id')->nullable();
+            $table->integer('order_column')->default(0);
 
             $table->timestamps();
         });

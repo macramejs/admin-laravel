@@ -55,6 +55,12 @@ abstract class BaseMakeCommand extends Command
     public function publishTypeForModule($module, $type)
     {
         $this->forEachFile($this->publishesPath($type), function(SplFileInfo $file) use($module, $type){
+            if($file->getFilename() == '.' || $file->getFilename() == '..'){
+                return;
+            }
+
+            dump($file->getFilename());
+
             if($this->getModule($file) != $module) {
                 return;
             }
@@ -67,7 +73,7 @@ abstract class BaseMakeCommand extends Command
 
     protected function getModule(SplFileInfo $file)
     {
-        $content = $this->files->get($file->getPath());
+        $content = $this->files->get($file->getRealPath());
 
         preg_match('/@module\s+([a-zA-Z]+)/', $content, $matches);
 

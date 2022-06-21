@@ -1,8 +1,8 @@
 <?php
 
-namespace {{ namespace }}\Http\Controllers\Auth;
+namespace Admin\Http\Controllers\Auth;
 
-use {{ namespace }}\Ui\Page;
+use Admin\Ui\Page;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;

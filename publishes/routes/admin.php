@@ -15,19 +15,29 @@ use Admin\Http\Controllers\MediaCollectionController;
 use Admin\Http\Controllers\Auth\NewPasswordController;
 use Admin\Http\Controllers\Auth\PasswordResetLinkController;
 use Admin\Http\Controllers\Auth\AuthenticatedSessionController;
+use Illuminate\Http\Request;
+use Admin\Http\Controllers\LinkController;
+use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 Route::group([
-    'middleware' => AuthenticateAdmin::class,
+    'middleware' => [
+        'api',
+        AuthenticateAdmin::class,
+        EnsureFrontendRequestsAreStateful::class,
+    ]
 ], function () {
 
     // settings
-    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+    // Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 
     // profile
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
     Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');    
 
+    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+        return $request->user();
+    });
     // users
     Route::get('/users', [UserController::class, 'items'])->name('user.items');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('user.delete');
@@ -74,14 +84,11 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => 'guest',
+    'middleware' => ['web', 'guest']
 ], function () {
-    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 
-    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
     Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
 
-    Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
     Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.update');
 });

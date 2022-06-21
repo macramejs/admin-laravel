@@ -20,14 +20,17 @@ class PageAuditResource extends JsonResource
     public function toArray($request)
     {
         $old = $this->old_values;
+
         if (array_key_exists('content', $old)) {
             $old['content'] = json_decode($old['content']);
         }
+
         if (array_key_exists('attributes', $old)) {
             $old['attributes'] = json_decode($old['attributes']);
         }
 
         $new = $this->new_values;
+
         if (array_key_exists('content', $new)) {
             $new['content'] = json_decode($new['content']);
         }

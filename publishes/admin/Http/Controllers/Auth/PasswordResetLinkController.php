@@ -1,8 +1,8 @@
 <?php
 
-namespace {{ namespace }}\Http\Controllers\Auth;
+namespace Admin\Http\Controllers\Auth;
 
-use {{ namespace }}\Ui\Page;
+use Admin\Ui\Page;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -20,7 +20,7 @@ class PasswordResetLinkController extends Controller
     {
         return $page
             ->page('Auth/ForgotPassword')
-            ->with('submit-route', route('{{ name }}.password.email'))
+            ->with('submit-route', route('admin.password.email'))
             ->with('lang', [
                 'message'         => 'Passwort vergessen? Kein Problem. Teile uns einfach deine E-Mail-Adresse mit und wir senden dir einen Link zum Zurücksetzen des Passworts zu.',
                 'email'           => 'E-Mail',

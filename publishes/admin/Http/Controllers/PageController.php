@@ -79,7 +79,7 @@ class PageController
 
         $page->update($validated);
 
-        return redirect()->back();
+        return PageResource::make($page);
     }
 
     /**
@@ -101,8 +101,7 @@ class PageController
         }
 
         $page->update($validated);
-
-        return redirect()->back();
+        return PageResource::make($page);
     }
 
     /**
@@ -125,9 +124,7 @@ class PageController
 
         $page->save();
 
-        return redirect()->route('admin.pages.show', [
-            'page' => $page,
-        ]);
+        return PageResource::make($page);
     }
 
     /**
@@ -135,13 +132,13 @@ class PageController
      *
      * @param  Request          $request
      * @param  Page             $page
-     * @return RedirectResponse
+     * @return Response
      */
     public function destroy(Request $request, Page $page)
     {
         $page->delete();
 
-        return redirect(route('admin.pages.index'));
+        return response()->noContent();
     }
 
     /**
@@ -154,7 +151,7 @@ class PageController
     {
         Page::updateOrder($request->order);
 
-        return redirect()->back();
+        return response()->noContent();
     }
 
     public function upload(Request $request, Page $page)
@@ -167,14 +164,10 @@ class PageController
         $file->group = $request->file_group;
         $file->save();
 
-        // $collection = Collection::find($request->collection);
-        // $collection->addFile($file);
-
-        // $page->addFile($file);
-
         $page->addFile($validated['file'])->save();
 
-        return Redirect::route('admin.sites.show', ['site' => $page]);
+
+        return PageResource::make($page);
     }
 
     /**
@@ -191,8 +184,6 @@ class PageController
         $page->slug = Str::slug($request->name);
         $page->save();
 
-        return redirect()->route('admin.pages.show', [
-            'page' => $page,
-        ]);
+        return PageResource::make($page);
     }
 }

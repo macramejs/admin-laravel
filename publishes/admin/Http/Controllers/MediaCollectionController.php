@@ -39,7 +39,7 @@ class MediaCollectionController
      * Create a new MediaCollection.
      *
      * @param Request $request
-     * @return RedirectResponse
+     * @return void
      */
     public function store(Request $request)
     {
@@ -54,7 +54,7 @@ class MediaCollectionController
      *
      * @param Request $request
      * @param MediaCollection $collection
-     * @return RedirectResponse
+     * @return void
      */
     public function destroy(Request $request, MediaCollection $collection)
     {
@@ -66,7 +66,7 @@ class MediaCollectionController
      *
      * @param Request $request
      * @param MediaCollection $collection
-     * @return RedirectResponse
+     * @return void
      */
     public function add(Request $request, MediaCollection $collection)
     {
@@ -89,7 +89,7 @@ class MediaCollectionController
      *
      * @param Request $request
      * @param MediaCollection $collection
-     * @return RedirectResponse
+     * @return void
      */
     public function remove(Request $request, MediaCollection $collection)
     {

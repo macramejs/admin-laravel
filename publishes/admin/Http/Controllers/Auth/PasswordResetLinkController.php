@@ -8,25 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 
-class PasswordResetLinkController extends Controller
+class PasswordResetLinkController
 {
-    /**
-     * Display the password reset link request view.
-     *
-     * @param  Page $page
-     * @return Page
-     */
-    public function create(Page $page)
-    {
-        return $page
-            ->page('Auth/ForgotPassword')
-            ->with('submit-route', route('admin.password.email'))
-            ->with('lang', [
-                'message'         => 'Passwort vergessen? Kein Problem. Teile uns einfach deine E-Mail-Adresse mit und wir senden dir einen Link zum Zurücksetzen des Passworts zu.',
-                'email'           => 'E-Mail',
-                'send_reset_link' => 'Sende Password Zurücksetzen Link',
-            ]);
-    }
 
     /**
      * Handle an incoming password reset link request.
@@ -51,7 +34,9 @@ class PasswordResetLinkController extends Controller
         );
 
         if ($status == Password::RESET_LINK_SENT) {
-            return back()->with('status', __($status));
+            return response()->json([
+                'status'=> __($status)
+            ]);
         }
 
         throw ValidationException::withMessages([

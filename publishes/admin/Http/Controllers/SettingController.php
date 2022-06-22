@@ -15,7 +15,7 @@ class SettingController
      */
     public function index(Request $request, Page $page): Page
     {
-        return $page
-            ->page('Settings/Index');
+        // return $page
+            // ->page('Settings/Index');
     }
 }

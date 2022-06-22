@@ -30,12 +30,12 @@ class UserController
      *
      * @param  Request          $request
      * @param  User             $user
-     * @return RedirectResponse
+     * @return Response
      */
     public function destroy(Request $request, User $user)
     {
         $user->delete();
 
-        return redirect()->back();
+        return response()->noContent();
     }
 }

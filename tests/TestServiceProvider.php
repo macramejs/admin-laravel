@@ -18,10 +18,8 @@ class TestServiceProvider extends RouteServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../publishes/migrations');
 
         $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('admin/api')
-                ->as('admin.api.')
-                ->namespace($this->namespace)
+            Route::prefix('admin')
+                ->as('admin')
                 ->group(__DIR__.'/../publishes/routes/admin.php');
         });
     }

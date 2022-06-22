@@ -24,15 +24,16 @@ Route::group([
         'api',
         AuthenticateAdmin::class,
         EnsureFrontendRequestsAreStateful::class,
-    ]
+    ],
+    'prefix' => 'api',
 ], function () {
 
     // settings
     // Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 
     // profile
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
-    Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
+    Route::post('/profile/password', [UserProfileController::class, 'updatePassword'])->name('profile.password');
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');    
 
     Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

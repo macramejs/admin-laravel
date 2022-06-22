@@ -28,7 +28,7 @@ class MenuItemController
     }
 
     /**
-     * Store a new navigation item.
+     * Updates a new navigation item.
      *
      * @param  Request  $request
      * @param  Menu     $menu

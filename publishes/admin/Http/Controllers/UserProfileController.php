@@ -10,14 +10,13 @@ use Illuminate\Validation\ValidationException;
 class UserProfileController
 {
     /**
-     * Show the user profile page.
+     * Show the user details.
      *
-     * @param  Page $page
-     * @return Page
+     * @return Request $request
      */
-    public function show(Page $page)
+    public function show(Request $request)
     {
-        return $page->page('UserProfile/Show')->with('user', auth()->user());
+        return auth()->user();
     }
 
     /**
@@ -41,6 +40,6 @@ class UserProfileController
         $request->user()->password = Hash::make($request->password);
         $request->user()->save();
 
-        return redirect()->back();
-    }
+        return $request->user();
+  }
 }

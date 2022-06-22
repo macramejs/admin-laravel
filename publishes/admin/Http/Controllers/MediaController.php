@@ -70,7 +70,7 @@ class MediaController
 
         File::whereIn('id', $request->ids)->delete();
 
-        return redirect()->back();
+        return response()->noContent();
     }
 
     /**

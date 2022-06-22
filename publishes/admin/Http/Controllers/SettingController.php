@@ -11,9 +11,9 @@ class SettingController
     /**
      * Show the ship index page for the admin application.
      *
-     * @return Page
+     * @return void
      */
-    public function index(Request $request, Page $page): Page
+    public function index(Request $request)
     {
         // return $page
             // ->page('Settings/Index');

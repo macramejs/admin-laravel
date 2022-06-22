@@ -14,26 +14,6 @@ use Illuminate\Validation\ValidationException;
 
 class NewPasswordController
 {
-    /**
-     * Display the password reset view.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\View\View
-     */
-    public function create(Request $request, Page $page, $token)
-    {
-        return $page
-            ->page('Auth/ResetPassword')
-            ->with('token', $token)
-            ->with('email', $request->query('email'))
-            ->with('submit-route', route('{{ name }}.password.update'))
-            ->with('lang', [
-                'password'              => 'Passwort',
-                'password_confirmation' => 'Passwort wiederhohlen',
-                'email'                 => 'E-Mail',
-                'reset_password'        => 'Passwort Zurücksetzen',
-            ]);
-    }
 
     /**
      * Handle an incoming new password request.
@@ -70,7 +50,9 @@ class NewPasswordController
         // the application's home authenticated view. If there is an error we can
         // redirect them back to where they came from with their error message.
         if ($status == Password::PASSWORD_RESET) {
-            return redirect()->route('admin.login')->with('status', __($status));
+            return response()->json([
+                'status'=> __($status)
+            ]);
         }
 
         throw ValidationException::withMessages([

@@ -5,7 +5,6 @@ namespace Admin\Http\Controllers;
 use Admin\Http\Indexes\MediaIndex;
 use Admin\Http\Resources\MediaCollectionResource;
 use Admin\Http\Resources\MediaResource;
-use Admin\Ui\Page;
 use App\Models\File;
 use App\Models\MediaCollection;
 use Illuminate\Http\Request;
@@ -47,13 +46,10 @@ class MediaController
      * @param  Page $page
      * @return Page
      */
-    public function index(Page $page, $mimeType = null)
+    public function index($mimeType = null)
     {
         $collections = MediaCollection::withCount('files')->get();
-
-        return $page
-            ->page('Media/Index')
-            ->with('collections', MediaCollectionResource::collection($collections));
+        return MediaCollectionResource::collection($collections);s
     }
 
     /**

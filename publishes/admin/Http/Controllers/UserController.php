@@ -3,8 +3,6 @@
 namespace Admin\Http\Controllers;
 
 use Admin\Http\Indexes\UserIndex;
-use Admin\Ui\Page;
-
 use App\Models\User;
 use Illuminate\Http\Request;
 

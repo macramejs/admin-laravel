@@ -40,7 +40,7 @@ class AuthenticatedSessionController
 
         $request->session()->regenerateToken();
 
-        return redirect('/admin/login');
+        return response()->noContent();
 
     }
 }

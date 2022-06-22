@@ -3,18 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Intervention\Image\ImageCache;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Response;
+use Intervention\Image\ImageCache;
 
 class MediaController extends Controller
 {
     /**
      * Get media conversions.
      *
-     * @param Request $request
-     * @param string $id
-     * @param string $file
+     * @param  Request $request
+     * @param  string  $id
+     * @param  string  $file
      * @return void
      */
     public function conversion(Request $request, $id, $file)

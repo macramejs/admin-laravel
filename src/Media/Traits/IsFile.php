@@ -2,23 +2,23 @@
 
 namespace Macrame\Admin\Media\Traits;
 
-use Illuminate\Support\Str;
+use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Filesystem\FilesystemAdapter;
-use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 trait IsFile
 {
     /**
-    * Create a new file model from the uploaded file.
-    *
-    * @param UploadedFile $file
-    * @param array $attributes
-    * @return static
-    */
+     * Create a new file model from the uploaded file.
+     *
+     * @param  UploadedFile $file
+     * @param  array        $attributes
+     * @return static
+     */
     public static function createFromUploadedFile(UploadedFile $file, array $attributes = []): static
     {
         return DB::transaction(function () use ($file, $attributes) {
@@ -110,6 +110,6 @@ trait IsFile
             $this->size /= 1024;
         }
 
-        return round($this->size, 2) . ' ' . $units[$i];
+        return round($this->size, 2).' '.$units[$i];
     }
 }

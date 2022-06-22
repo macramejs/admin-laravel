@@ -26,10 +26,10 @@ class MediaResource extends JsonResource
     public function toArray($request)
     {
         return array_merge(parent::toArray($request), [
-            'url' => $this->getUrl(),
+            'url'           => $this->getUrl(),
             'readable_size' => $this->getReadableSize(),
-            'created_at' => new DateTimeResource($this->created_at),
-            'updated_at' => new DateTimeResource($this->updated_at),
+            'created_at'    => new DateTimeResource($this->created_at),
+            'updated_at'    => new DateTimeResource($this->updated_at),
         ]);
     }
 }

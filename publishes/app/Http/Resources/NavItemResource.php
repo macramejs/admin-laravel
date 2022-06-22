@@ -20,17 +20,17 @@ class NavItemResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request                                        $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
     public function toArray($request)
     {
         return [
-            'link' => $this->link->url(),
-            'name' => $this->title,
-            'children'  => static::collection(
+            'link'     => $this->link->url(),
+            'name'     => $this->title,
+            'children' => static::collection(
                 $this->children->sortBy('order_column')
-            )
+            ),
         ];
     }
 }

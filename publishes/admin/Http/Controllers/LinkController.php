@@ -2,10 +2,10 @@
 
 namespace Admin\Http\Controllers;
 
-use App\Models\Page;
-use Illuminate\Http\Request;
 use Admin\Http\Resources\LinkOptionResource;
 use Admin\Http\Resources\Options\LinkOption;
+use App\Models\Page;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class LinkController
@@ -13,7 +13,7 @@ class LinkController
     /**
      * Get link items.
      *
-     * @param Request $request
+     * @param  Request                     $request
      * @return AnonymousResourceCollection
      */
     public function __invoke(Request $request)

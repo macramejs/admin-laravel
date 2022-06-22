@@ -10,8 +10,8 @@ interface File
     /**
      * Create a new file model from the uploaded file.
      *
-     * @param UploadedFile $file
-     * @param array $attributes
+     * @param  UploadedFile $file
+     * @param  array        $attributes
      * @return static
      */
     public static function createFromUploadedFile(UploadedFile $file, array $attributes = []): static;

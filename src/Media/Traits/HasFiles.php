@@ -11,8 +11,8 @@ trait HasFiles
     /**
      * Files relationship.
      *
-     * @param string $collection
-     * @param string $fileModel
+     * @param  string        $collection
+     * @param  string        $fileModel
      * @return BelongsToMany
      */
     public function files($collection = null, $fileModel = null): BelongsToMany
@@ -36,8 +36,8 @@ trait HasFiles
     /**
      * Determines whether the model is attached to the given file.
      *
-     * @param AttachableFile $file
-     * @return boolean
+     * @param  AttachableFile $file
+     * @return bool
      */
     public function isAttachedTo(AttachableFile $file)
     {
@@ -47,9 +47,9 @@ trait HasFiles
     /**
      * Attach a file to the model.
      *
-     * @param AttachableFile $file
-     * @param string|null $collection
-     * @param array $attributes
+     * @param  AttachableFile $file
+     * @param  string|null    $collection
+     * @param  array          $attributes
      * @return void
      */
     public function attachFile(AttachableFile $file, ?string $collection = null, array $attributes = [])
@@ -60,9 +60,9 @@ trait HasFiles
     /**
      * Attach a collection of files to the model.
      *
-     * @param Collection $files
-     * @param string|null $collection
-     * @param array $attributes
+     * @param  Collection  $files
+     * @param  string|null $collection
+     * @param  array       $attributes
      * @return void
      */
     public function attachFiles(Collection $files, ?string $collection = null, array $attributes = [])

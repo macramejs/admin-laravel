@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
-use LogicException;
 
 trait IsAttachableFile
 {
@@ -63,7 +62,7 @@ trait IsAttachableFile
     /**
      * File attachments relationship.
      *
-     * @param string $model
+     * @param  string        $model
      * @return BelongsToMany
      */
     public function attached(string $model): BelongsToMany
@@ -83,9 +82,9 @@ trait IsAttachableFile
     /**
      * Attach a file to the model.
      *
-     * @param Collection|Model $model
-     * @param mixed $collection
-     * @param array $attributes
+     * @param  Collection|Model $model
+     * @param  mixed            $collection
+     * @param  array            $attributes
      * @return void
      */
     public function attach(Collection | Model $model, $collection = null, $attributes = []): void
@@ -107,7 +106,7 @@ trait IsAttachableFile
     /**
      * Detach a file from the given model('s).
      *
-     * @param Collection|Model $model
+     * @param  Collection|Model $model
      * @return void
      */
     public function detach(Collection | Model $model): void

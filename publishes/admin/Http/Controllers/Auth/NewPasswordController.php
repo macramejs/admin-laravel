@@ -2,8 +2,6 @@
 
 namespace Admin\Http\Controllers\Auth;
 
-use Admin\Ui\Page;
-use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +12,6 @@ use Illuminate\Validation\ValidationException;
 
 class NewPasswordController
 {
-
     /**
      * Handle an incoming new password request.
      *
@@ -51,7 +48,7 @@ class NewPasswordController
         // redirect them back to where they came from with their error message.
         if ($status == Password::PASSWORD_RESET) {
             return response()->json([
-                'status'=> __($status)
+                'status' => __($status),
             ]);
         }
 

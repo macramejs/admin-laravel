@@ -2,10 +2,10 @@
 
 namespace Admin\Http\Controllers;
 
+use Admin\Http\Resources\MenuItemTreeResource;
 use App\Models\Menu;
 use App\Models\MenuItem;
 use Illuminate\Http\Request;
-use Admin\Http\Resources\MenuItemTreeResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MenuItemController
@@ -13,8 +13,8 @@ class MenuItemController
     /**
      * Get menu item tree.
      *
-     * @param  Request $request
-     * @param  Menu $menu
+     * @param  Request                     $request
+     * @param  Menu                        $menu
      * @return AnonymousResourceCollection
      */
     public function tree(Request $request, Menu $menu)
@@ -30,9 +30,9 @@ class MenuItemController
     /**
      * Updates a new navigation item.
      *
-     * @param  Request  $request
-     * @param  Menu     $menu
-     * @param  string   $id
+     * @param  Request $request
+     * @param  Menu    $menu
+     * @param  string  $id
      * @return void
      */
     public function update(Request $request, Menu $menu, $id)
@@ -65,7 +65,7 @@ class MenuItemController
         ]);
 
         $parent = null;
-        if($parentId) {
+        if ($parentId) {
             // Checking whether a parent exists for the given menu.
             $parent = $menu->items()->where('id', $parentId)->firstOrFail();
         }
@@ -80,7 +80,7 @@ class MenuItemController
      * Update the order of the navigation tree.
      *
      * @param  Request $request
-     * @param  Menu $menu
+     * @param  Menu    $menu
      * @return void
      */
     public function order(Request $request, Menu $menu)
@@ -93,9 +93,9 @@ class MenuItemController
     /**
      * Remove an item from the navigation tree.
      *
-     * @param Request $request
-     * @param Menu $menu
-     * @param int $itemId
+     * @param  Request $request
+     * @param  Menu    $menu
+     * @param  int     $itemId
      * @return void
      */
     public function destroy(Request $request, Menu $menu, $itemId)

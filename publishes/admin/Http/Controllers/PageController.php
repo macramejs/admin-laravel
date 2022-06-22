@@ -2,19 +2,14 @@
 
 namespace Admin\Http\Controllers;
 
-use App\Models\Page;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Admin\Ui\Page as AdminPage;
 use Admin\Http\Indexes\PageIndex;
-use Illuminate\Http\RedirectResponse;
 use Admin\Http\Resources\PageResource;
-use Illuminate\Support\Facades\Redirect;
 use Admin\Http\Resources\PageTreeResource;
-use Admin\Http\Controllers\Traits\PageLinks;
-use Admin\Http\Resources\LinkOptionResource;
-use Admin\Http\Resources\Options\LinkOption;
+use App\Models\Page;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Str;
 
 class PageController
 {
@@ -35,8 +30,8 @@ class PageController
     /**
      * Get Page item.
      *
-     * @param Request $request
-     * @param Page $page
+     * @param  Request      $request
+     * @param  Page         $page
      * @return PageResource
      */
     public function item(Request $request, Page $page)
@@ -101,6 +96,7 @@ class PageController
         }
 
         $page->update($validated);
+
         return PageResource::make($page);
     }
 
@@ -130,8 +126,8 @@ class PageController
     /**
      * Destroy the given page.
      *
-     * @param  Request          $request
-     * @param  Page             $page
+     * @param  Request  $request
+     * @param  Page     $page
      * @return Response
      */
     public function destroy(Request $request, Page $page)
@@ -165,7 +161,6 @@ class PageController
         $file->save();
 
         $page->addFile($validated['file'])->save();
-
 
         return PageResource::make($page);
     }

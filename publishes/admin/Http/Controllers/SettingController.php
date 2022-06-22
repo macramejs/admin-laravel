@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class SettingController
 {
-
     /**
      * Show the ship index page for the admin application.
      *
@@ -16,6 +15,6 @@ class SettingController
     public function index(Request $request)
     {
         // return $page
-            // ->page('Settings/Index');
+        // ->page('Settings/Index');
     }
 }

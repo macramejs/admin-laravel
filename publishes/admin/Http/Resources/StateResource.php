@@ -2,7 +2,6 @@
 
 namespace Admin\Http\Resources;
 
-use AwStudio\States\State;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class StateResource extends JsonResource

@@ -18,6 +18,7 @@ class AdminServiceProvider extends ServiceProvider
         // Nav\NavServiceProvider::class,
 
     ];
+
     /**
      * Register application services.
      *

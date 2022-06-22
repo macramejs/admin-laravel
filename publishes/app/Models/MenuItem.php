@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use App\Casts\MenuLinkCast;
-use Macrame\Tree\Traits\IsTree;
-use Macrame\Contracts\Tree\Tree;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Macrame\Contracts\Tree\Tree;
+use Macrame\Tree\Traits\IsTree;
 
 class MenuItem extends Model implements Tree
 {

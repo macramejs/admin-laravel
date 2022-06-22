@@ -2,9 +2,8 @@
 
 namespace Tests\Feature\AdminApi;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class MenuControllerTest extends TestCase
 {
@@ -19,8 +18,6 @@ class MenuControllerTest extends TestCase
 
     public function test_items()
     {
-
-
         $items = $this->get('/admin/api/menus');
 
         //dd($items->decodeResponseJson());

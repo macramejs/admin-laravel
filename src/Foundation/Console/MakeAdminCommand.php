@@ -2,9 +2,6 @@
 
 namespace Macrame\Admin\Foundation\Console;
 
-use Illuminate\Support\Str;
-use Macrame\Admin\Foundation\Console\BaseMakeCommand;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Process\Process;
 
 class MakeAdminCommand extends BaseMakeCommand
@@ -45,7 +42,7 @@ class MakeAdminCommand extends BaseMakeCommand
         // Copy CORS Configuration
         $this->files->copyDirectory($this->publishesPath('config'), config_path());
         $this->files->copyDirectory($this->publishesPath('migrations'), database_path('migrations'));
-        
+
         // Register Routes
         $this->replaceInFile(
             "                ->group(base_path('routes/web.php'));",
@@ -68,7 +65,6 @@ class MakeAdminCommand extends BaseMakeCommand
             ->run(function ($type, $output) {
                 $this->output->write($output);
             });
-
 
         return 0;
     }

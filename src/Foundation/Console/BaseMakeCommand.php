@@ -3,13 +3,12 @@
 namespace Macrame\Admin\Foundation\Console;
 
 use Closure;
-use SplFileInfo;
-use Illuminate\Support\Str;
-use RecursiveIteratorIterator;
 use Illuminate\Console\Command;
-use RecursiveDirectoryIterator;
 use Illuminate\Filesystem\Filesystem;
 use LogicException;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use SplFileInfo;
 
 abstract class BaseMakeCommand extends Command
 {
@@ -35,7 +34,7 @@ abstract class BaseMakeCommand extends Command
 
     public function publishesPath($path)
     {
-        return __DIR__ ."/../../../publishes/" . $path;
+        return __DIR__.'/../../../publishes/'.$path;
     }
 
     public function publishModule(string $module)
@@ -49,24 +48,24 @@ abstract class BaseMakeCommand extends Command
 
     public function publishModuleRoutes($module)
     {
-        # code...
+        // code...
     }
 
     public function publishTypeForModule($module, $type)
     {
-        $this->forEachFile($this->publishesPath($type), function(SplFileInfo $file) use($module, $type){
-            if($file->getFilename() == '.' || $file->getFilename() == '..'){
+        $this->forEachFile($this->publishesPath($type), function (SplFileInfo $file) use ($module, $type) {
+            if ($file->getFilename() == '.' || $file->getFilename() == '..') {
                 return;
             }
 
             dump($file->getFilename());
 
-            if($this->getModule($file) != $module) {
+            if ($this->getModule($file) != $module) {
                 return;
             }
 
             $destinationPath = $this->getDestinationPath($file, $type);
-            
+
             $this->files->copy($file->getPath(), $destinationPath);
         });
     }
@@ -77,7 +76,7 @@ abstract class BaseMakeCommand extends Command
 
         preg_match('/@module\s+([a-zA-Z]+)/', $content, $matches);
 
-        if(!$module = ($matches[1] ?? false)) {
+        if (! $module = ($matches[1] ?? false)) {
             throw new LogicException("Missing module for in {$file}");
         }
 
@@ -86,10 +85,10 @@ abstract class BaseMakeCommand extends Command
 
     protected function getDestinationPath(SplFileInfo $file, $type)
     {
-        return match($type) {
-            'admin' => base_path('admin/'.last(explode("publishes/admin/", $file->getPath()))),
-            'app' => app_path(last(explode("publishes/app/", $file))),
-            'migrations' => database_path('migrations/'.last(explode("publishes/migrations/", $file)))
+        return match ($type) {
+            'admin'      => base_path('admin/'.last(explode('publishes/admin/', $file->getPath()))),
+            'app'        => app_path(last(explode('publishes/app/', $file))),
+            'migrations' => database_path('migrations/'.last(explode('publishes/migrations/', $file)))
         };
     }
 

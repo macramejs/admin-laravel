@@ -2,30 +2,30 @@
 
 namespace App\Casts;
 
-use App\Models\File;
-use Macrame\Content\ContentCast;
 use App\Http\Resources\ImageResource;
 use App\Http\Resources\Wrapper\Image;
+use App\Models\File;
+use Macrame\Content\ContentCast;
 
 class PageAttributesCast extends ContentCast
 {
     /**
      * Parse items.
      *
-     * @param array $items
+     * @param  array $items
      * @return $this
      */
     public function parse()
     {
-        if (!is_array($this->items)) {
+        if (! is_array($this->items)) {
             return $this;
         }
 
         $this->items = match ($this->model->template) {
             'default' => $this->defaultTemplate($this->items),
-            default => $this->items
+            default   => $this->items
         };
-        
+
         return $this;
     }
 
@@ -36,7 +36,7 @@ class PageAttributesCast extends ContentCast
             $image = File::query()
                 ->where('id', $items['header']['id'] ?? null)
                 ->first();
-    
+
             $image = new Image(
                 $image,
                 array_key_exists('alt', $header) ? $header['alt'] : '',
@@ -46,7 +46,7 @@ class PageAttributesCast extends ContentCast
 
         return [
             ...$items,
-            'header' => $header ? (new ImageResource($image))->toArray(request()) : null
+            'header' => $header ? (new ImageResource($image))->toArray(request()) : null,
         ];
     }
 }

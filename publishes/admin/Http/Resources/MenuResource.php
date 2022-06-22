@@ -17,7 +17,7 @@ class MenuResource extends JsonResource
      */
     public $resource;
 
-   /**
+    /**
      * Transform the resource into an array.
      *
      * @param  \Illuminate\Http\Request                                        $request

@@ -2,15 +2,12 @@
 
 namespace Admin\Http\Controllers\Auth;
 
-use Admin\Ui\Page;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 
 class PasswordResetLinkController
 {
-
     /**
      * Handle an incoming password reset link request.
      *
@@ -35,7 +32,7 @@ class PasswordResetLinkController
 
         if ($status == Password::RESET_LINK_SENT) {
             return response()->json([
-                'status'=> __($status)
+                'status' => __($status),
             ]);
         }
 

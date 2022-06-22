@@ -26,9 +26,9 @@ class MenuItemTreeResource extends TreeResource
     public function value($request)
     {
         return [
-            'id' => $this->id,
+            'id'    => $this->id,
             'title' => $this->title,
-            'link' => $this->link->value,
+            'link'  => $this->link->value,
         ];
     }
 }

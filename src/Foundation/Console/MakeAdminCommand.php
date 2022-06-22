@@ -66,6 +66,19 @@ class MakeAdminCommand extends BaseMakeCommand
                 $this->output->write($output);
             });
 
+        $composerPackages = [
+            'laravel/sanctum',
+            'macramejs/macrame-laravel:dev-main',
+        ];
+
+        foreach ($composerPackages as $package) {
+            (new Process(['composer', 'require', $package], base_path()))
+                ->setTimeout(null)
+                ->run(function ($type, $output) {
+                    $this->output->write($output);
+                });
+        }
+
         return 0;
     }
 

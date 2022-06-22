@@ -2,7 +2,6 @@
 
 namespace Admin\Http\Controllers;
 
-use Admin\Ui\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -41,5 +40,5 @@ class UserProfileController
         $request->user()->save();
 
         return $request->user();
-  }
+    }
 }

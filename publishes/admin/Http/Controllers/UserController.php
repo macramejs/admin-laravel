@@ -26,8 +26,8 @@ class UserController
     /**
      * Delete a given user.
      *
-     * @param  Request          $request
-     * @param  User             $user
+     * @param  Request  $request
+     * @param  User     $user
      * @return Response
      */
     public function destroy(Request $request, User $user)

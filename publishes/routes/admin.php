@@ -1,22 +1,19 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Admin\Http\Controllers\NavController;
-use Admin\Http\Controllers\HomeController;
-use Admin\Http\Controllers\MenuController;
-use Admin\Http\Controllers\PageController;
-use Admin\Http\Controllers\UserController;
-use Admin\Http\Controllers\MediaController;
-use Admin\Http\Middleware\AuthenticateAdmin;
-use Admin\Http\Controllers\SettingController;
-use Admin\Http\Controllers\MenuItemController;
-use Admin\Http\Controllers\UserProfileController;
-use Admin\Http\Controllers\MediaCollectionController;
+use Admin\Http\Controllers\Auth\AuthenticatedSessionController;
 use Admin\Http\Controllers\Auth\NewPasswordController;
 use Admin\Http\Controllers\Auth\PasswordResetLinkController;
-use Admin\Http\Controllers\Auth\AuthenticatedSessionController;
-use Illuminate\Http\Request;
 use Admin\Http\Controllers\LinkController;
+use Admin\Http\Controllers\MediaCollectionController;
+use Admin\Http\Controllers\MediaController;
+use Admin\Http\Controllers\MenuController;
+use Admin\Http\Controllers\MenuItemController;
+use Admin\Http\Controllers\PageController;
+use Admin\Http\Controllers\SettingController;
+use Admin\Http\Controllers\UserController;
+use Admin\Http\Controllers\UserProfileController;
+use Admin\Http\Middleware\AuthenticateAdmin;
+use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 Route::group([
@@ -32,13 +29,11 @@ Route::group([
     // Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 
     // profile
+    Route::get('/user', [UserProfileController::class, 'show']);
     Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
     Route::post('/profile/password', [UserProfileController::class, 'updatePassword'])->name('profile.password');
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');    
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-        return $request->user();
-    });
     // users
     Route::get('/users', [UserController::class, 'items'])->name('user.items');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('user.delete');
@@ -85,7 +80,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['web', 'guest']
+    'middleware' => ['web', 'guest'],
 ], function () {
     Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 

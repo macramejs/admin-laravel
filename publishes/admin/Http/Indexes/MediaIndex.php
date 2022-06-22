@@ -1,12 +1,12 @@
 <?php
 
-namespace {{ namespace }}\Http\Indexes;
+namespace Admin\Http\Indexes;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Macrame\Index\Index;
 
-class {{ page }}Index extends Index
+class MediaIndex extends Index
 {
     protected $mimeTypes = [
         'images'    => ['image/%'],

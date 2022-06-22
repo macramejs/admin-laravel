@@ -1,6 +1,6 @@
 <?php
 
-namespace {{ namespace }}\Http\Indexes;
+namespace Admin\Http\Indexes;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;

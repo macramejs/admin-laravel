@@ -69,6 +69,7 @@ class MakeAdminCommand extends BaseMakeCommand
         $composerPackages = [
             'laravel/sanctum',
             'macramejs/macrame-laravel:dev-main',
+            'owen-it/laravel-auditing',
         ];
 
         foreach ($composerPackages as $package) {

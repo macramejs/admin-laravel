@@ -15,7 +15,7 @@ class MediaController
     /**
      * Media index page.
      *
-     * @param  Request $request
+     * @param  Request   $request
      * @param  PageIndex $index
      * @return PageIndex
      */
@@ -31,8 +31,8 @@ class MediaController
     /**
      * Show a single file.
      *
-     * @param Request $request
-     * @param File $file
+     * @param  Request       $request
+     * @param  File          $file
      * @return MediaResource
      */
     public function item(Request $request, File $file)
@@ -49,19 +49,20 @@ class MediaController
     public function index($mimeType = null)
     {
         $collections = MediaCollection::withCount('files')->get();
-        return MediaCollectionResource::collection($collections);s
+
+        return MediaCollectionResource::collection($collections);
     }
 
     /**
      * Destroy multiple files.
      *
-     * @param Request $request
+     * @param  Request          $request
      * @return RedirectResponse
      */
     public function destroy(Request $request)
     {
         $request->validate([
-            'ids' => 'required|array'
+            'ids' => 'required|array',
         ]);
 
         File::whereIn('id', $request->ids)->delete();
@@ -72,7 +73,7 @@ class MediaController
     /**
      * Upload files.
      *
-     * @param Request $request
+     * @param  Request $request
      * @return void
      */
     public function upload(Request $request)

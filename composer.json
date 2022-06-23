@@ -30,7 +30,8 @@
     "require": {
         "illuminate/support": "^9.0",
         "illuminate/contracts": "^9.0",
-        "illuminate/filesystem": "^9.0"
+        "illuminate/filesystem": "^9.0",
+        "macramejs/macrame-laravel": "dev-main"
     },
     "extra": {
         "laravel": {

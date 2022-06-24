@@ -75,28 +75,32 @@ class MakeAdminCommand extends BaseMakeCommand
 
     protected function addAppRoutes()
     {
-        $file = base_path('routes/web.php');
-
-        $webRoutes = [
-            'App\Http\Controllers\MediaController' => "Route::get('/storage/c/{id}/{file}', [MediaController::class, 'conversion']);",
+        $routes = [
+            'web' => [
+                'App\Http\Controllers\MediaController' => "Route::get('/storage/c/{id}/{file}', [MediaController::class, 'conversion']);",
+            ],
         ];
 
-        foreach ($webRoutes as $controller => $route) {
-            if (str_contains(file_get_contents($file), $controller)) {
-                continue;
+        foreach ($routes as $file => $fileRoutes) {
+            $filePath = base_path("routes/{$file}.php");
+
+            foreach ($fileRoutes as $controller => $route) {
+                if (str_contains(file_get_contents($filePath), $controller)) {
+                    continue;
+                }
+
+                $this->replaceInFile(
+                    "<?php\n",
+                    "<?php\n\nuse {$controller};",
+                    $filePath
+                );
+
+                $this->replaceInFile(
+                    '});',
+                    "});\n{$route}",
+                    $filePath
+                );
             }
-
-            $this->replaceInFile(
-                "<?php\n",
-                "<?php\n\nuse {$controller};",
-                $file
-            );
-
-            $this->replaceInFile(
-                '});',
-                "});\n{$route}",
-                $file
-            );
         }
     }
 

@@ -9,6 +9,7 @@ use Admin\Http\Controllers\MediaController;
 use Admin\Http\Controllers\MenuController;
 use Admin\Http\Controllers\MenuItemController;
 use Admin\Http\Controllers\PageController;
+use Admin\Http\Controllers\PartialController;
 use Admin\Http\Controllers\SettingController;
 use Admin\Http\Controllers\UserController;
 use Admin\Http\Controllers\UserProfileController;
@@ -77,6 +78,10 @@ Route::group([
     Route::post('/menus/{menu}/items', [MenuItemController::class, 'store'])->name('menus.items.store');
     Route::put('/menus/{menu}/items/{item}', [MenuItemController::class, 'update'])->name('menus.items.update');
     Route::delete('/menus/{menu}/items/{item}', [MenuItemController::class, 'destroy'])->name('menus.items.destroy');
+
+    // partials
+    Route::get('/partial/{partial}', [PartialController::class, 'show'])->name('partial.show');
+    Route::put('/partial/{partial}', [PartialController::class, 'update'])->name('partial.update');
 });
 
 Route::group([

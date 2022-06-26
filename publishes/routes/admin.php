@@ -1,23 +1,23 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Admin\Http\Controllers\LinkController;
-use Admin\Http\Controllers\MenuController;
-use Admin\Http\Controllers\PageController;
-use Admin\Http\Controllers\UserController;
-use Admin\Http\Controllers\BlockController;
-use Admin\Http\Controllers\MediaController;
-use Admin\Http\Middleware\AuthenticateAdmin;
-use Admin\Http\Controllers\PartialController;
-use Admin\Http\Controllers\SettingController;
-use Admin\Http\Controllers\MenuItemController;
-use Admin\Http\Controllers\PageTreeController;
-use Admin\Http\Controllers\UserProfileController;
-use Admin\Http\Controllers\MenuItemTreeController;
-use Admin\Http\Controllers\MediaCollectionController;
+use Admin\Http\Controllers\Auth\AuthenticatedSessionController;
 use Admin\Http\Controllers\Auth\NewPasswordController;
 use Admin\Http\Controllers\Auth\PasswordResetLinkController;
-use Admin\Http\Controllers\Auth\AuthenticatedSessionController;
+use Admin\Http\Controllers\BlockController;
+use Admin\Http\Controllers\LinkController;
+use Admin\Http\Controllers\MediaCollectionController;
+use Admin\Http\Controllers\MediaController;
+use Admin\Http\Controllers\MenuController;
+use Admin\Http\Controllers\MenuItemController;
+use Admin\Http\Controllers\MenuItemTreeController;
+use Admin\Http\Controllers\PageController;
+use Admin\Http\Controllers\PageTreeController;
+use Admin\Http\Controllers\PartialController;
+use Admin\Http\Controllers\SettingController;
+use Admin\Http\Controllers\UserController;
+use Admin\Http\Controllers\UserProfileController;
+use Admin\Http\Middleware\AuthenticateAdmin;
+use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
 Route::group([
@@ -62,7 +62,7 @@ Route::group([
 
     // pages
     Route::get('/pages', [PageController::class, 'items'])->name('pages.items');
-    
+
     Route::get('/pages/{page}', [PageController::class, 'item'])->name('pages.item');
     Route::post('/pages', [PageController::class, 'store'])->name('pages.store');
     Route::post('/pages/{page}/upload', [PageController::class, 'upload'])->name('pages.upload');
@@ -85,7 +85,7 @@ Route::group([
 
     // menu items-tree
     Route::get('/menus/{menu}/item-tree', [MenuItemTreeController::class, 'show'])->name('menus.item-tree.show');
-    Route::post('/menus/{menu}/item-tree', [MenuItemTreeController::class, 'update'])->name('menus.item-tree.update');
+    Route::put('/menus/{menu}/item-tree', [MenuItemTreeController::class, 'update'])->name('menus.item-tree.update');
 
     // partials
     Route::get('/partials/{partial}', [PartialController::class, 'show'])->name('partials.show');

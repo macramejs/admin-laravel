@@ -55,13 +55,13 @@ class PageController
             'slug'              => 'sometimes|nullable',
             'name'              => 'sometimes|string',
             'is_live'           => 'sometimes|boolean',
-            'publish_at'        => 'sometimes|date|after:now|nullable',
-            'meta.title'        => 'sometimes|string',
-            'meta.description'  => 'sometimes|string',
+            'publish_at'        => 'sometimes|date|nullable',
+            'meta.title'        => 'sometimes|string|nullable',
+            'meta.description'  => 'sometimes|string|nullable',
         ]);
 
-        if(array_key_exists("meta", $validated)) {
-            foreach($validated as $key => $value){
+        if (array_key_exists("meta", $validated)) {
+            foreach ($validated as $key => $value) {
                 $validated["meta_{$key}"] = $value;
             }
 
@@ -73,6 +73,8 @@ class PageController
         if (array_key_exists('slug', $validated)) {
             $validated['slug'] = Str::slug($validated['slug']);
         }
+
+        ray($validated);
 
         $page->update($validated);
 

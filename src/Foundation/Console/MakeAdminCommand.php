@@ -66,10 +66,52 @@ class MakeAdminCommand extends BaseMakeCommand
                 $this->output->write($output);
             });
 
+        $this->addAppRoutes();
+
+        $this->addComposerDependencies();
+
+        return 0;
+    }
+
+    protected function addAppRoutes()
+    {
+        $routes = [
+            'web' => [
+                'App\Http\Controllers\MediaController' => "Route::get('/storage/c/{id}/{file}', [MediaController::class, 'conversion']);",
+            ],
+        ];
+
+        foreach ($routes as $file => $fileRoutes) {
+            $filePath = base_path("routes/{$file}.php");
+
+            foreach ($fileRoutes as $controller => $route) {
+                if (str_contains(file_get_contents($filePath), $controller)) {
+                    continue;
+                }
+
+                $this->replaceInFile(
+                    "<?php\n",
+                    "<?php\n\nuse {$controller};",
+                    $filePath
+                );
+
+                $this->replaceInFile(
+                    '});',
+                    "});\n{$route}",
+                    $filePath
+                );
+            }
+        }
+    }
+
+    protected function addComposerDependencies()
+    {
         $composerPackages = [
             'laravel/sanctum',
             'macramejs/macrame-laravel:dev-main',
             'owen-it/laravel-auditing',
+            'intervention/image',
+            'intervention/imagecache',
         ];
 
         foreach ($composerPackages as $package) {
@@ -79,8 +121,6 @@ class MakeAdminCommand extends BaseMakeCommand
                     $this->output->write($output);
                 });
         }
-
-        return 0;
     }
 
     protected function replaceInFile($search, $replace, $path)

@@ -2,14 +2,15 @@
 
 namespace Admin\Http\Controllers;
 
-use Admin\Http\Indexes\PageIndex;
-use Admin\Http\Resources\PageResource;
-use Admin\Http\Resources\PageTreeResource;
 use App\Models\Page;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Admin\Http\Indexes\PageIndex;
+use Illuminate\Http\RedirectResponse;
+use Admin\Http\Resources\PageResource;
+use Admin\Http\Resources\StoredResource;
+use Admin\Http\Resources\PageTreeResource;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PageController
 {
@@ -40,16 +41,6 @@ class PageController
     }
 
     /**
-     * Get the pages tree.
-     *
-     * @return AnonymousResourceCollection
-     */
-    public function tree()
-    {
-        return PageTreeResource::collection(Page::root());
-    }
-
-    /**
      * Update the page.
      *
      * @param  Request $request
@@ -59,40 +50,28 @@ class PageController
     public function update(Request $request, Page $page)
     {
         $validated = $request->validate([
-            'content'    => 'array',
-            'attributes' => 'array',
-            'slug'       => 'sometimes|nullable',
-            'name'       => 'sometimes|string',
-            'is_live'    => 'sometimes|boolean',
-            'publish_at' => 'sometimes|date|after:now|nullable',
+            'content'           => 'array',
+            'attributes'        => 'array',
+            'slug'              => 'sometimes|nullable',
+            'name'              => 'sometimes|string',
+            'is_live'           => 'sometimes|boolean',
+            'publish_at'        => 'sometimes|date|after:now|nullable',
+            'meta.title'        => 'sometimes|string',
+            'meta.description'  => 'sometimes|string',
         ]);
+
+        if(array_key_exists("meta", $validated)) {
+            foreach($validated as $key => $value){
+                $validated["meta_{$key}"] = $value;
+            }
+
+            unset($validated["meta"]);
+        }
+        
 
         // Enforce sluggified slug
         if (array_key_exists('slug', $validated)) {
             $validated['slug'] = Str::slug($validated['slug']);
-        }
-
-        $page->update($validated);
-
-        return PageResource::make($page);
-    }
-
-    /**
-     * Update the meta information of the page.
-     *
-     * @param  Request $request
-     * @param  Page    $page
-     * @return void
-     */
-    public function meta(Request $request, Page $page)
-    {
-        $validated = $request->validate([
-            'title'       => 'nullable|string',
-            'description' => 'nullable|string',
-        ]);
-
-        foreach ($validated as $key => $value) {
-            $validated['meta_'.$key] = $value;
         }
 
         $page->update($validated);
@@ -109,7 +88,7 @@ class PageController
     public function store(Request $request)
     {
         $page = Page::make([
-            'parent_id' => $request->parent,
+            'parent_id' => $request->parent_id,
             'name'      => $request->name,
             'slug'      => Str::slug($request->slug ?: $request->name),
             'template'  => $request->template,
@@ -120,7 +99,7 @@ class PageController
 
         $page->save();
 
-        return PageResource::make($page);
+        return new StoredResource($page);
     }
 
     /**
@@ -133,19 +112,6 @@ class PageController
     public function destroy(Request $request, Page $page)
     {
         $page->delete();
-
-        return response()->noContent();
-    }
-
-    /**
-     * Update the order for of the page tree.
-     *
-     * @param  Request $request
-     * @return void
-     */
-    public function order(Request $request)
-    {
-        Page::updateOrder($request->order);
 
         return response()->noContent();
     }

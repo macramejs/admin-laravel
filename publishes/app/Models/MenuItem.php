@@ -41,4 +41,29 @@ class MenuItem extends Model implements Tree
     {
         return $this->hasOne(Menu::class);
     }
+
+    /**
+     * Determines whether the item is public.
+     *
+     * @return bool
+     */
+    public function isPublic()
+    {
+        $parsed = parse_url($this->link);
+
+        if (!$parsed || ($parsed['scheme'] ?? '') != 'route') {
+            return true;
+        }
+
+        $page = Page::find(explode('site.', $this->link)[1]);
+
+        if ($page->is_live) {
+            if (is_null($page->publish_at) || $page->publish_at < now()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

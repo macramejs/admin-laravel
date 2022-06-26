@@ -19,4 +19,15 @@ class MenuController
     {
         return MenuResource::collection(Menu::all());
     }
+
+    /**
+     * Gets a list of navigation types.
+     *
+     * @param  Request                     $request
+     * @return AnonymousResourceCollection
+     */
+    public function item(Request $request, Menu $menu)
+    {
+        return new MenuResource($menu);
+    }
 }

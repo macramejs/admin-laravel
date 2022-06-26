@@ -2,32 +2,29 @@
 
 namespace Admin\Http\Resources;
 
-use App\Models\Menu;
+use App\Models\Page;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin Menu
+ * @mixin Page
  */
-class MenuResource extends JsonResource
+class BlockResource extends JsonResource
 {
     /**
      * The resource instance.
      *
-     * @var Menu
+     * @var Page
      */
     public $resource;
 
     /**
-     * Transform the resource into an array.
+     * Gets the value array containing all required attributes.
      *
      * @param  \Illuminate\Http\Request                                        $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request)
+    public function value($request)
     {
-        return [
-            'title' => $this->title,
-            'type' => $this->type,
-        ];
+        return parent::toArray($request);
     }
 }

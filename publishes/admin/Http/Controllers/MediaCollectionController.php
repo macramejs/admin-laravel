@@ -2,14 +2,15 @@
 
 namespace Admin\Http\Controllers;
 
-use Admin\Http\Resources\MediaCollectionResource;
 use App\Models\File;
-use App\Models\MediaCollection;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\MediaCollection;
+use Illuminate\Support\Facades\DB;
+use Admin\Http\Resources\StoredResource;
+use Admin\Http\Resources\MediaCollectionResource;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MediaCollectionController
 {
@@ -44,10 +45,12 @@ class MediaCollectionController
      */
     public function store(Request $request)
     {
-        MediaCollection::create([
+        $collection = MediaCollection::create([
             'title' => $request->title,
             'key'   => Str::slug($request->title),
         ]);
+
+        return new StoredResource($collection);
     }
 
     /**

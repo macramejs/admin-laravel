@@ -2,31 +2,15 @@
 
 namespace Admin\Http\Controllers;
 
-use Admin\Http\Resources\MenuItemTreeResource;
 use App\Models\Menu;
 use App\Models\MenuItem;
 use Illuminate\Http\Request;
+use Admin\Http\Resources\StoredResource;
+use Admin\Http\Resources\MenuItemTreeResource;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MenuItemController
 {
-    /**
-     * Get menu item tree.
-     *
-     * @param  Request                     $request
-     * @param  Menu                        $menu
-     * @return AnonymousResourceCollection
-     */
-    public function tree(Request $request, Menu $menu)
-    {
-        $tree = $menu
-            ->items()
-            ->whereRoot()
-            ->get();
-
-        return MenuItemTreeResource::collection($tree);
-    }
-
     /**
      * Updates a new navigation item.
      *
@@ -70,26 +54,14 @@ class MenuItemController
             $parent = $menu->items()->where('id', $parentId)->firstOrFail();
         }
 
-        MenuItem::create(array_merge($validated, [
+        $item = MenuItem::create(array_merge($validated, [
             'menu_id'   => $menu->id,
             'parent_id' => $parent ? $parent->id : null,
         ]));
-    }
 
-    /**
-     * Update the order of the navigation tree.
-     *
-     * @param  Request $request
-     * @param  Menu    $menu
-     * @return void
-     */
-    public function order(Request $request, Menu $menu)
-    {
-        $menu
-            ->items()
-            ->updateOrder($request->order);
+        return new StoredResource($item);
     }
-
+    
     /**
      * Remove an item from the navigation tree.
      *

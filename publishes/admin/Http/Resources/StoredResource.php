@@ -2,18 +2,18 @@
 
 namespace Admin\Http\Resources;
 
-use App\Models\Menu;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin Menu
+ * @mixin Model
  */
-class MenuResource extends JsonResource
+class StoredResource extends JsonResource
 {
     /**
      * The resource instance.
      *
-     * @var Menu
+     * @var Model
      */
     public $resource;
 
@@ -25,9 +25,6 @@ class MenuResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'title' => $this->title,
-            'type' => $this->type,
-        ];
+        return ['id' => $this->id];
     }
 }

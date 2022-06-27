@@ -77,6 +77,7 @@ Route::group([
     // menus
     Route::get('/menus', [MenuController::class, 'items'])->name('menus.items');
     Route::get('/menus/{menu}', [MenuController::class, 'item'])->name('menus.item');
+    Route::post('/menus', [MenuController::class, 'store'])->name('menus.store');
 
     // menu items
     Route::post('/menus/{menu}/items', [MenuItemController::class, 'store'])->name('menus.items.store');

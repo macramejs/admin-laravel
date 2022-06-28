@@ -114,13 +114,11 @@ class MakeAdminCommand extends BaseMakeCommand
             'intervention/imagecache',
         ];
 
-        foreach ($composerPackages as $package) {
-            (new Process(['composer', 'require', $package], base_path()))
-                ->setTimeout(null)
-                ->run(function ($type, $output) {
-                    $this->output->write($output);
-                });
-        }
+        (new Process(['composer', 'require'] + $composerPackages, base_path()))
+            ->setTimeout(null)
+            ->run(function ($type, $output) {
+                $this->output->write($output);
+            });
     }
 
     protected function replaceInFile($search, $replace, $path)

@@ -60,12 +60,6 @@ class MakeAdminCommand extends BaseMakeCommand
             base_path('composer.json')
         );
 
-        (new Process(['composer', 'dump-autoload'], base_path()))
-            ->setTimeout(null)
-            ->run(function ($type, $output) {
-                $this->output->write($output);
-            });
-
         $this->addAppRoutes();
 
         $this->addComposerDependencies();

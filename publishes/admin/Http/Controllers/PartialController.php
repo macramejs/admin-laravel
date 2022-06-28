@@ -15,8 +15,13 @@ class PartialController
      * @param  \App\Models\Partial       $partial
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, Partial $partial)
+    public function show(Request $request, $template)
     {
+        $partial = Partial::firstOrCreate([
+            'template' => $template,
+            'name'     => ucfirst($template),
+        ]);
+
         return PartialResource::make($partial);
     }
 
@@ -31,7 +36,7 @@ class PartialController
     {
         $validated = $request->validate([
             'attributes' => 'array',
-            'name'       => 'sometimes|string',
+            // 'name'       => 'sometimes|string',
         ]);
 
         $partial->update($validated);

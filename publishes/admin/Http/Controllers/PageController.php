@@ -2,15 +2,13 @@
 
 namespace Admin\Http\Controllers;
 
-use App\Models\Page;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Admin\Http\Indexes\PageIndex;
-use Illuminate\Http\RedirectResponse;
 use Admin\Http\Resources\PageResource;
 use Admin\Http\Resources\StoredResource;
-use Admin\Http\Resources\PageTreeResource;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use App\Models\Page;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PageController
 {
@@ -50,31 +48,28 @@ class PageController
     public function update(Request $request, Page $page)
     {
         $validated = $request->validate([
-            'content'           => 'array',
-            'attributes'        => 'array',
-            'slug'              => 'sometimes|nullable',
-            'name'              => 'sometimes|string',
-            'is_live'           => 'sometimes|boolean',
-            'publish_at'        => 'sometimes|date|nullable',
-            'meta.title'        => 'sometimes|string|nullable',
-            'meta.description'  => 'sometimes|string|nullable',
+            'content'          => 'array',
+            'attributes'       => 'array',
+            'slug'             => 'sometimes|nullable',
+            'name'             => 'sometimes|string',
+            'is_live'          => 'sometimes|boolean',
+            'publish_at'       => 'sometimes|date|nullable',
+            'meta.title'       => 'sometimes|string|nullable',
+            'meta.description' => 'sometimes|string|nullable',
         ]);
 
-        if (array_key_exists("meta", $validated)) {
-            foreach ($validated as $key => $value) {
+        if (array_key_exists('meta', $validated)) {
+            foreach ($validated['meta'] as $key => $value) {
                 $validated["meta_{$key}"] = $value;
             }
 
-            unset($validated["meta"]);
+            unset($validated['meta']);
         }
-        
 
         // Enforce sluggified slug
         if (array_key_exists('slug', $validated)) {
             $validated['slug'] = Str::slug($validated['slug']);
         }
-
-        ray($validated);
 
         $page->update($validated);
 

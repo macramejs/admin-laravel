@@ -94,7 +94,7 @@ Route::group([
 
     // blocks
     Route::post('/blocks', [BlockController::class, 'store'])->name('blocks.store');
-    Route::get('/blocks/items', [BlockController::class, 'items'])->name('blocks.items');
+    Route::get('/blocks', [BlockController::class, 'items'])->name('blocks.items');
     Route::get('/blocks/{block}', [BlockController::class, 'show'])->name('blocks.show');
     Route::put('/blocks/{block}', [BlockController::class, 'update'])->name('blocks.update');
 });

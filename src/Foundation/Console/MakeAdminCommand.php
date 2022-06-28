@@ -43,16 +43,34 @@ class MakeAdminCommand extends BaseMakeCommand
         $this->files->copyDirectory($this->publishesPath('config'), config_path());
         $this->files->copyDirectory($this->publishesPath('migrations'), database_path('migrations'));
 
-        // Register Routes
+        // Register (pages) Routes
+        $this->replaceInFile(
+            "namespace App\Providers;\n",
+            "namespace App\Providers;\n\nuse App\Models\Page;",
+            app_path('providers/RouteServiceProvider.php')
+        );
         $this->replaceInFile(
             "                ->group(base_path('routes/web.php'));",
             "                ->group(base_path('routes/web.php'));
-
+            
+            Page::routes();
+            
             Route::prefix('admin')
                 ->group(base_path('routes/admin.php'));",
             app_path('providers/RouteServiceProvider.php')
         );
 
+        // add RateLimiting for admin api
+        $this->replaceInFile(
+            "RateLimiter::for('api', function (Request \$request) {",
+            "RateLimiter::for('api', function (Request \$request) {
+            if (str_contains(\$request->getRequestUri(), 'admin/api') && \$request->user()) {
+                return Limit::perMinute(600)->by(\$request->user()->id);
+            }\n",
+            app_path('providers/RouteServiceProvider.php')
+        );
+
+        // add admin psr namespace
         $this->replaceInFile(
             '            "App\\\\": "app/",',
             '            "App\\\\": "app/",

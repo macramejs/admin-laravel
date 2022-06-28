@@ -89,8 +89,8 @@ Route::group([
     Route::put('/menus/{menu}/item-tree', [MenuItemTreeController::class, 'update'])->name('menus.item-tree.update');
 
     // partials
-    Route::get('/partials/{partial}', [PartialController::class, 'show'])->name('partials.show');
-    Route::put('/partials/{partial}', [PartialController::class, 'update'])->name('partials.update');
+    Route::get('/partials/{template}', [PartialController::class, 'show'])->name('partials.show');
+    Route::put('/partials/{partial:template}', [PartialController::class, 'update'])->name('partials.update');
 
     // blocks
     Route::post('/blocks', [BlockController::class, 'store'])->name('blocks.store');

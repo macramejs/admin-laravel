@@ -4,7 +4,7 @@ namespace Macrame\Admin\Media\Traits;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
-use Macrame\Admin\Media\Contracts\AttachableFile;
+use Macrame\Admin\Contracts\Media\AttachableFile;
 
 trait HasFiles
 {

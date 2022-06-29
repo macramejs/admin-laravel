@@ -51,7 +51,7 @@ class MenuItem extends Model implements Tree
     {
         $parsed = parse_url($this->link);
 
-        if (!$parsed || ($parsed['scheme'] ?? '') != 'route') {
+        if (! $parsed || ($parsed['scheme'] ?? '') != 'route') {
             return true;
         }
 
@@ -65,5 +65,4 @@ class MenuItem extends Model implements Tree
 
         return false;
     }
-
 }

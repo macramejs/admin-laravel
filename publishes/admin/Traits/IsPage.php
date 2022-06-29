@@ -1,6 +1,6 @@
 <?php
 
-namespace Macrame\Admin\Pages\Traits;
+namespace Admin\Traits;
 
 use Closure;
 use Illuminate\Database\QueryException;

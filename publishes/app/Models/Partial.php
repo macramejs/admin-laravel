@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Admin\Traits\HasFiles;
 use App\Casts\PartialAttributesCast;
 use Illuminate\Database\Eloquent\Model;
-use Macrame\Admin\Media\Traits\HasFiles;
 
 class Partial extends Model
 {

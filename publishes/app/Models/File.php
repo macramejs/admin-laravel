@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Admin\Contracts\Media\AttachableFile;
+use Admin\Traits\IsAttachableFile;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Macrame\Admin\Contracts\Media\AttachableFile;
-use Macrame\Admin\Media\Traits\IsAttachableFile;
 
 class File extends Model implements AttachableFile
 {

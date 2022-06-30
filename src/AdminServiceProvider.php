@@ -13,9 +13,10 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected $providers = [
         Foundation\FoundationServiceProvider::class,
-        Media\MediaServiceProvider::class,
-        Pages\PagesServiceProvider::class,
-        Nav\NavServiceProvider::class,
+        // Media\MediaServiceProvider::class,
+        // Pages\PagesServiceProvider::class,
+        // Nav\NavServiceProvider::class,
+
     ];
 
     /**

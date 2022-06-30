@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Models;
+
+use Admin\Traits\HasFiles;
+use App\Casts\ContentCast;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Block extends Model
+{
+    use HasFactory, HasFiles;
+
+    /**
+     * Attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'content',
+    ];
+
+    /**
+     * Attributes casts.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'content' => ContentCast::class,
+    ];
+
+    /**
+     * Default model attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'content' => '[]',
+    ];
+
+    /**
+     * The creator of the page.
+     *
+     * @return BelongsTo
+     */
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'creator_id');
+    }
+}

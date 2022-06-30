@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Admin\Contracts\Pages\Page as PageContract;
 use Admin\Traits\HasFiles;
+use Admin\Traits\IsPage;
 use App\Casts\ContentCast;
 use App\Casts\PageAttributesCast;
 use App\Http\Controllers\PageController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Macrame\Admin\Pages\Traits\IsPage;
 
 class Page extends Model implements PageContract
 {

@@ -31,6 +31,8 @@ class MakeAdminCommand extends BaseMakeCommand
     {
         // $this->publishModule($this->publishesModule);
 
+        $this->addComposerDependencies();
+
         // Copy Admin files
         $this->files->ensureDirectoryExists(base_path('admin'));
         $this->files->copyDirectory($this->publishesPath('admin'), base_path('admin'));
@@ -80,9 +82,23 @@ class MakeAdminCommand extends BaseMakeCommand
 
         $this->addAppRoutes();
 
-        $this->addComposerDependencies();
+        $this->configureEnvironment();
 
         return 0;
+    }
+
+    protected function configureEnvironment()
+    {
+        $appDomain = parse_url(url('/'))['host'];
+
+        if($this->confirm('Is your admin backend located at admin.'$appDomain .'?', true)){
+            $this->replaceInFile(
+                'SESSION_LIFETIME=120',
+                "SESSION_LIFETIME=120\nSANCTUM_STATEFUL_DOMAINS==localhost,admin.{$appDomain}\nSESSION_DOMAIN=.{$appDomain}",
+                base_path('.env')
+            );
+        }
+        
     }
 
     protected function addAppRoutes()

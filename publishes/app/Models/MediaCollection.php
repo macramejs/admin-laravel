@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use Admin\Traits\HasFiles;
 use Illuminate\Database\Eloquent\Model;
-use Macrame\Admin\Media\Traits\HasFiles;
 
 class MediaCollection extends Model
 {

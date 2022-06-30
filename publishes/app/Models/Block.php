@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use Admin\Traits\HasFiles;
 use App\Casts\ContentCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Macrame\Admin\Media\Traits\HasFiles;
 
 class Block extends Model
 {

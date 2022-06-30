@@ -1,6 +1,6 @@
 <?php
 
-namespace Macrame\Admin\Media\Traits;
+namespace Admin\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

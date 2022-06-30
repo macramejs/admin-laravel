@@ -1,6 +1,6 @@
 <?php
 
-namespace Macrame\Admin\Contracts\Pages;
+namespace Admin\Contracts\Pages;
 
 use Closure;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

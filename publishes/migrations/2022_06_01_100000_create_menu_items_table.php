@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('title')->nullable();
             $table->string('link')->nullable();
             $table->boolean('new_tab')->nullable();
+            $table->boolean('is_group')->default(false);
 
             $table->foreignId('menu_id');
             $table->foreignId('parent_id')->nullable();

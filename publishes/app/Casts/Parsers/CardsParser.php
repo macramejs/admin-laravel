@@ -50,7 +50,7 @@ class CardsParser implements Parser
             }
 
             $link = $item['link'] ?? ['link' => ''];
-            $link['url'] = LinkResolver::urlFromLink($link['link'] ?? '');
+            $link['url'] = LinkResolver::urlFromLink($link['url'] ?? '');
 
             $item['link'] = $link;
 

@@ -16,7 +16,7 @@ class PageTreeController
      *
      * @return AnonymousResourceCollection
      */
-    public function show(Request $request, Page $parent = null)
+    public function show(Request $request)
     {
         return PageTreeResource::collection(Page::root());
     }

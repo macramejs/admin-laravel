@@ -5,7 +5,7 @@ namespace App\Casts\Parsers;
 use App\Casts\Resolvers\LinkResolver;
 use Macrame\Content\Contracts\Parser;
 
-class InfoBoxParser implements Parser
+class TeaserBoxesParser implements Parser
 {
     /**
      * Link.
@@ -28,10 +28,21 @@ class InfoBoxParser implements Parser
 
     public function parse()
     {
-        $link = $this->value['link'] ?? ['link' => ''];
-        $link['url'] = LinkResolver::urlFromLink($link['url'] ?? '');
+        $this->items = collect($this->value['items'] ?? [])->map(function ($item) {
+            if (! is_array($item)) {
+                return;
+            }
 
-        $this->link = $link;
+            $link = $item['link'] ?? ['link' => ''];
+            $link['url'] = LinkResolver::urlFromLink($link['url'] ?? '');
+
+            $box = collect([
+                'title' => $item['title'],
+                'link'  => $link,
+            ]);
+
+            return $box;
+        })->filter();
     }
 
     /**
@@ -42,7 +53,7 @@ class InfoBoxParser implements Parser
     public function toArray()
     {
         return array_merge($this->value, [
-            'link' => $this->link,
+            'items' => $this->items,
         ]);
     }
 }

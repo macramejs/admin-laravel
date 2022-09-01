@@ -13,7 +13,6 @@ use Admin\Http\Controllers\MenuItemTreeController;
 use Admin\Http\Controllers\PageController;
 use Admin\Http\Controllers\PageTreeController;
 use Admin\Http\Controllers\PartialController;
-use Admin\Http\Controllers\SettingController;
 use Admin\Http\Controllers\UserController;
 use Admin\Http\Controllers\UserProfileController;
 use Admin\Http\Middleware\AuthenticateAdmin;
@@ -48,7 +47,7 @@ Route::group([
     // media
     Route::get('/media/items', [MediaController::class, 'items'])->name('media.items');
     Route::get('/media/{file}', [MediaController::class, 'item'])->name('media.item');
-    Route::post('/media/upload', [MediaController::class, 'upload'])->name('media.upload');
+    Route::post('/media/upload/{collection?}', [MediaController::class, 'upload'])->name('media.upload');
     Route::post('/media/delete', [MediaController::class, 'destroy'])->name('media.destroy');
 
     // media collections

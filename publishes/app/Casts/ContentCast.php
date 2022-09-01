@@ -12,14 +12,18 @@ class ContentCast extends BaseContentCast
      * @var array
      */
     protected $parsers = [
-        'block'          => Parsers\BlockParser::class,
-        'image_full'     => Parsers\ImageFullParser::class,
-        'text_image'     => Parsers\ImageFullParser::class,
-        'logo_wall'      => Parsers\LogoWallParser::class,
-        'image_carousel' => Parsers\CarouselParser::class,
-        'info_box'       => Parsers\InfoBoxParser::class,
-        'cards'          => Parsers\CardsParser::class,
-        'grid_gallery'   => Parsers\GridGalleryParser::class,
+        'block'             => Parsers\BlockParser::class,
+        'image_small'       => Parsers\ImageFullParser::class,
+        'image_full'        => Parsers\ImageFullParser::class,
+        'text_image'        => Parsers\TextImageParser::class,
+        'info_section'      => Parsers\TextImageParser::class,
+        'logo_wall'         => Parsers\LogoWallParser::class,
+        'image_carousel'    => Parsers\CarouselParser::class,
+        'teaser_boxes'      => Parsers\TeaserBoxesParser::class,
+        'cta'               => Parsers\CTAParser::class,
+        'info_box'          => Parsers\InfoBoxParser::class,
+        'cards'             => Parsers\CardsParser::class,
+        'grid_gallery'      => Parsers\GridGalleryParser::class,
     ];
 
     /**

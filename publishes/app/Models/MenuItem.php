@@ -19,7 +19,13 @@ class MenuItem extends Model implements Tree
      * @var array
      */
     protected $fillable = [
-        'parent_id', 'order_column', 'title', 'link', 'new_tab', 'menu_id',
+        'parent_id',
+        'order_column',
+        'title',
+        'link',
+        'new_tab',
+        'menu_id',
+        'is_group',
     ];
 
     /**
@@ -28,8 +34,9 @@ class MenuItem extends Model implements Tree
      * @var array
      */
     protected $casts = [
-        'link'    => MenuLinkCast::class,
-        'new_tab' => 'boolean',
+        'link'               => MenuLinkCast::class,
+        'new_tab'            => 'boolean',
+        'is_group'           => 'boolean',
     ];
 
     /**

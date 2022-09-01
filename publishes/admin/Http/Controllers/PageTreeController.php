@@ -2,14 +2,12 @@
 
 namespace Admin\Http\Controllers;
 
-use Admin\Http\Indexes\PageIndex;
-use Admin\Http\Resources\PageResource;
 use Admin\Http\Resources\PageTreeResource;
+use Admin\Policies\PageTreePolicy;
 use App\Models\Page;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Gate;
 
 class PageTreeController
 {
@@ -18,7 +16,7 @@ class PageTreeController
      *
      * @return AnonymousResourceCollection
      */
-    public function show()
+    public function show(Request $request)
     {
         return PageTreeResource::collection(Page::root());
     }

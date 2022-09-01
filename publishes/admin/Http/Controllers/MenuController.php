@@ -2,10 +2,10 @@
 
 namespace Admin\Http\Controllers;
 
-use App\Models\Menu;
-use Illuminate\Http\Request;
 use Admin\Http\Resources\MenuResource;
 use Admin\Http\Resources\StoredResource;
+use App\Models\Menu;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MenuController
@@ -18,7 +18,9 @@ class MenuController
      */
     public function items(Request $request)
     {
-        return MenuResource::collection(Menu::all());
+        $query = Menu::query();
+
+        return MenuResource::collection($query->get());
     }
 
     /**
@@ -40,10 +42,12 @@ class MenuController
      */
     public function store(Request $request)
     {
-        $menu = Menu::make([
-            'title' => $request->title,
-            'type'      => $request->type,
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'type'  => 'required|string',
         ]);
+
+        $menu = Menu::make($validated);
 
         $menu->save();
 

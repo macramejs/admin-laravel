@@ -2,15 +2,15 @@
 
 namespace Admin\Http\Controllers;
 
-use App\Models\File;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use App\Models\MediaCollection;
-use Illuminate\Support\Facades\DB;
-use Admin\Http\Resources\StoredResource;
 use Admin\Http\Resources\MediaCollectionResource;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Admin\Http\Resources\StoredResource;
+use App\Models\File;
+use App\Models\MediaCollection;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MediaCollectionController
 {
@@ -45,10 +45,17 @@ class MediaCollectionController
      */
     public function store(Request $request)
     {
-        $collection = MediaCollection::create([
-            'title' => $request->title,
-            'key'   => Str::slug($request->title),
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'key'   => 'required|string|unique:events,slug',
         ]);
+
+        // Enforce sluggified slug
+        if (array_key_exists('slug', $validated)) {
+            $validated['slug'] = Str::slug($validated['slug']);
+        }
+
+        $collection = MediaCollection::create($validated);
 
         return new StoredResource($collection);
     }

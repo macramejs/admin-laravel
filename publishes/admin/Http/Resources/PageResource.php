@@ -33,6 +33,7 @@ class PageResource extends JsonResource
             'slug'        => $this->slug,
             'preview_key' => $this->preview_key,
             'template'    => $this->template,
+            'parent_id'   => $this->parent_id,
 
             // dynamic
             'content'    => $this->content->toArray(),

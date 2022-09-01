@@ -2,18 +2,17 @@
 
 namespace App\Casts\Parsers;
 
-use App\Http\Resources\Wrapper\Image;
-use App\Models\Block;
+use App\Casts\Resolvers\LinkResolver;
 use Macrame\Content\Contracts\Parser;
 
-class BlockParser implements Parser
+class CTAParser implements Parser
 {
     /**
-     * Image.
+     * Link.
      *
-     * @var Image
+     * @var array
      */
-    public ?Block $block;
+    public array $link;
 
     /**
      * Create new Parser instance.
@@ -29,9 +28,10 @@ class BlockParser implements Parser
 
     public function parse()
     {
-        $this->block = Block::query()
-            ->where('id', $this->value['block'] ?? null)
-            ->first();
+        $link = $this->value['link'] ?? ['link' => ''];
+        $link['url'] = LinkResolver::urlFromLink($link['url'] ?? '');
+
+        $this->link = $link;
     }
 
     /**
@@ -41,12 +41,8 @@ class BlockParser implements Parser
      */
     public function toArray()
     {
-        if (!$this->block) {
-            return [];
-        }
-
-        $content = $this->block->content;
-
-        return $this->block->content->parse()->toArray(request());
+        return array_merge($this->value, [
+            'link' => $this->link,
+        ]);
     }
 }

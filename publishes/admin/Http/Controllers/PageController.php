@@ -22,7 +22,8 @@ class PageController
     {
         return $index->items(
             $request,
-            Page::query()
+            Page::query(),
+            PageResource::class
         );
     }
 
@@ -72,8 +73,6 @@ class PageController
         }
 
         $page->update($validated);
-
-        return PageResource::make($page);
     }
 
     /**
@@ -84,11 +83,20 @@ class PageController
      */
     public function store(Request $request)
     {
+        $page = $request->parent_id
+            ? Page::where('id', $request->parent_id)->firstOrFail()
+            : null;
+
+        $validated = $request->validate([
+            'name'     => 'required|string',
+            'slug'     => 'required|string',
+            'template' => 'required|string',
+        ]);
+
         $page = Page::make([
+            ...$validated,
             'parent_id' => $request->parent_id,
-            'name'      => $request->name,
             'slug'      => Str::slug($request->slug ?: $request->name),
-            'template'  => $request->template,
         ]);
 
         $page->creator_id = $request->user()->id;

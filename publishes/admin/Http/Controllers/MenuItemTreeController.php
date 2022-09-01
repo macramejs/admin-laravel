@@ -4,9 +4,9 @@ namespace Admin\Http\Controllers;
 
 use Admin\Http\Resources\MenuItemTreeResource;
 use App\Models\Menu;
-use App\Models\MenuItem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Cache;
 
 class MenuItemTreeController
 {
@@ -36,6 +36,13 @@ class MenuItemTreeController
      */
     public function update(Request $request, Menu $menu)
     {
+        if ($menu->type == 'main') {
+            Cache::forget('mainNavigation');
+        }
+        if ($menu->type == 'footer') {
+            Cache::forget('footerNavigation');
+        }
+
         $menu
             ->items()
             ->updateOrder($request->order);

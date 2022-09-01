@@ -28,7 +28,7 @@ class MenuItemTreeResource extends TreeResource
         return [
             'id'         => $this->id,
             'title'      => $this->title,
-            'link'       => $this->link->value,
+            'link'       => $this->link?->value,
             'is_public'  => $this->isPublic(),
         ];
     }

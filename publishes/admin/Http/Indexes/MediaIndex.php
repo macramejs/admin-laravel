@@ -8,6 +8,8 @@ use Macrame\Index\Index;
 
 class MediaIndex extends Index
 {
+    protected $defaultPerPage = 50;
+
     protected $mimeTypes = [
         'images'    => ['image/%'],
         'documents' => ['application/%'],

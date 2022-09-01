@@ -2,11 +2,11 @@
 
 namespace Admin\Http\Controllers;
 
-use App\Models\Block;
-use Illuminate\Http\Request;
 use Admin\Http\Indexes\BlockIndex;
 use Admin\Http\Resources\BlockResource;
 use Admin\Http\Resources\StoredResource;
+use App\Models\Block;
+use Illuminate\Http\Request;
 
 class BlockController
 {
@@ -62,9 +62,11 @@ class BlockController
      */
     public function store(Request $request)
     {
-        $block = Block::make([
-            'name' => $request->name,
+        $validated = $request->validate([
+            'name' => 'required|string',
         ]);
+
+        $block = Block::make($validated);
 
         $block->creator_id = $request->user()->id;
 

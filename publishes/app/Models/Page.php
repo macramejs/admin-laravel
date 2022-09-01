@@ -2,16 +2,21 @@
 
 namespace App\Models;
 
-use Admin\Contracts\Pages\Page as PageContract;
-use Admin\Traits\HasFiles;
 use Admin\Traits\IsPage;
+use Admin\Traits\HasFiles;
 use App\Casts\ContentCast;
+use App\Casts\PageTemplateCast;
 use App\Casts\PageAttributesCast;
-use App\Http\Controllers\PageController;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Controllers\PageController;
+use Admin\Contracts\Pages\Page as PageContract;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * @property PageTemplateCast $template
+ */
 class Page extends Model implements PageContract
 {
     use HasFactory, HasFiles, IsPage;
@@ -37,6 +42,7 @@ class Page extends Model implements PageContract
         'full_slug',
         'order_column',
         'is_live',
+        'is_root',
         'parent_id',
         'publish_at',
         'meta_title',
@@ -50,9 +56,11 @@ class Page extends Model implements PageContract
      * @var array
      */
     protected $casts = [
+        'template'   => PageTemplateCast::class,
         'content'    => ContentCast::class,
         'attributes' => PageAttributesCast::class,
         'is_live'    => 'boolean',
+        'is_root'    => 'boolean',
         'publish_at' => 'datetime',
     ];
 
@@ -94,5 +102,19 @@ class Page extends Model implements PageContract
     public function getHasBeenPublishedAttribute()
     {
         return $this->publish_at < now();
+    }
+
+    public function scopeSearch($query, string $term)
+    {
+        $query->where('attributes', 'LIKE', "%{$term}%")
+            ->orWhere('content', 'LIKE', "%{$term}%")
+            ->orWhere('name', 'LIKE', "%{$term}%");
+    }
+
+    public function getTreeIds()
+    {
+        $parentIds = $this->parent ? $this->parent->getTreeIds() : [];
+
+        return array_merge($parentIds, [$this->id]);
     }
 }

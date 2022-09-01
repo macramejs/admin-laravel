@@ -2,12 +2,11 @@
 
 namespace Admin\Http\Controllers;
 
+use Admin\Http\Resources\StoredResource;
 use App\Models\Menu;
 use App\Models\MenuItem;
 use Illuminate\Http\Request;
-use Admin\Http\Resources\StoredResource;
-use Admin\Http\Resources\MenuItemTreeResource;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Cache;
 
 class MenuItemController
 {
@@ -22,9 +21,19 @@ class MenuItemController
     public function update(Request $request, Menu $menu, $id)
     {
         $validated = $request->validate([
-            'title' => 'required|string',
-            'link'  => 'required|string',
+            'title'              => 'required|string',
+            'link'               => 'nullable|string',
+            'is_group'           => 'bool',
+            'alternative_layout' => 'bool',
+            'cols'               => 'nullable|numeric',
         ]);
+
+        if ($menu->type == 'main') {
+            Cache::forget('mainNavigation');
+        }
+        if ($menu->type == 'footer') {
+            Cache::forget('footerNavigation');
+        }
 
         $menu
             ->items()
@@ -44,9 +53,19 @@ class MenuItemController
     public function store(Request $request, Menu $menu, $parentId = null)
     {
         $validated = $request->validate([
-            'title' => 'required|string',
-            'link'  => 'required|string',
+            'title'              => 'required|string',
+            'link'               => 'nullable|string',
+            'is_group'           => 'bool',
+            'alternative_layout' => 'bool',
+            'cols'               => 'nullable|numeric',
         ]);
+
+        if ($menu->type == 'main') {
+            Cache::forget('mainNavigation');
+        }
+        if ($menu->type == 'footer') {
+            Cache::forget('footerNavigation');
+        }
 
         $parent = null;
         if ($parentId) {
@@ -61,7 +80,7 @@ class MenuItemController
 
         return new StoredResource($item);
     }
-    
+
     /**
      * Remove an item from the navigation tree.
      *

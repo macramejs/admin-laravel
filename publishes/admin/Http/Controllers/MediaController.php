@@ -76,11 +76,15 @@ class MediaController
      * @param  Request $request
      * @return void
      */
-    public function upload(Request $request)
+    public function upload(Request $request, MediaCollection $collection = null)
     {
         collect($request->files->get('files'))
-            ->each(function (UploadedFile $file) {
-                File::createFromUploadedFile($file);
+            ->each(function (UploadedFile $file) use ($collection) {
+                $file = File::createFromUploadedFile($file);
+
+                if ($collection) {
+                    $file->attach($collection);
+                }
             });
 
         return response()->json();

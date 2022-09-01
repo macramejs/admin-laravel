@@ -2,9 +2,9 @@
 
 namespace Admin\Traits;
 
+use Admin\Contracts\Media\AttachableFile;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Collection;
-use Admin\Contracts\Media\AttachableFile;
 
 trait HasFiles
 {
@@ -55,6 +55,17 @@ trait HasFiles
     public function attachFile(AttachableFile $file, ?string $collection = null, array $attributes = [])
     {
         $file->attach($this, $collection, $attributes);
+    }
+
+    /**
+     * Detach a file from the model.
+     *
+     * @param  AttachableFile $file
+     * @return void
+     */
+    public function detachFile(AttachableFile $file)
+    {
+        $file->detach($this);
     }
 
     /**

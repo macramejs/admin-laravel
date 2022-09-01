@@ -25,10 +25,13 @@ class DateTimeResource extends JsonResource
      */
     public function toArray($request)
     {
-        $this->setLocale(app()->getLocale());
+        setlocale(LC_TIME, 'de_DE.utf8');
 
         return [
-            'label'         => $this->toRfc7231String(),
+            'original'      => $this->toDateTimeString(),
+            'iso'           => $this->toIso8601String(),
+            'formatted'     => $this->format('d.m.Y'),
+            'label'         => $this->formatLocalized('%d. %B %Y'),
             'readable_diff' => $this->diffForHumans(),
         ];
     }

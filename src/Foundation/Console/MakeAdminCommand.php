@@ -41,7 +41,7 @@ class MakeAdminCommand extends BaseMakeCommand
 
         // Copy CORS Configuration
         $this->files->copyDirectory($this->publishesPath('config'), config_path());
-        $this->files->copyDirectory($this->publishesPath('migrations'), database_path('migrations'));
+        $this->files->copyDirectory($this->publishesPath('database'), database_path());
 
         // Register (pages) Routes
         $this->replaceInFile(

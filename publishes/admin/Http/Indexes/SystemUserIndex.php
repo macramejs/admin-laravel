@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Macrame\Index\Index;
 
-class UserIndex extends Index
+class SystemUserIndex extends Index
 {
     /**
      * Handle search.

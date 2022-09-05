@@ -44,11 +44,6 @@ class PageResource extends JsonResource
             'publish_at'         => $this->publish_at,
             'is_live'            => $this->is_live,
             'has_been_published' => $this->publish_at < now(),
-
-            'meta' => [
-                'title'       => $this->meta_title,
-                'description' => $this->meta_description,
-            ],
         ];
     }
 }

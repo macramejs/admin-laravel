@@ -91,6 +91,13 @@ class MenuItemController
      */
     public function destroy(Request $request, Menu $menu, $itemId)
     {
+        if ($menu->type == 'main') {
+            Cache::forget('mainNavigation');
+        }
+        if ($menu->type == 'footer') {
+            Cache::forget('footerNavigation');
+        }
+
         $menu
             ->items()
             ->where('id', $itemId)

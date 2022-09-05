@@ -7,6 +7,7 @@ use Admin\Http\Resources\StoredResource;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Str;
 
 class MenuController
 {
@@ -44,10 +45,11 @@ class MenuController
     {
         $validated = $request->validate([
             'title' => 'required|string',
-            'type'  => 'required|string',
         ]);
 
         $menu = Menu::make($validated);
+
+        $menu->type = Str::slug($request->title);
 
         $menu->save();
 

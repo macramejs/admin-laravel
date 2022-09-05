@@ -20,7 +20,7 @@ class AuthenticateAdmin
     public function handle($request, Closure $next)
     {
         if (! $user = Auth::user()) {
-            return abort(405, 'Unauthenticated');
+            return abort(401, 'Unauthenticated');
         }
 
         if ($user->is_admin) {

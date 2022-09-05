@@ -7,6 +7,7 @@ use App\Http\Resources\ImageResource;
 use App\Http\Resources\Wrapper\Image;
 use App\Models\File;
 use Macrame\Content\ContentCast;
+use Macrame\Content\Contracts\Parser;
 
 class PageAttributesCast extends ContentCast
 {
@@ -22,11 +23,28 @@ class PageAttributesCast extends ContentCast
             return $this;
         }
 
+        // og image
+        $og_image = File::query()
+            ->where('id', $this->items['meta_og_image']['id'] ?? null)
+            ->first();
+        $this->items['meta_og_image_url'] = $og_image ? $og_image->getUrl() : null;
+
         $this->items = match ($this->model->template) {
-            'default'     => $this->defaultTemplate($this->items),
-            'home'        => $this->homeTemplate($this->items),
-            default       => $this->items
+            'default' => $this->defaultTemplate($this->items),
+            'home'    => $this->homeTemplate($this->items),
+            default   => $this->items
         };
+
+        // For any item, we want to make sure routes are replaced with actual links
+        array_walk_recursive($this->items, function (&$value, $key) {
+            if ($value instanceof Parser || $key == 'items') {
+                return;
+            }
+
+            $value = preg_replace_callback('/"(route:\/\/.*?)"/', function ($match) {
+                return '"'.LinkResolver::urlFromLink($match[1]).'"';
+            }, $value);
+        });
 
         return $this;
     }
@@ -105,48 +123,6 @@ class PageAttributesCast extends ContentCast
         $items['text_image']['image'] = $items['text_image']['image']
         ? (new ImageResource($items['text_image']['image']))->toArray(request())
         : null;
-
-        // services link
-        $link_services = $this->items['services']['link'] ?? ['link' => ''];
-        $link_services['url'] = LinkResolver::urlFromLink($link_services['url'] ?? '');
-
-        $this->items['services']['link'] = $link_services;
-        $items['services'] = $this->items['services'];
-
-        // services cards links
-        $items['services']['items'] = collect($items['services']['items'] ?? [])->map(function ($item) {
-            if (! is_array($item)) {
-                return;
-            }
-
-            $link = $item['link'] ?? ['link' => ''];
-            $link['url'] = LinkResolver::urlFromLink($link['url'] ?? '');
-
-            $box = collect([
-                'title' => $item['title'],
-                'icon'  => $item['icon'],
-                'link'  => $link,
-            ]);
-
-            return $box;
-        })->filter();
-
-        // quickstart links
-        $items['teaser_boxes']['items'] = collect($items['teaser_boxes']['items'] ?? [])->map(function ($item) {
-            if (! is_array($item)) {
-                return;
-            }
-
-            $link = $item['link'] ?? ['link' => ''];
-            $link['url'] = LinkResolver::urlFromLink($link['url'] ?? '');
-
-            $box = collect([
-                'title' => $item['title'],
-                'link'  => $link,
-            ]);
-
-            return $box;
-        })->filter();
 
         return [
             ...$items,

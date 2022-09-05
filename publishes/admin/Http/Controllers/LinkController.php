@@ -21,7 +21,7 @@ class LinkController
         $items = Page::get()
             ->map(function (Page $page) {
                 return LinkOption::fromRoute(
-                    title: $page->name,
+                    title: $page->getFullName(),
                     name: $page->getRoute()->getName(),
                 );
             });

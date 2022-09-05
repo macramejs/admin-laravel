@@ -27,7 +27,6 @@ Route::group([
     ],
     'prefix' => 'api',
 ], function () {
-
     // settings
     // Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
 
@@ -99,7 +98,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['web', 'guest'],
+    'middleware' => ['web'],
 ], function () {
     Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 

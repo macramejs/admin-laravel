@@ -2,7 +2,9 @@
 
 namespace App\Casts;
 
+use App\Casts\Resolvers\LinkResolver;
 use Macrame\Content\ContentCast as BaseContentCast;
+use Macrame\Content\Contracts\Parser;
 
 class ContentCast extends BaseContentCast
 {
@@ -12,18 +14,20 @@ class ContentCast extends BaseContentCast
      * @var array
      */
     protected $parsers = [
-        'block'             => Parsers\BlockParser::class,
-        'image_small'       => Parsers\ImageFullParser::class,
-        'image_full'        => Parsers\ImageFullParser::class,
-        'text_image'        => Parsers\TextImageParser::class,
-        'info_section'      => Parsers\TextImageParser::class,
-        'logo_wall'         => Parsers\LogoWallParser::class,
-        'image_carousel'    => Parsers\CarouselParser::class,
-        'teaser_boxes'      => Parsers\TeaserBoxesParser::class,
-        'cta'               => Parsers\CTAParser::class,
-        'info_box'          => Parsers\InfoBoxParser::class,
-        'cards'             => Parsers\CardsParser::class,
-        'grid_gallery'      => Parsers\GridGalleryParser::class,
+        'block'          => Parsers\BlockParser::class,
+        'image_small'    => Parsers\ImageFullParser::class,
+        'image_full'     => Parsers\ImageFullParser::class,
+        'text_image'     => Parsers\TextImageParser::class,
+        'info_section'   => Parsers\TextImageParser::class,
+        'logo_wall'      => Parsers\LogoWallParser::class,
+        'image_carousel' => Parsers\CarouselParser::class,
+        'teaser_boxes'   => Parsers\TeaserBoxesParser::class,
+        'cta'            => Parsers\CTAParser::class,
+        'map'            => Parsers\MapParser::class,
+        'info_box'       => Parsers\InfoBoxParser::class,
+        'cards'          => Parsers\CardsParser::class,
+        'downloads'      => Parsers\DownloadsParser::class,
+        'grid_gallery'   => Parsers\GridGalleryParser::class,
     ];
 
     /**
@@ -36,6 +40,17 @@ class ContentCast extends BaseContentCast
         foreach ($this->items as $key => $item) {
             $this->items[$key] = $this->parseItem($item);
         }
+
+        // For any item, we want to make sure routes are replaced with actual links
+        array_walk_recursive($this->items, function (&$value, $key) {
+            if ($value instanceof Parser || $key == 'items') {
+                return;
+            }
+
+            $value = preg_replace_callback('/"(route:\/\/.*?)"/', function ($match) {
+                return '"'.LinkResolver::urlFromLink($match[1]).'"';
+            }, $value);
+        });
 
         return $this;
     }

@@ -47,7 +47,7 @@ class MediaCollectionController
     {
         $validated = $request->validate([
             'title' => 'required|string',
-            'key'   => 'required|string|unique:events,slug',
+            'key'   => 'required|string|unique:file_collections,key',
         ]);
 
         // Enforce sluggified slug

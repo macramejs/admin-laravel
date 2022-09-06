@@ -13,6 +13,7 @@ use Admin\Http\Controllers\MenuItemTreeController;
 use Admin\Http\Controllers\PageController;
 use Admin\Http\Controllers\PageTreeController;
 use Admin\Http\Controllers\PartialController;
+use Admin\Http\Controllers\SystemUserController;
 use Admin\Http\Controllers\UserController;
 use Admin\Http\Controllers\UserProfileController;
 use Admin\Http\Middleware\AuthenticateAdmin;
@@ -95,6 +96,9 @@ Route::group([
     Route::get('/blocks', [BlockController::class, 'items'])->name('blocks.items');
     Route::get('/blocks/{block}', [BlockController::class, 'show'])->name('blocks.show');
     Route::put('/blocks/{block}', [BlockController::class, 'update'])->name('blocks.update');
+
+    // system-users
+    Route::resource('/system-users', SystemUserController::class)->parameters(['system-users' => 'user']);
 });
 
 Route::group([

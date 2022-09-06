@@ -32,7 +32,7 @@ class PageResource extends JsonResource
             'name'        => $this->name,
             'slug'        => $this->slug,
             'preview_key' => $this->preview_key,
-            'template'    => $this->template,
+            'template'    => (string) $this->template,
             'parent_id'   => $this->parent_id,
 
             // dynamic

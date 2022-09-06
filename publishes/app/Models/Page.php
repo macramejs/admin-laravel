@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-use Admin\Traits\IsPage;
-use Admin\Traits\HasFiles;
-use App\Casts\ContentCast;
-use App\Casts\PageTemplateCast;
-use App\Casts\PageAttributesCast;
-use Illuminate\Database\Eloquent\Model;
-use App\Http\Controllers\PageController;
 use Admin\Contracts\Pages\Page as PageContract;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Admin\Traits\HasFiles;
+use Admin\Traits\IsPage;
+use App\Casts\ContentCast;
+use App\Casts\PageAttributesCast;
+use App\Casts\PageTemplateCast;
+use App\Http\Controllers\PageController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property PageTemplateCast $template
@@ -116,5 +115,19 @@ class Page extends Model implements PageContract
         $parentIds = $this->parent ? $this->parent->getTreeIds() : [];
 
         return array_merge($parentIds, [$this->id]);
+    }
+
+    /**
+     * Get the full name of the page.
+     *
+     * @return string
+     */
+    public function getFullName(): string
+    {
+        if (! $this->parent) {
+            return $this->name;
+        }
+
+        return $this->parent->getFullName().' > '.$this->name;
     }
 }
